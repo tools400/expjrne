@@ -1,0 +1,51 @@
+     /* =================================================================== */
+     /*                                                                     */
+     /*  Application . : EXPJRNE                                            */
+     /*  Object  . . . : EXPJRNE                                            */
+     /*  Description . : Export Journal Entries                             */
+     /*  Author  . . . : Thomas Raddatz   <thomas.raddatz@tools400.de>      */
+     /*  Date  . . . . : 23.10.2001                                         */
+     /*                                                                     */
+     /* =================================================================== */
+     /*                                                                     */
+     /*  This software is free software, you can redistribute it and/or     */
+     /*  modify it under the terms of the GNU General Public License (GPL)  */
+     /*  as published by the Free Software Foundation.                      */
+     /*                                                                     */
+     /*  See GNU General Public License for details.                        */
+     /*          http://www.opensource.org                                  */
+     /*          http://www.opensource.org/licenses/gpl-license.html        */
+     /*                                                                     */
+     /* =================================================================== */
+     /*  History:                                                           */
+     /*                                                                     */
+     /*  Date        Name          Comment                                  */
+     /*  ----------  ------------  ---------------------------------------  */
+     /*  22.12.2005  Th.Raddatz    Now using service programs BASICS1       */
+     /*                            and RTVFLDA.                             */
+     /*                                                                     */
+     /*  20.09.2008  Th.Raddatz    Redesigned EXPJRNE to support additional */
+     /*                            object types, starting with *DTAARA.     */
+     /*                                                                     */
+     /* =================================================================== */
+     /* >>PRE-COMPILER<<                                                    */
+     /*   >>CRTCMD<< CRTPGM       PGM(&LI/&OB);                             */
+     /*   >>IMPORTANT<<                                                     */
+     /*     >>PARM<< MODULE(&LI/EXPJRNEC1 +                                 */
+     /*                     &LI/EXPJRNER4 +                                 */
+     /*                     &LI/EXPJRNER5 );                                */
+     /*     >>PARM<< ENTMOD(&LI/EXPJRNEC1);                                 */
+     /*     >>PARM<< BNDSRVPGM(&LI/EXPJRNECU +                              */
+     /*                        &LI/RTVFLDA +                                */
+     /*                        &LI/BASICS1);                                */
+     /*     >>PARM<< BNDDIR(QC2LE);                                         */
+     /*     >>PARM<< ACTGRP(*NEW      );                                    */
+     /*     >>PARM<< USRPRF(*USER);                                         */
+     /*     >>PARM<< DETAIL(*BASIC);                                        */
+     /*     >>PARM<< ALWUPD(*YES);                                          */
+     /*     >>PARM<< ALWLIBUPD(*YES);                                       */
+     /*     >>PARM<< TGTRLS(V6R1M0);                                        */
+     /*   >>END-IMPORTANT<<                                                 */
+     /*   >>EXECUTE<<                                                       */
+     /* >>END-PRE-COMPILER<<                                                */
+     /* =================================================================== */

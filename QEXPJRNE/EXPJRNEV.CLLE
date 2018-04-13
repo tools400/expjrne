@@ -1,0 +1,212 @@
+     /* =================================================================== */
+     /*                                                                     */
+     /*  Application . : EXPJRNE                                            */
+     /*  Object  . . . : EXPJRNEV                                           */
+     /*  Description . : EXPJRNE - Validity Checker Example                 */
+     /*  Author  . . . : Thomas Raddatz   <thomas.raddatz@tools400.de>      */
+     /*  Date  . . . . : 08.12.2014                                         */
+     /*                                                                     */
+     /* =================================================================== */
+     /*  Purpose of the EXPJRNEV validity checker program:                  */
+     /*                                                                     */
+     /*     The EXPJRNEV demonstrates how to write a validity checker       */
+     /*     program for the EXPJRNE command.                                */
+     /*     This sample program checks the following conditions:            */
+     /*      - File to receive output: must match *DFT                      */
+     /*          Library             : must match QTEMP                     */
+     /*      - Create outfile        : must match *NO                       */
+     /*      - Journalthat are not allowed to export journal entries        */
+     /*        from:   FOO/BAA                                              */
+     /*                                                                     */
+     /*  Compiling the validity checker:                                    */
+     /*                                                                     */
+     /*     CRTCLMOD MODULE(yourLib/EXPJRNEV) SRCFILE(yourLib/QEXPJRNE)     */
+     /*       SRCMBR(*MODULE) DBGVIEW(*LIST)                                */
+     /*                                                                     */
+     /*     CRTPGM   PGM(yourLib/EXPJRNEV) MODULE(*PGM)                     */
+     /*       ACTGRP(*CALLER) BNDSRVPGM(yourLib/EXPJRNECU)                  */
+     /*                                                                     */
+     /*  Activating the validity checker:                                   */
+     /*                                                                     */
+     /*     CHGCMD CMD(yourLib/EXPJRNE) VLDCKR(yourLib/EXPJRNEV)            */
+     /*                                                                     */
+     /*  Deactivating the validity checker:                                 */
+     /*                                                                     */
+     /*     CHGCMD CMD(yourLib/EXPJRNE) VLDCKR(*NONE)                       */
+     /*                                                                     */
+     /* =================================================================== */
+     /*                                                                     */
+     /*  This software is free software, you can redistribute it and/or     */
+     /*  modify it under the terms of the GNU General Public License (GPL)  */
+     /*  as published by the Free Software Foundation.                      */
+     /*                                                                     */
+     /*  See GNU General Public License for details.                        */
+     /*          http://www.opensource.org                                  */
+     /*          http://www.opensource.org/licenses/gpl-license.html        */
+     /*                                                                     */
+     /* =================================================================== */
+     /*  History:                                                           */
+     /*                                                                     */
+     /*  Date        Name          Comment                                  */
+     /*  ----------  ------------  ---------------------------------------  */
+     /*                                                                     */
+     /* =================================================================== */
+     /* >>PRE-COMPILER<<                                                    */
+     /*   >>CRTCMD<< CRTCLMOD     MODULE(&LI/&OB) +                         */
+     /*                           SRCFILE(&SL/&SF) +                        */
+     /*                           SRCMBR(*MODULE);                          */
+     /*   >>IMPORTANT<<                                                     */
+     /*     >>PARM<< DBGVIEW(*LIST);                                        */
+     /*   >>END-IMPORTANT<<                                                 */
+     /*   >>EXECUTE<<                                                       */
+     /*   >>CMD<<    CRTPGM       PGM(&LI/&OB) +                            */
+     /*                           MODULE(*PGM) +                            */
+     /*                           BNDSRVPGM(&LI/EXPJRNECU) +                */
+     /*                           ACTGRP(*CALLER);                          */
+     /*   >>CMD<<    DLTMOD       MODULE(&LI/&OB);                          */
+     /* >>END-PRE-COMPILER<<                                                */
+     /* =================================================================== */
+             PGM        PARM(&I_OBJ           +
+                             &I_FROMDATE      +
+                             &I_FROMTIME      +
+                             &I_TODATE        +
+                             &I_TOTIME        +
+                             &I_OBJTYPE       +
+                             &I_MBR           +
+                             &I_OUTFILE       +
+                             &I_MBROPT        +
+                             &I_CRTFILE       +
+                             &I_TPLFILE       +
+                             &I_OUTFILFM      +
+                             &I_JRN           +
+                             &I_RCVRNG        +
+                             &I_SIZE          +
+                             &I_LVLCHK        +
+                             &I_MSGF          )
+
+/* Input parameters     */
+             DCL        VAR(&I_OBJ     ) TYPE(*CHAR) LEN(20)
+             DCL        VAR(&I_FROMDATE) TYPE(*CHAR) LEN( 7)
+             DCL        VAR(&I_FROMTIME) TYPE(*CHAR) LEN( 6)
+             DCL        VAR(&I_TODATE  ) TYPE(*CHAR) LEN( 7)
+             DCL        VAR(&I_TOTIME  ) TYPE(*CHAR) LEN( 6)
+             DCL        VAR(&I_OBJTYPE ) TYPE(*CHAR) LEN(10)
+             DCL        VAR(&I_MBR     ) TYPE(*CHAR) LEN(10)
+             DCL        VAR(&I_OUTFILE ) TYPE(*CHAR) LEN(20)
+             DCL        VAR(&I_MBROPT  ) TYPE(*CHAR) LEN(22)
+             DCL        VAR(&I_CRTFILE ) TYPE(*CHAR) LEN( 1)
+             DCL        VAR(&I_TPLFILE ) TYPE(*CHAR) LEN(20)
+             DCL        VAR(&I_OUTFILFM) TYPE(*CHAR) LEN(10)
+             DCL        VAR(&I_JRN     ) TYPE(*CHAR) LEN(20)
+             DCL        VAR(&I_RCVRNG  ) TYPE(*CHAR) LEN(42)
+             DCL        VAR(&I_SIZE    ) TYPE(*CHAR) LEN(10)
+             DCL        VAR(&I_LVLCHK  ) TYPE(*CHAR) LEN( 1)
+             DCL        VAR(&I_MSGF    ) TYPE(*CHAR) LEN(10)
+
+/* Temp. fields         */
+             DCL        VAR(&OUTFILE   ) TYPE(*CHAR) LEN(10)
+             DCL        VAR(&OUTLIB    ) TYPE(*CHAR) LEN(10)
+
+             DCL        VAR(&OBJ       ) TYPE(*CHAR) LEN(10)
+             DCL        VAR(&LIB       ) TYPE(*CHAR) LEN(10)
+             DCL        VAR(&OBJTYPE   ) TYPE(*CHAR) LEN(10)
+             DCL        VAR(&ACTIVE    ) TYPE(*CHAR) LEN( 1)
+             DCL        VAR(&JRN       ) TYPE(*CHAR) LEN(10)
+             DCL        VAR(&JRNLIB    ) TYPE(*CHAR) LEN(10)
+             DCL        VAR(&IMAGES    ) TYPE(*CHAR) LEN(10)
+             DCL        VAR(&OMTJRNE   ) TYPE(*CHAR) LEN(10)
+
+  /* ------------------------------------------------------------------------ */
+  /*    Get selected (journaled) object from entry parameters.                */
+  /* ------------------------------------------------------------------------ */
+             CHGVAR     VAR(&OBJ    )   VALUE(%SST(&I_OBJ   1 10))
+             CHGVAR     VAR(&LIB    )   VALUE(%SST(&I_OBJ  11 10))
+             CHGVAR     VAR(&OBJTYPE)   VALUE(&I_OBJTYPE)
+
+             /* Resolve object library */
+             RTVOBJD    OBJ(&LIB/&OBJ) OBJTYPE(&OBJTYPE) RTNLIB(&LIB)
+
+  /* ------------------------------------------------------------------------ */
+  /*    Get output file and library from entry parameters.                    */
+  /* ------------------------------------------------------------------------ */
+             CHGVAR     VAR(&OUTFILE   ) VALUE(%SST(&I_OUTFILE  1 10))
+             CHGVAR     VAR(&OUTLIB    ) VALUE(%SST(&I_OUTFILE 11 10))
+
+  /* ------------------------------------------------------------------------ */
+  /*    Get output file and library from entry parameters.                    */
+  /* ------------------------------------------------------------------------ */
+             CHGVAR     VAR(&OBJ    )   VALUE(%SST(&I_OBJ   1 10))
+             CHGVAR     VAR(&LIB    )   VALUE(%SST(&I_OBJ  11 10))
+
+  /* ------------------------------------------------------------------------ */
+  /*    Restrict output file to *DFT.                                         */
+  /* ------------------------------------------------------------------------ */
+             IF         COND(&OUTFILE *NE '*DFT') THEN(DO)
+               SNDPGMMSG  MSGID(CPD0006) MSGF(*LIBL/QCPFMSG) +
+                            MSGDTA('0000' *CAT +
+                            'Output file is restricted to *DFT.') +
+                            TOPGMQ(*PRV (*)) MSGTYPE(*DIAG)
+               GOTO       CMDLBL(CANCEL)
+             ENDDO
+
+  /* ------------------------------------------------------------------------ */
+  /*    Restrict output library to QTEMP.                                     */
+  /* ------------------------------------------------------------------------ */
+             IF         COND(&OUTLIB *NE 'QTEMP') THEN(DO)
+               SNDPGMMSG  MSGID(CPD0006) MSGF(*LIBL/QCPFMSG) +
+                            MSGDTA('0000' *CAT +
+                            'Output library is restricted to QTEMP.') +
+                            TOPGMQ(*PRV (*)) MSGTYPE(*DIAG)
+               GOTO       CMDLBL(CANCEL)
+             ENDDO
+
+  /* ------------------------------------------------------------------------ */
+  /*    Restrict 'Create outfile' to *NO.                                     */
+  /* ------------------------------------------------------------------------ */
+             IF         COND(&I_CRTFILE *NE 'N') THEN(DO)
+               SNDPGMMSG  MSGID(CPD0006) MSGF(*LIBL/QCPFMSG) +
+                            MSGDTA('0000' *CAT +
+                            'Parameter ''Create outfile'' is restricted to *NO.') +
+                            TOPGMQ(*PRV (*)) MSGTYPE(*DIAG)
+               GOTO       CMDLBL(CANCEL)
+             ENDDO
+
+  /* ------------------------------------------------------------------------ */
+  /*    Check the selected journal.                                           */
+  /* ------------------------------------------------------------------------ */
+             CALLPRC    PRC('EXPJRNER7_rtvJrnInf') +
+                          PARM(&OBJ       +
+                               &LIB       +
+                               &OBJTYPE   +
+                               &OBJ       +
+                               &LIB       +
+                               &ACTIVE    +
+                               &JRN       +
+                               &JRNLIB    +
+                               &IMAGES    +
+                               &OMTJRNE   )
+
+             IF         COND(&JRNLIB *EQ 'FOO' *AND +
+                             &JRN    *EQ 'BAA') THEN(DO)
+               SNDPGMMSG  MSGID(CPD0006) MSGF(*LIBL/QCPFMSG) +
+                            MSGDTA('0000' *CAT +
+                            'Exporting journal entries from journal ' *CAT +
+                            &JRNLIB *TCAT '/' *CAT &JRN *BCAT +
+                            'is not allowed.') +
+                            TOPGMQ(*PRV (*)) MSGTYPE(*DIAG)
+               GOTO       CMDLBL(CANCEL)
+             ENDDO
+
+  /* ------------------------------------------------------------------------ */
+  /*    Heureca! Everything is fine!                                          */
+  /* ------------------------------------------------------------------------ */
+             RETURN
+
+  /* ------------------------------------------------------------------------ */
+  /*    Cancel command execution due to a validity checking issue.            */
+  /* ------------------------------------------------------------------------ */
+  CANCEL:
+               SNDPGMMSG  MSGID(CPF0002) MSGF(*LIBL/QCPFMSG) +
+                            TOPGMQ(*PRV (*)) MSGTYPE(*ESCAPE)
+
+             ENDPGM

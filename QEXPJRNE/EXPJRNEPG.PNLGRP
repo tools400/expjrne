@@ -1,0 +1,775 @@
+.*=====================================================================*
+.*                                                                     *
+.*  Application . : EXPJRNE                                            *
+.*  Object  . . . : EXPJRNEP                                           *
+.*  Description . : Export Journal Entries - Ger                       *
+.*  Author  . . . : Thomas Raddatz   <thomas.raddatz@tools400.de>      *
+.*  Date  . . . . : 24.10.2001                                         *
+.*                                                                     *
+.*=====================================================================*
+.*                                                                     *
+.*  This software is free software, you can redistribute it and/or     *
+.*  modify it under the terms of the GNU General Public License (GPL)  *
+.*  as published by the Free Software Foundation.                      *
+.*                                                                     *
+.*  See GNU General Public License for details.                        *
+.*          http://www.opensource.org                                  *
+.*          http://www.opensource.org/licenses/gpl-license.html        *
+.*                                                                     *
+.*=====================================================================*
+.*  History:                                                           *
+.*                                                                     *
+.*  Date        Name          Comment                                  *
+.*  ----------  ------------  ---------------------------------------  *
+.*  25.10.2001  Th.Raddatz    Added description for parameter value    *
+.*                            OUTFILE(*DFT).                           *
+.*                                                                     *
+.*  10.11.2005  Th.Raddatz    Added option to select between outfile   *
+.*                            types: *TYPE1 / *TYPE2.                  *
+.*                                                                     *
+.*  07.02.2006  Th.Raddatz    Added outfile type *TYPE3 to support     *
+.*                            files with null-capable fields.          *
+.*                                                                     *
+.*  15.06.2007  Th.Raddatz    Added parameter RCVRNG.                  *
+.*                                                                     *
+.*  20.09.2008  Th.Raddatz    Redesigned EXPJRNE to support additional *
+.*                            object types, starting with *DTAARA.     *
+.*                                                                     *
+.*  08.02.2014  Th.Raddatz    Added parameter JRN.                     *
+.*                                                                     *
+.*  08.10.2014  Th.Raddatz    Added parameter TPLFILE.                 *
+.*                                                                     *
+.*  02.01.2015  Th.Raddatz    Added option *OBJ to parameter OUTFILE.  *
+.*                                                                     *
+.*  24.01.2015  Th.Raddatz    Added option *USER to parameter OUTFILE. *
+.*                                                                     *
+.*=====================================================================*
+.* >>PRE-COMPILER<<                                                    *
+.*   >>CRTCMD<< CRTPNLGRP    PNLGRP(&LI/EXPJRNEP) +                    *
+.*                           SRCFILE(&SL/&SF) +                        *
+.*                           SRCMBR(&SM);                              *
+.*   >>IMPORTANT<<                                                     *
+.*   >>END-IMPORTANT<<                                                 *
+.*   >>EXECUTE<<                                                       *
+.* >>END-PRE-COMPILER<<                                                *
+.*=====================================================================*
+:PNLGRP.
+.*
+:HELP name='EXPJRNE/ALL'.
+:IMHELP name=EXPJRNE.
+:IMHELP name='EXPJRNE/OBJ       '.
+:IMHELP name='EXPJRNE/OBJTYPE   '.
+:IMHELP name='EXPJRNE/MBR       '.
+:IMHELP name='EXPJRNE/FROMDATE  '.
+:IMHELP name='EXPJRNE/FROMTIME  '.
+:IMHELP name='EXPJRNE/TODATE    '.
+:IMHELP name='EXPJRNE/TOTIME    '.
+:IMHELP name='EXPJRNE/OUTFILFMT '.
+:IMHELP name='EXPJRNE/OUTFILE   '.
+:IMHELP name='EXPJRNE/OUTMBR    '.
+:IMHELP name='EXPJRNE/CRTFILE   '.
+:IMHELP name='EXPJRNE/TPLFILE   '.
+:IMHELP name='EXPJRNE/SIZE      '.
+:IMHELP name='EXPJRNE/LVLCHK    '.
+:IMHELP name='EXPJRNE/RCVRNG    '.
+:IMHELP name='EXPJRNE/JRN       '.
+:EHELP.
+.*--------------------------------------------------------------------
+.* Hilfetext für den Befehl
+.*--------------------------------------------------------------------
+:HELP NAME='EXPJRNE'.
+Journaleinträge exportieren (EXPJRNE) - Hilfe
+:P.
+Mit dem Befehl EXPJRNE können Journaleinträge aus einem Journal abgerufen
+und in eine durch QUERY oder SQL auswertbare Ausgabedatei gestellt werden.
+.*
+:EHELP.
+.*
+.*--------------------------------------------------------------------
+.* Hilfetext für Schlüsselwort OBJ
+.*--------------------------------------------------------------------
+:HELP name='EXPJRNE/OBJ       '.
+Objekt - Hilfe
+:XH3.Objekt (OBJ)
+:P.
+Gibt den qualifizierten Namen des Objekts an, dessen
+Journaleinträge exportiert werden sollen.
+.*
+:IMHELP name='COM/REQPARM'.
+:P.
+:HP2.Objektname::eHP2.
+Den Namen des Objekts angeben, dessen Journaleinträge exportiert
+werden sollen.
+:P.
+Der Name des Objekts kann durch einen der folgenden
+Bibliothekswerte qualifiziert werden:
+:P.
+:PARML.
+:PT.:PK DEF.*LIBL:EPK.
+:PD.Alle Bibliotheken in der Bibliotheksliste des Jobs werden
+durchsucht, bis die erste Übereinstimmung gefunden wird.
+.*
+:PT.:PV.*CURLIB:EPV.
+:PD.Die aktuelle Jobbibliothek wird durchsucht. Falls keine aktuelle
+Bibliothek für den Job angegeben wurde, wird die Bibliothek QGPL
+verwendet.
+.*
+:PT.:PV.Bibliotheksname:EPV.
+:PD.Den Namen der zu durchsuchenden Bibliothek angeben.
+.*
+:EPARML.
+.*
+:EHELP.
+.*
+.*--------------------------------------------------------------------
+.* Hilfetext für Schlüsselwort OBJTYPE
+.*--------------------------------------------------------------------
+:HELP name='EXPJRNE/OBJTYPE   '.
+Objektart - Hilfe
+:XH3.Objektart (OBJTYPE)
+:P.
+Gibt die Objektart des Objekts an, dessen Journaleinträge exportiert werden. Zur
+Zeit werden folgende Objektarten unterstützt:
+:LINES.
+Objekt                         Codes   Types
+----------------------------   -----   ---------------------------
+*FILE     Datei                R       BR   Before rollback
+                                       DL   Delete
+                                       DR   Delete rollback
+                                       PT   Add
+                                       PX   Add by RRN
+                                       UB   Before update
+                                       UP   After update
+                                       UR   Update rollback
+                               F       CR   Member cleared
+                                       DM   Member deleted
+*DTAARA   Datenbereich         E       EE   Create data area
+                                       EA   After update
+                                       EB   Before update
+*DTAQ     Datenwarteschlange   Q       QC   Queue cleared, no key
+                                       QJ   Queue cleared, has key
+                                       QK   Send entry, has key
+                                       QL   Reveive entry, has key
+                                       QR   Received entry, no key
+                                       QS   Send entry, no key
+:ELINES.
+.*
+:IMHELP name='COM/OPTPARM'.
+:P.
+:PARML.
+:PT.:PK DEF.*FILE:EPK.
+:PD.Die Journaleinträge einer Datei werden exportiert.
+.*
+:PT.:PV.Objektart:EPV.
+:PD.Die Objektart des Objekts angeben, dessen Journaleinträge
+exportiert werden.
+:EPARML.
+.*
+:EHELP.
+.*
+.*--------------------------------------------------------------------
+.* Hilfetext für Schlüsselwort MBR
+.*--------------------------------------------------------------------
+:HELP name='EXPJRNE/MBR       '.
+Teildatei - Hilfe
+:XH3.Teildatei (MBR)
+:P.
+Gibt den Namen der Teildatei an, deren Journaleinträge exportiert
+werden sollen.
+.*
+:IMHELP name='COM/OPTPARM'.
+:P.
+:PARML.
+:PT.:PK DEF.*FIRST:EPK.
+:PD.Die Journaleinträge in der ersten Teildatei werden exportiert.
+.*
+:PT.:PV.*ALL:EPV.
+:PD.Die Journaleinträge aller physischen Dateien der
+angegebenen Bibliothek, deren aufgezeichnete Änderungen
+sich derzeit im Journalempfänger befinden, werden
+exportiert.
+.*
+:PT.:PV.Teildateiname:EPV.
+:PD.Den Namen der Teildatei angeben, deren Journaleinträge
+exportiert werden sollen.
+:EPARML.
+.*
+:EHELP.
+.*
+.*--------------------------------------------------------------------
+.* Hilfetext für Schlüsselwort FROMDATE
+.*--------------------------------------------------------------------
+:HELP name='EXPJRNE/FROMDATE  '.
+Startdatum - Hilfe
+:XH3.Startdatum (FROMDATE)
+:P.
+Gibt Datum und Uhrzeit des ersten Journaleintrags an, der
+exportiert werden soll.
+.*
+:IMHELP name='COM/REQPARM'.
+:P.
+:PARML.
+:PT.:PV.Startdatum:EPV.
+:PD.Das Startdatum angeben. Startdatum und -zeit des
+ersten Journaleintrags mit dem angegebenen oder
+nächstspäteren Datum und der angegebenen oder
+nächstspäteren Uhrzeit geben den Anfangspunkt des
+Bereichs mit Journaleinträgen an, die exportiert
+werden sollen.
+:EPARML.
+.*
+:EHELP.
+.*
+.*--------------------------------------------------------------------
+.* Hilfetext für Schlüsselwort FROMTIME
+.*--------------------------------------------------------------------
+:HELP name='EXPJRNE/FROMTIME  '.
+Startzeit - Hilfe
+:XH3.Startzeit (FROMTIME)
+:P.
+Gibt Datum und Uhrzeit des ersten Journaleintrags an, der
+exportiert werden soll.
+.*
+:IMHELP name='COM/REQPARM'.
+:P.
+:PARML.
+:PT.:PV.Startzeit:EPV.
+:PD.Die Startzeit angeben. Startdatum und -zeit des ersten
+Journaleintrags mit dem angegebenen oder
+nächstspäteren Datum und der angegebenen oder
+nächstspäteren Uhrzeit geben den Anfangspunkt des
+Bereichs mit Journaleinträgen an, die exportiert werden
+sollen.
+:EPARML.
+.*
+:EHELP.
+.*
+.*--------------------------------------------------------------------
+.* Hilfetext für Schlüsselwort TODATE
+.*--------------------------------------------------------------------
+:HELP name='EXPJRNE/TODATE    '.
+Enddatum - Hilfe
+:XH3.Enddatum (TODATE)
+:P.
+Gibt das Erstellungsdatum und die Erstellungsuhrzeit des
+letzten Journaleintrags an, der exportiert werden soll.
+.*
+:IMHELP name='COM/REQPARM'.
+:P.
+:PARML.
+:PT.:PV.Enddatum:EPV.
+:PD.Das Enddatum angeben. Enddatum und -zeit des ersten
+Journaleintrags mit dem angegebenen oder
+nächstfrüheren Datum und der angegebenen oder
+nächstfrüheren Uhrzeit geben den Endpunkt des Bereichs
+mit Journaleinträgen an, der exportiert werden
+soll.
+:EPARML.
+.*
+:EHELP.
+.*
+.*--------------------------------------------------------------------
+.* Hilfetext für Schlüsselwort TOTIME
+.*--------------------------------------------------------------------
+:HELP name='EXPJRNE/TOTIME  '.
+Endzeit - Hilfe
+:XH3.Endzeit (TOTIME)
+:P.
+Gibt das Erstellungsdatum und die Erstellungsuhrzeit des
+letzten Journaleintrags an, der exportiert werden soll.
+.*
+:IMHELP name='COM/REQPARM'.
+:P.
+:PARML.
+:PT.:PV.Endzeit:EPV.
+:PD.Die Endzeit angeben. Enddatum und -zeit des erstensten
+Journaleintrags mit dem angegebenen oder
+nächstfrüheren Datum und der angegebenen oder
+nächstfrüheren Uhrzeit geben den Endpunkt des Bereichs
+mit Journaleinträgen an, der exportiert werden soll.
+:EPARML.
+.*
+:EHELP.
+.*
+.*--------------------------------------------------------------------
+.* Hilfetext für Schlüsselwort OUTFILFMT
+.*--------------------------------------------------------------------
+:HELP name='EXPJRNE/OUTFILFMT '.
+Format der Ausgabedatei - Hilfe
+:XH3.Format der Ausgabedatei (OUTFILFMT)
+:P.
+Gibt das Format der Journaleinträge an, die in die
+Ausgabedatei geschrieben werden, die mit dem Parameter
+:HP2.Datei für Ausgabe (OUTFILE):EHP2. angegeben ist.Dieser Parameter
+kann nur angegeben werden, wenn für den Parameter OUTPUT
+der Wert *OUTFILE angegeben ist.
+.*
+:IMHELP name='COM/OPTPARM'.
+:P.
+:PARML.
+:PT.:PK DEF.*TYPE1:EPK.
+:PD.Die umgesetzten Journaleinträge werden formatiert, um
+das Minimum an Daten, das angegeben werden kann, zu
+umfassen.
+.*
+:PT.:PV.*TYPE2:EPV.
+:PD.Die umgesetzten Einträge umfassen die Daten, die bei
+Angabe von OUTFILFMT(*TYPE1) zurückgegeben werden, den
+Namen des Benutzerprofils für den Job, der die
+angezeigten Journaleinträge erstellt hat, und den
+Namen des Systems, in dem die Ausgabesätze erstellt
+wurden.
+.*
+:PT.:PV.*TYPE3:EPV.
+:PD.Mit dieser Auswahl können Dateien, die NULL-fähige
+Felder beinhalten exportiert werden. Das erzeugte
+Ausgabeformat entspricht *TYPE2.
+:EPARML.
+.*
+:EHELP.
+.*
+.*--------------------------------------------------------------------
+.* Hilfetext für Schlüsselwort OUTFILE
+.*--------------------------------------------------------------------
+:HELP name='EXPJRNE/OUTFILE   '.
+Datei für Ausgabe - Hilfe
+:XH3.Datei für Ausgabe (OUTFILE)
+:P.
+Gibt den Namen und die Bibliothek der Datenbankdatei an, in die die
+Ausgabe des Befehls gestellt wird. Besteht die Datei noch nicht, wird
+durch diesen Befehl in der angegebenen Bibliothek eine Datenbankdatei
+erstellt.
+:P.
+:HP2.Hinweis::EHP2. Wenn eine neue Datei erstellt wird, ist der Text zur
+Beschreibung der Datei "Ausgabedatei für EXPJRNE".
+.*
+:IMHELP name='COM/OPTPARM'.
+:P.
+:PARML.
+:PT.:PK DEF.*DFT:EPK.
+:PD.Der Name der Ausgabedatei wird gebildet aus dem Namen der
+Eingabedatei plus dem Suffix '_Q'.
+.*
+:PT.:PV.*OBJ:EPV.
+:PD.Der Name der Ausgabedatei ist gleich dem Namen des Objekts,
+welches am Parameter .HP2.Objekt (OBJ).EHP2. angegeben ist.
+.*
+:PT.:PV.Dateiname:EPV.
+:PD.Den Namen der Ausgabedatei angeben.
+:EPARML.
+:P.
+Gültige Bibliothekswerte sind:
+:P.
+:PARML.
+:PT.:PK DEF.*LIBL:EPK.
+:PD.Alle Bibliotheken in der Bibliotheksliste des Jobs werden
+durchsucht, bis die erste Übereinstimmung gefunden wird.
+.*
+:PT.:PV.*CURLIB:EPV.
+:PD.Die aktuelle Jobbibliothek wird durchsucht. Falls keine aktuelle
+Bibliothek für den Job angegeben wurde, wird die Bibliothek QGPL
+verwendet.
+.*
+:PT.:PV.*USER:EPV.
+:PD.Die Bibliothek mit dem Namen des aktuellen Benutzerprofils
+wird nach der Ausgabedatei durchsucht.
+.*
+:PT.:PV.Bibliotheksname:EPV.
+:PD.Den Namen der zu durchsuchenden Bibliothek angeben.
+:EPARML.
+.*
+:EHELP.
+.*
+.*--------------------------------------------------------------------
+.* Hilfetext für Schlüsselwort OUTMBR
+.*--------------------------------------------------------------------
+:HELP name='EXPJRNE/OUTMBR    '.
+Auswahl für Ausgabeteildatei - Hilfe
+:XH3.Auswahl für Ausgabeteildatei (OUTMBR)
+:P.
+Gibt die Art der Speicherung der exportierten Journaleinträge an.
+.*
+:IMHELP name='COM/OPTPARM'.
+:P.
+:PARML.
+:PT.:PK DEF.*REPLACE:EPK.
+:PD.Das System löscht den Inhalt der vorhandenen Teildatei und fügt die
+neuen Sätze hinzu.
+.*
+:PT.:PV.*ADD:EPV.
+:PD.Das System fügt die neuen Sätze am Ende der vorhandenen Sätze hinzu.
+:EPARML.
+.*
+:EHELP.
+.*
+.*--------------------------------------------------------------------
+.* Hilfetext für Schlüsselwort CRTFILE
+.*--------------------------------------------------------------------
+:HELP name='EXPJRNE/CRTFILE   '.
+Ausgabedatei neu erstellen - Hilfe
+:XH3.Ausgabedatei neu erstellen (CRTFILE)
+:P.
+Gibt an, ob die Ausgabedatei neu erstellt werden soll. Eine Neuerstellung
+der Ausgabedatei kann dann erforderlich werden, wenn sich das Satzformat
+der Datei, deren Journaleinträge exportiert werden sollen, geändert hat.
+.*
+:IMHELP name='COM/OPTPARM'.
+:P.
+:PARML.
+:PT.:PK DEF.*NO:EPK.
+:PD.Eine bereits vorhandene Ausgabedatei wird verwendet. Die
+Ausgabedatei wird nicht neu erstellt.
+.*
+:PT.:PV.*YES:EPV.
+:PD.Die Ausgabedatei wird auch dann neu erstellt, wenn sie
+bereits existieren sollte. Diese Auswahl dient nur noch zur
+Wahrung der Abwärtkompatibilität und ist ansonsten gleich
+der Auswahl *SQL.
+.*
+:PT.:PV.*SQL:EPV.
+:PD.Die Ausgabedatei wird auch dann neu erstellt, wenn sie
+bereits existieren sollte. *SQL ist ein Alias für den Wert
+*YES und beschreibt, dass die Ausgabedatei per SQL erstellt
+wird. SQL beschriebene Dateien können keine Datensätze mit
+fehlerhaften Daten aufnehmen. Sollen Datensätze mit Dezimalfehlern
+exportiert werden, so muss dieser Parameter mit *DDS angegeben werden.
+.*
+:PT.:PV.*DDS:EPV.
+:PD.Die Ausgabedatei wird auch dann neu erstellt, wenn sie
+bereits existieren sollte. Die Ausgabedatei wird mit DDS
+erzeugt und kann daher Datensätze mit fehlerhaften Daten
+aufnehmen.
+.*
+:EPARML.
+.*
+:EHELP.
+.*
+.*--------------------------------------------------------------------
+.* Hilfetext für Schlüsselwort TPLFILE
+.*--------------------------------------------------------------------
+:HELP name='EXPJRNE/TPLFILE   '.
+Vorlage für Ausgabedatei - Hilfe
+:XH3.Vorlage für Ausgabedatei (TPLFILE)
+:P.
+Gibt an, welche Datei als Vorlage für das Satzformat der Ausgabedatei
+verwendet wird.
+:P.
+Dieser Parameter ist für den Export alter Journaleinträge gedacht,
+wenn sich das Format der journalisierten Datei zwischenzeitlich
+geändert hat.
+.*
+:IMHELP name='COM/OPTPARM'.
+:P.
+:PARML.
+:PT.:PK DEF.*OBJECT:EPK.
+:PD.Die am Parameter :HP2.Objekt:EHP2. angegebene Datei wird
+als Vorlage für das Satzformat der Ausgabedatei verwendet.
+.*
+:PT.:PV.file-name:EPV.
+:PD.Name der als Vorlage zu verwendenden Datei.
+:EPARML.
+:P.
+Der Name des Objekts kann durch einen der folgenden
+Bibliothekswerte qualifiziert werden:
+:P.
+:PARML.
+:PT.:PK DEF.*LIBL:EPK.
+:PD.Alle Bibliotheken in der Bibliotheksliste des Jobs werden
+durchsucht, bis die erste Übereinstimmung gefunden wird.
+.*
+:PT.:PV.*CURLIB:EPV.
+:PD.Die aktuelle Jobbibliothek wird durchsucht. Falls keine aktuelle
+Bibliothek für den Job angegeben wurde, wird die Bibliothek QGPL
+verwendet.
+.*
+:PT.:PV.Bibliotheksname:EPV.
+:PD.Den Namen der zu durchsuchenden Bibliothek angeben.
+:EPARML.
+.*
+:EHELP.
+.*
+.*--------------------------------------------------------------------
+.* Hilfetext für Schlüsselwort SIZE
+.*--------------------------------------------------------------------
+:HELP name='EXPJRNE/SIZE      '.
+Größe der Teildatei - Hilfe
+:XH3.Größe der Teildatei (SIZE)
+:P.
+Gibt die Anfangsanzahl von Sätzen in jeder Teildatei derf
+Datei, die Anzahl der Sätze für jede Erhöhung, die zur
+Teildatei hinzugefügt wurde und außerdem an, wie oft die
+Erhöhung automatisch angelegt wurde.
+:P.
+:HP2.Gültige Werte:EHP2.
+.*
+:PARML.
+:PT.:PK DEF.*NOMAX:EPK.
+:PD.Die Anzahl der Sätze, die zu jeder Teildatei der Datei
+hinzugefügt werden können, wird nicht durch den Benutzer beschränkt.
+.*
+:EPARML.
+:P.
+:HP2.Element 1: Anfangsanzahl Sätze:EHP2.
+.*
+:PARML.
+:PT.:PK DEF.*SAME:EPK.
+:PD.Der Wert ändert sich nicht.
+.*
+:PT.:PV.1-2147483646:EPV.
+:PD.Die Anzahl der Sätze angeben, die eingefügt werden
+können, bevor eine automatische Erweiterung eintritt.
+Sind automatische Erweiterungen unerwünscht, Null für
+den zweiten und dritten Wert in der Liste eingeben.
+:EPARML.
+:P.
+:HP2.Element 2: Satzanzahl für Erweiterung:EHP2.
+.*
+:PARML.
+:PT.:PK DEF.*SAME:EPK.
+:PD.Der Wert ändert sich nicht.
+.*
+:PT.:PV.0-32767:EPV.
+:PD.Einen Wert für die Anzahl der zusätzlichen Sätze
+angeben, die zur Teildatei hinzugefügt werden sollen,
+wenn die Anzahl der Sätze in der Teildatei die
+Anfanganzahl der Sätze oder die Satzanzahl der
+aktuellen Erhöhung überschreitet.
+Bei Eingabe von 0 werden automatische Erweiterungen
+nicht zugelassen. Dieser Wert muss 0 lauten, wenn auch
+der Wert für die maximalen Erhöhungen 0 lautet.
+:EPARML.
+:P.
+:HP2.Element 3: Maximale Erweiterungen:EHP2.
+.*
+:PARML.
+:PT.:PK DEF.*SAME:EPK.
+:PD.Der Wert ändert sich nicht.
+.*
+:PT.:PV.0-32767:EPV.
+:PD.Maximal zulässige Anzahl an Erhöhungen angeben, die
+automatisch zur Teildatei bzw. zu den Teildateien
+hinzugefügt werden können. Bei Eingabe von 0 werden
+automatische Erweiterungen nicht zugelassen. Wenn der
+Wert für die Satzerhöhungsanzahl 0 lautet, dann muss
+dieser Wert ebenfalls 0 lauten.
+:EPARML.
+.*
+:EHELP.
+.*
+.*--------------------------------------------------------------------
+.* Hilfetext für Schlüsselwort LVLCHK
+.*--------------------------------------------------------------------
+:HELP name='EXPJRNE/LVLCHK    '.
+Satzformat-Aktualitätsprüfung - Hilfe
+:XH3.Satzformat-Aktualitätsprüfung (LVLCHK)
+:P.
+Gibt an, ob das Aktualitätskennzeichen des Satzformats der
+Ausgabedatei geprüft wird, bevor die Journaleinträge exportiert
+werden.
+.*
+:IMHELP name='COM/OPTPARM'.
+:P.
+:PARML.
+:PT.:PK DEF.*NO:EPK.
+:PD.Das Aktualitätskennzeichen des Satzformats wird nicht
+überprüft.
+.*
+:PT.:PV.*YES:EPV.
+:PD.Das Aktualitätskennzeichen des Satzformats wird
+überprüft. Wenn das Aktualitätskennzeichen nicht stimmt, wird
+eine Abbruchnachricht gesendet und die Verarbeitung damit abgebrochen.
+.*
+:EPARML.
+.*
+:EHELP.
+.*
+.*--------------------------------------------------------------------
+.* Hilfetext für Schlüsselwort JRN
+.*--------------------------------------------------------------------
+:HELP name='EXPJRNE/JRN       '.
+Journal - Hilfe
+:XH3.Journal (JRN)
+:P.
+Gibt das Journal an, dessen Journaleinträge zur Umsetzung
+und Ausgabe abgerufen werden.
+.*
+:IMHELP name='COM/OPTPARM'.
+:P.
+:HP2.Einzelwerte:EHP2.
+.*
+:PARML.
+:PT.:PK DEF.*OBJ:EPK.
+:PD.Der Name und die Bibliothek des Journals werden anhand des
+am Parameter :HP2.Objekt (OBJ):EHP2. angegebenen Objekt ermittelt.
+:EPARML.
+:P.
+:HP2.Qualifikationsmerkmal 1: Journal:EHP2.
+:P.
+:PARML.
+:PT.:PV.Journalname:EPV.
+:PD.Den Namen des Journals angeben.
+:EPARML.
+:P.
+:HP2.Qualifikationsmerkmal 2: Bibliothek:EHP2.
+:P.
+:PARML.
+:PT.:PK DEF.*LIBL:EPK.
+:PD.Alle Bibliotheken in der Bibliotheksliste des
+aktuellen Threads werden durchsucht, bis die erste
+Übereinstimmung gefunden wird.
+.*
+:PT.:PV.*CURLIB:EPV.
+:PD.Die aktuelle Jobbibliothek wird durchsucht. Ist für
+den Job keine aktuelle Bibliothek angegeben, wird QGPL
+benutzt.
+.*
+:PT.:PV.Bibliotheksname:EPV.
+:PD.Den Namen der zu durchsuchenden Bibliothek angeben.
+:EPARML.
+.*
+:EHELP.
+.*
+.*--------------------------------------------------------------------
+.* Hilfetext für Schlüsselwort RCVRNG
+.*--------------------------------------------------------------------
+:HELP name='EXPJRNE/RCVRNG    '.
+Bereich der Journalempfänger - Hilfe
+:XH3.Bereich der Journalempfänger (RCVRNG)
+:P.
+Gibt den ersten Journalempfänger (Start) und den letzten
+Journalempfänger (Ende) an, d. h. den Empfängerbereich, der
+Journaleinträge enthält, die für die Ausgabe umgesetzt werden sollen.
+Das System beginnt mit dem ersten Journalempfänger (angegeben durch den
+ersten Wert) und arbeitet die Empfängerkette ab, bis der letzte
+Empfänger (angegeben durch den letzten Wert) verarbeitet ist.
+:P.
+:HP2.Anmerkung::EHP2.  Wenn die maximale Anzahl an Empfängern im Bereich
+überschritten wird, tritt ein Fehler auf, und es werden keine
+Journaleinträge umgesetzt.
+.*
+:IMHELP name='COM/OPTPARM'.
+:P.
+:HP2.Einzelwerte:EHP2.
+:P.
+.*
+:PARML.
+:PT.:PK DEF.*CURCHAIN:EPK.
+:PD.Die Journalempfängerkette, zu der der Journalempfänger gehört, der
+beim Beginn des Umsetzens der Journaleinträge angehängt ist, wird
+verwendet. Diese Empfängerkette überbrückt keine Unterbrechung der
+Kette. Kommt es zu einer Unterbrechung der Kette, so reicht der
+Empfängerbereich von der letzten Unterbrechung der Kette bis zum dem
+Empfänger, der beim Beginn des Umsetzens der Journaleinträge
+angehängt ist.
+.*
+:PT.:PV.*CURRENT:EPV.
+:PD.Der aktuelle Empfänger, der beim Beginn des Umsetzens der
+Journaleinträge angehängt ist, wird verwendet.
+.*
+:EPARML.
+:P.
+:HP2.Element 1: Start Journalempfänger:EHP2.
+:P.
+:HP2.Qualifikationsmerkmal 1: Start Journalempfänger Name:EHP2.
+:P.
+.*
+:PARML.
+:PT.:PV.Journalempfänger:EPV.
+:PD.Den Namen des ersten Journalempfängers angeben, dessen Einträge
+für die Ausgabe umgesetzt werden sollen.
+:EPARML.
+:P.
+:HP2.Qualifikationsmerkmal 2: Bibliothek:EHP2.
+:P.
+.*
+:PARML.
+:PT.:PK DEF.*LIBL:EPK.
+:PD.Alle Bibliotheken in der Bibliotheksliste des Jobs werden
+durchsucht, bis die erste Übereinstimmung gefunden wird.
+.*
+:PT.:PV.*CURLIB:EPV.
+:PD.Der Journalempfänger wird in der aktuellen Jobbibliothek
+gesucht. Ist für den Job keine aktuelle Bibliothek angegeben,
+wird QGPL benutzt.
+.*
+:PT.:PV.Bibliothek:EPV.
+:PD.Bibliothek angeben, in der sich der Journalempfänger befindet.
+.*
+:EPARML.
+:P.
+:HP2.Element 2: Ende Journalempfänger:EHP2.
+:P.
+:HP2.Einzelwerte:EHP2.
+:P.
+.*
+:PARML.
+:PT.:PK DEF.*CURRENT:EPK.
+:PD.Der aktuelle Empfänger, der beim Beginn des Umsetzens der
+Journaleinträge angehängt ist, wird verwendet.
+:EPARML.
+:P.
+:HP2.Qualifikationsmerkmal 1: Ende Journalempfänger Name:EHP2.
+:P.
+.*
+:PARML.
+:PT.:PV.Journalempfänger:EPV.
+:PD.Den Namen des letzten Journalempfängers angeben, der abzurufende
+Journaleinträge enthält. Wird das Ende der Empfängerkette erreicht
+bevor ein Empfänger dieses Namens gefunden wird, wird eine
+Fehlernachricht gesendet und Journaleinträge werden nicht abgerufen.
+:EPARML.
+:P.
+:HP2.Qualifikationsmerkmal 2: Bibliothek:EHP2.
+:P.
+.*
+:PARML.
+:PT.:PK DEF.*LIBL:EPK.
+:PD.Alle Bibliotheken in der Bibliotheksliste des Jobs werden
+durchsucht, bis die erste Übereinstimmung gefunden wird.
+.*
+:PT.:PV.*CURLIB:EPV.
+:PD.Der Journalempfänger wird in der aktuellen Jobbibliothek
+gesucht. Ist für den Job keine aktuelle Bibliothek angegeben,
+wird QGPL benutzt.
+.*
+:PT.:PV.Bibliothek:EPV.
+:PD.Bibliothek angeben, in der sich der Journalempfänger befindet.
+.*
+:EPARML.
+.*
+:EHELP.
+.*
+.*====================================================================
+.*  Textbausteine, die an mehreren Stellen im Hilfetext
+.*  verwendet werden.
+.*====================================================================
+
+.*=====================================
+.*  Erforderlicher Parameter
+.*=====================================
+:HELP NAME='COM/REQPARM'.
+:P.
+Dieser Parameter ist erforderlich.
+:P.
+:IMHELP name='COM/VALUES'.
+:EHELP.
+
+.*=====================================
+.*  Optionaler Parameter
+.*=====================================
+:HELP NAME='COM/OPTPARM'.
+:P.
+Dieser Parameter ist optional.
+:P.
+:IMHELP name='COM/VALUES'.
+:EHELP.
+
+.*=====================================
+.*  Werteliste
+.*=====================================
+:HELP NAME='COM/VALUES'.
+:P.
+Mögliche Werte sind:
+:EHELP.
+.*
+:EPNLGRP.

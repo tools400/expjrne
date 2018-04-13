@@ -1,0 +1,39 @@
+     /* =================================================================== */
+     /*                                                                     */
+     /*  Application . : EXPJRNE                                            */
+     /*  Object  . . . : EXPJRNE                                            */
+     /*  Description . : Export Journal Entries - POP                       */
+     /*  Author  . . . : Thomas Raddatz   <thomas.raddatz@tools400.de>      */
+     /*  Date  . . . . : 19.09.2008                                         */
+     /*                                                                     */
+     /* =================================================================== */
+     /*                                                                     */
+     /*  This software is free software, you can redistribute it and/or     */
+     /*  modify it under the terms of the GNU General Public License (GPL)  */
+     /*  as published by the Free Software Foundation.                      */
+     /*                                                                     */
+     /*  See GNU General Public License for details.                        */
+     /*          http://www.opensource.org                                  */
+     /*          http://www.opensource.org/licenses/gpl-license.html        */
+     /*                                                                     */
+     /* =================================================================== */
+     /*  History:                                                           */
+     /*                                                                     */
+     /*  Date        Name          Comment                                  */
+     /*  ----------  ------------  ---------------------------------------  */
+     /*  20.09.2008  Th.Raddatz    Redesigned EXPJRNE to support additional */
+     /*                            object types, starting with *DTAARA.     */
+     /*                                                                     */
+     /* =================================================================== */
+     /* >>PRE-COMPILER<<                                                    */
+     /*   >>CRTCMD<< CRTPGM       PGM(&LI/&OB);                             */
+     /*   >>IMPORTANT<<                                                     */
+     /*     >>PARM<< MODULE(&LI/EXPJRNER1 );                                */
+     /*     >>PARM<< ACTGRP(*CALLER   );                                    */
+     /*     >>PARM<< USRPRF(*USER);                                         */
+     /*     >>PARM<< DETAIL(*BASIC);                                        */
+     /*     >>PARM<< TGTRLS(V6R1M0);                                        */
+     /*   >>END-IMPORTANT<<                                                 */
+     /*   >>EXECUTE<<                                                       */
+     /* >>END-PRE-COMPILER<<                                                */
+     /* =================================================================== */

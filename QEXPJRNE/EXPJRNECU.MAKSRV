@@ -1,0 +1,103 @@
+     /* =================================================================== */
+     /*                                                                     */
+     /*  Application . : EXPJRNE                                            */
+     /*  Object  . . . : EXPJRNECU                                          */
+     /*  Description . : Export Journal Entries - UTIL                      */
+     /*  Author  . . . : Thomas Raddatz   <thomas.raddatz@tools400.de>      */
+     /*  Date  . . . . : 26.09.2008                                         */
+     /*                                                                     */
+     /* =================================================================== */
+     /*                                                                     */
+     /*  This software is free software, you can redistribute it and/or     */
+     /*  modify it under the terms of the GNU General Public License (GPL)  */
+     /*  as published by the Free Software Foundation.                      */
+     /*                                                                     */
+     /*  See GNU General Public License for details.                        */
+     /*          http://www.opensource.org                                  */
+     /*          http://www.opensource.org/licenses/gpl-license.html        */
+     /*                                                                     */
+     /* =================================================================== */
+     /*  History:                                                           */
+     /*                                                                     */
+     /*  Date        Name          Comment                                  */
+     /*  ----------  ------------  ---------------------------------------  */
+     /*  20.09.2008  Th.Raddatz    Redesigned EXPJRNE to support additional */
+     /*                            object types, starting with *DTAARA.     */
+     /*                                                                     */
+     /* =================================================================== */
+     /* >>PRE-COMPILER<<                                                    */
+     /*   >>CRTCMD<< CRTSRVPGM    SRVPGM(&LI/&OB);                          */
+     /*   >>IMPORTANT<<                                                     */
+     /*     >>PARM<< MODULE(&LI/EXPJRNER6 +                                 */
+     /*                     &LI/EXPJRNER7 );                                */
+     /*     >>PARM<< EXPORT(*SRCFILE);                                      */
+     /*     >>PARM<< SRCFILE(&SL/&SF);                                      */
+     /*     >>PARM<< SRCMBR(&SM);                                           */
+     /*     >>PARM<< BNDSRVPGM(&LI/BASICS1 +                                */
+     /*                        &LI/RTVFLDA);                                */
+     /*     >>PARM<< ACTGRP(*CALLER   );                                    */
+     /*     >>PARM<< USRPRF(*USER);                                         */
+     /*     >>PARM<< DETAIL(*BASIC);                                        */
+     /*     >>PARM<< ALWUPD(*YES);                                          */
+     /*     >>PARM<< ALWLIBUPD(*YES);                                       */
+     /*     >>PARM<< TGTRLS(V6R1M0);                                        */
+     /*     >>PARM<< TEXT(+                                                 */
+     /*              'Tool: EXPJRNE    (Export Journal Entries  ) UTIL');   */
+     /*   >>END-IMPORTANT<<                                                 */
+     /*   >>EXECUTE<<                                                       */
+     /* >>END-PRE-COMPILER<<                                                */
+     /* =================================================================== */
+     STRPGMEXP  PGMLVL(*CURRENT) SIGNATURE('Version 3.4')
+        EXPORT SYMBOL('EXPJRNER6_SQLCLI_Columns_open')
+        EXPORT SYMBOL('EXPJRNER6_SQLCLI_Columns_numE')
+        EXPORT SYMBOL('EXPJRNER6_SQLCLI_Columns_get')
+        EXPORT SYMBOL('EXPJRNER6_SQLCLI_Columns_close')
+        EXPORT SYMBOL('EXPJRNER6_SQLCLI_Columns_isNull')
+        EXPORT SYMBOL('EXPJRNER6_SQLCLI_Columns_null')
+        EXPORT SYMBOL('EXPJRNER6_SQLCLI_initialize')
+        EXPORT SYMBOL('EXPJRNER6_SQLCLI_executeDirect')
+        EXPORT SYMBOL('EXPJRNER6_SQLCLI_terminate')
+        EXPORT SYMBOL('EXPJRNER6_SQLCLI_shutdown')
+        EXPORT SYMBOL('EXPJRNER6_SQLCLI_isNull')
+        EXPORT SYMBOL('EXPJRNER6_SQLCLI_null')
+        EXPORT SYMBOL('EXPJRNER6_SQLCLI_Error_get')
+
+        EXPORT SYMBOL('EXPJRNER7_rtvJobDateFmt')
+        EXPORT SYMBOL('EXPJRNER7_rtvJrnInf')
+        EXPORT SYMBOL('EXPJRNER7_sqlTypeToString')
+        EXPORT SYMBOL('EXPJRNER7_xlate')
+        EXPORT SYMBOL('EXPJRNER7_getOutputFileColumns')
+        EXPORT SYMBOL('EXPJRNER7_hasCcsidClause')
+
+        EXPORT SYMBOL('EXPJRNER7_Error_getCounterAsString')
+        EXPORT SYMBOL('EXPJRNER7_Error_incrementCounter')
+        EXPORT SYMBOL('EXPJRNER7_Error_resetCounter')
+        EXPORT SYMBOL('EXPJRNER7_Message_sendStatusMsg')
+        EXPORT SYMBOL('EXPJRNER7_Message_sendDiagMsg')
+        EXPORT SYMBOL('EXPJRNER7_Message_sendEscapeMsg')
+        EXPORT SYMBOL('EXPJRNER7_OutputFile_getLibrary')
+        EXPORT SYMBOL('EXPJRNER7_OutputFile_getMember')
+        EXPORT SYMBOL('EXPJRNER7_OutputFile_getName')
+        EXPORT SYMBOL('EXPJRNER7_OutputFile_getOutputFileFormat')
+        EXPORT SYMBOL('EXPJRNER7_OutputFile_setLibrary')
+        EXPORT SYMBOL('EXPJRNER7_OutputFile_setMember')
+        EXPORT SYMBOL('EXPJRNER7_OutputFile_setName')
+        EXPORT SYMBOL('EXPJRNER7_OutputFile_setOutputFileFormat')
+        EXPORT SYMBOL('EXPJRNER7_OutputFile_isLevelCheck')
+        EXPORT SYMBOL('EXPJRNER7_Object_getLibrary')
+        EXPORT SYMBOL('EXPJRNER7_Object_getName')
+        EXPORT SYMBOL('EXPJRNER7_Object_getType')
+        EXPORT SYMBOL('EXPJRNER7_Object_setLibrary')
+        EXPORT SYMBOL('EXPJRNER7_Object_setName')
+        EXPORT SYMBOL('EXPJRNER7_Object_setType')
+        EXPORT SYMBOL('EXPJRNER7_TemplateFile_getLibrary')
+        EXPORT SYMBOL('EXPJRNER7_TemplateFile_getName')
+        EXPORT SYMBOL('EXPJRNER7_TemplateFile_setLibrary')
+        EXPORT SYMBOL('EXPJRNER7_TemplateFile_setName')
+
+        /* Added with v3.9   */
+        EXPORT SYMBOL('EXPJRNER7_System_getCurrentRelease')
+
+        /* Added with v4.1   */
+        EXPORT SYMBOL('EXPJRNER7_Application_getLibrary')
+     ENDPGMEXP

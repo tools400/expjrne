@@ -1,0 +1,30 @@
+      * ======================================================================== *
+      *      >>PRE-COMPILER<<                                                    *
+      *        >>CRTCMD<< CRTPF        FILE(&LI/&OB) +                           *
+      *                                SRCFILE(&SL/&SF) +                        *
+      *                                SRCMBR(&SM);                              *
+      *        >>IMPORTANT<<                                                     *
+      *        >>END-IMPORTANT<<                                                 *
+      *        >>EXECUTE<<                                                       *
+      *      >>END-PRE-COMPILER<<                                                *
+      *==========================================================================*
+
+     a          R EXPJRNE_PF                TEXT('EXPJRNE: Test file')
+
+     a            SCHAR         10A
+     a            VCHAR         10A         VARLEN
+     a            SGRAPHIC      10G
+     a            VGRAPHIC      10G         VARLEN
+     a            SMALLINT       4B
+     a            INTEGER        9B
+     a            BIGINT        18B
+     a            DECIMAL        7P 2
+     a            NUMERIC        7S 2
+     a            SDOUBLE       16F15       FLTPCN(*DOUBLE)
+     a            FLOAT         16F15       FLTPCN(*DOUBLE)
+     a            REAL           8F 7       FLTPCN(*SINGLE)
+     a            SDATE           L
+     a            STIME           T
+     a            STIMESTAMP      Z
+     a            SMALLINTX      1B
+

@@ -1,0 +1,309 @@
+     /* =================================================================== */
+     /*                                                                     */
+     /*  Documentation:                                                     */
+     /*                                                                     */
+     /*  Utility . . . : EXPJRNE                                            */
+     /*  Object  . . . : A_INSTALL  (PGM)                                   */
+     /*  Source member : A_INSTALL                                          */
+     /*  Source type . : CLLE                                               */
+     /*  Description   : EXPJRNE - Installer                                */
+     /*  Author  . . . : Thomas Raddatz   <thomas.raddatz@tools400.de>      */
+     /*                                                                     */
+     /* =================================================================== */
+     /*                                                                     */
+     /*  This software is free software, you can redistribute it and/or     */
+     /*  modify it under the terms of the GNU General Public License (GPL)  */
+     /*  as published by the Free Software Foundation.                      */
+     /*                                                                     */
+     /*  See GNU General Public License for details.                        */
+     /*          http://www.opensource.org                                  */
+     /*          http://www.opensource.org/licenses/gpl-license.html        */
+     /*                                                                     */
+     /* =================================================================== */
+     /*  History:                                                           */
+     /*                                                                     */
+     /*  Datum       Name          Änderung                                 */
+     /*  ----------  ------------  ---------------------------------------  */
+     /*                                                                     */
+     /* =================================================================== */
+     /*   >>PRE-COMPILER<<                                                  */
+     /*     >>CRTCMD<<    CRTBNDCL  PGM(QTEMP/&OB) +                        */
+     /*                             SRCFILE(&SL/&SF) SRCMBR(&SM);           */
+     /*     >>IMPORTANT<<                                                   */
+     /*       >>PARM<<    OPTION(*EVENTF);                                  */
+     /*     >>END-IMPORTANT<<                                               */
+     /*     >>EXECUTE<<                                                     */
+     /*     >>CMD<<       CALL   PGM(QTEMP/A_INSTALL) +                     */
+     /*                          PARM('*CURRENT' '&SF' '&LI' 'GER');        */
+     /*     >>CMD<<       DLTPGM PGM(QTEMP/A_INSTALL);                      */
+     /*   >>END-PRE-COMPILER<<                                              */
+     /* =================================================================== */
+             PGM        PARM(&TGTRLS &SRCFILE &TOLIB &LNG &TAGSREQ)
+
+             DCL        VAR(&TGTRLS   ) TYPE(*CHAR) LEN(10)
+             DCL        VAR(&SRCFILE  ) TYPE(*CHAR) LEN(10)
+             DCL        VAR(&TOLIB    ) TYPE(*CHAR) LEN(10)
+             DCL        VAR(&LNG      ) TYPE(*CHAR) LEN( 3)
+             DCL        VAR(&TAGSREQ  ) TYPE(*CHAR) LEN(10)
+
+             DCL        VAR(&SRCLIB   ) TYPE(*CHAR) LEN(10)
+
+             DCL        VAR(&CRTMSGF  ) TYPE(*CHAR) LEN(10)
+             DCL        VAR(&MSGF     ) TYPE(*CHAR) LEN(10) VALUE('EXPJRNE')
+             DCL        VAR(&PNLGRP   ) TYPE(*CHAR) LEN(10)
+             DCL        VAR(&CMD      ) TYPE(*CHAR) LEN(10)
+
+             CHGVAR     VAR(&SRCLIB) VALUE(&TOLIB   )
+
+     /* -------------------------------- */
+     /*  Delete old objects              */
+     /* -------------------------------- */
+             DLTCMD    CMD(&TOLIB/EXPJRNE)
+             MONMSG     MSGID(CPF2105)
+
+             DLTPGM    PGM(&TOLIB/EXPJRNEC)
+             MONMSG     MSGID(CPF2105)
+
+             DLTPGM    PGM(&TOLIB/EXPJRNECC)
+             MONMSG     MSGID(CPF2105)
+
+             DLTPGM    PGM(&TOLIB/EXPJRNECP)
+             MONMSG     MSGID(CPF2105)
+
+             DLTPGM    PGM(&TOLIB/EXPJRNECR)
+             MONMSG     MSGID(CPF2105)
+
+             DLTPGM    PGM(&TOLIB/EXPJRNECU)
+             MONMSG     MSGID(CPF2105)
+
+             DLTMOD    MODULE(&TOLIB/EXPJRNEC1)
+             MONMSG     MSGID(CPF2105)
+
+             DLTMOD    MODULE(&TOLIB/EXPJRNER1)
+             MONMSG     MSGID(CPF2105)
+
+             DLTMOD    MODULE(&TOLIB/EXPJRNER2)
+             MONMSG     MSGID(CPF2105)
+
+             DLTMOD    MODULE(&TOLIB/EXPJRNER3)
+             MONMSG     MSGID(CPF2105)
+
+             DLTMOD    MODULE(&TOLIB/EXPJRNER4)
+             MONMSG     MSGID(CPF2105)
+
+             DLTMOD    MODULE(&TOLIB/EXPJRNER5)
+             MONMSG     MSGID(CPF2105)
+
+             DLTMOD    MODULE(&TOLIB/EXPJRNER6)
+             MONMSG     MSGID(CPF2105)
+
+             DLTMOD    MODULE(&TOLIB/EXPJRNER7)
+             MONMSG     MSGID(CPF2105)
+
+             DLTPNLGRP PNLGRP(&TOLIB/EXPJRNEP)
+             MONMSG     MSGID(CPF2105)
+
+             DLTMSGF    MSGF(&TOLIB/&MSGF)
+             MONMSG     MSGID(CPF2105)
+
+             RMVMSG     PGMQ(*SAME (*)) CLEAR(*ALL)
+
+     /* -------------------------------- */
+     /*  Create message file             */
+     /* -------------------------------- */
+             IF         COND(&LNG *EQ 'ENG') THEN(DO)
+                CHGVAR     VAR(&CRTMSGF) VALUE('A_MSG_ENG')
+                CHGVAR     VAR(&PNLGRP ) VALUE('EXPJRNEPE')
+                CHGVAR     VAR(&CMD    ) VALUE('EXPJRNEE')
+             ENDDO
+             ELSE       CMD(DO)
+                CHGVAR     VAR(&CRTMSGF) VALUE('A_MSG_GER')
+                CHGVAR     VAR(&PNLGRP ) VALUE('EXPJRNEPG')
+                CHGVAR     VAR(&CMD    ) VALUE('EXPJRNEG')
+             ENDDO
+
+             CRTMSGF    MSGF(&TOLIB/&MSGF) +
+                          TEXT('Export Journal Entries')
+
+             CRTCLPGM   PGM(QTEMP/&CRTMSGF) +
+                          SRCFILE(&SRCLIB/&SRCFILE) SRCMBR(*PGM) +
+                          OPTION(*LSTDBG) +
+                          TGTRLS(&TGTRLS)
+             DLTSPLF    FILE(&CRTMSGF  ) JOB(*) SPLNBR(*LAST)
+             MONMSG     MSGID(CPF0000)
+
+             CALL       PGM(QTEMP/&CRTMSGF) PARM(&TOLIB)
+             DLTPGM     PGM(QTEMP/&CRTMSGF)
+
+     /* -------------------------------- */
+     /*  Create modules                  */
+     /* -------------------------------- */
+             CRTCLMOD   MODULE(&TOLIB/EXPJRNEC1) +
+                          SRCFILE(&SRCLIB/&SRCFILE) +
+                          SRCMBR(*MODULE) +
+                          DBGVIEW(*LIST) +
+                          TGTRLS(&TGTRLS)
+             DLTSPLF    FILE(EXPJRNEC1) JOB(*) SPLNBR(*LAST)
+             MONMSG     MSGID(CPF0000)
+
+             CRTRPGMOD  MODULE(&TOLIB/EXPJRNER1) +
+                          SRCFILE(&SRCLIB/&SRCFILE) SRCMBR(*MODULE) +
+                          TEXT(*SRCMBRTXT) DBGVIEW(*LIST) +
+                          TRUNCNBR(*NO) +
+                          TGTRLS(&TGTRLS)
+             DLTSPLF    FILE(EXPJRNER1) JOB(*) SPLNBR(*LAST)
+             MONMSG     MSGID(CPF0000)
+
+             CRTRPGMOD MODULE(&TOLIB/EXPJRNER2) +
+                          SRCFILE(&SRCLIB/&SRCFILE) +
+                          SRCMBR(*MODULE) TEXT(*SRCMBRTXT) +
+                          DBGVIEW(*LIST) TRUNCNBR(*NO) +
+                          TGTRLS(&TGTRLS)
+             DLTSPLF    FILE(EXPJRNER2) JOB(*) SPLNBR(*LAST)
+             MONMSG     MSGID(CPF0000)
+
+             CRTRPGMOD MODULE(&TOLIB/EXPJRNER3) +
+                          SRCFILE(&SRCLIB/&SRCFILE) +
+                          SRCMBR(*MODULE) TEXT(*SRCMBRTXT) +
+                          DBGVIEW(*LIST) TRUNCNBR(*NO) +
+                          TGTRLS(&TGTRLS)
+             DLTSPLF    FILE(EXPJRNER3) JOB(*) SPLNBR(*LAST)
+             MONMSG     MSGID(CPF0000)
+
+             CRTRPGMOD MODULE(&TOLIB/EXPJRNER4) +
+                          SRCFILE(&SRCLIB/&SRCFILE) +
+                          SRCMBR(*MODULE) TEXT(*SRCMBRTXT) +
+                          DBGVIEW(*LIST) TRUNCNBR(*NO) +
+                          TGTRLS(&TGTRLS)
+             DLTSPLF    FILE(EXPJRNER4) JOB(*) SPLNBR(*LAST)
+             MONMSG     MSGID(CPF0000)
+
+             CRTRPGMOD MODULE(&TOLIB/EXPJRNER5) +
+                          SRCFILE(&SRCLIB/&SRCFILE) +
+                          SRCMBR(*MODULE) TEXT(*SRCMBRTXT) +
+                          DBGVIEW(*LIST) TRUNCNBR(*NO) +
+                          TGTRLS(&TGTRLS)
+             DLTSPLF    FILE(EXPJRNER5) JOB(*) SPLNBR(*LAST)
+             MONMSG     MSGID(CPF0000)
+
+             CRTRPGMOD MODULE(&TOLIB/EXPJRNER6) +
+                          SRCFILE(&SRCLIB/&SRCFILE) +
+                          SRCMBR(*MODULE) TEXT(*SRCMBRTXT) +
+                          DBGVIEW(*LIST) TRUNCNBR(*NO) +
+                          TGTRLS(&TGTRLS)
+             DLTSPLF    FILE(EXPJRNER6) JOB(*) SPLNBR(*LAST)
+             MONMSG     MSGID(CPF0000)
+
+             CRTRPGMOD MODULE(&TOLIB/EXPJRNER7) +
+                          SRCFILE(&SRCLIB/&SRCFILE) +
+                          SRCMBR(*MODULE) TEXT(*SRCMBRTXT) +
+                          DBGVIEW(*LIST) TRUNCNBR(*NO) +
+                          TGTRLS(&TGTRLS)
+             DLTSPLF    FILE(EXPJRNER7) JOB(*) SPLNBR(*LAST)
+             MONMSG     MSGID(CPF0000)
+
+     /* -------------------------------- */
+     /*  Create programs                 */
+     /* -------------------------------- */
+             CRTSRVPGM  SRVPGM(&TOLIB/EXPJRNECU) +
+                          MODULE(&TOLIB/EXPJRNER6  +
+                                 &TOLIB/EXPJRNER7) +
+                          EXPORT(*SRCFILE) +
+                          SRCFILE(&TOLIB/QEXPJRNE) +
+                          SRCMBR(EXPJRNECU) +
+                          BNDSRVPGM(&TOLIB/BASICS1  +
+                                    &TOLIB/RTVFLDA) +
+                          BNDDIR(QC2LE) +
+                          ACTGRP(*CALLER   ) +
+                          TEXT('Export Journal Entries') +
+                          DETAIL(*BASIC) +
+                          TGTRLS(&TGTRLS)
+             DLTSPLF    FILE(EXPJRNECU ) JOB(*) SPLNBR(*LAST)
+             MONMSG     MSGID(CPF0000)
+
+             CRTPGM     PGM(&TOLIB/EXPJRNEC) +
+                          MODULE(&TOLIB/EXPJRNEC1  +
+                                 &TOLIB/EXPJRNER4  +
+                                 &TOLIB/EXPJRNER5) +
+                          ENTMOD(&TOLIB/EXPJRNEC1) +
+                          BNDSRVPGM(&TOLIB/BASICS1    +
+                                    &TOLIB/RTVFLDA    +
+                                    &TOLIB/EXPJRNECU) +
+                          BNDDIR(QC2LE) +
+                          DETAIL(*BASIC) +
+                          ACTGRP(*NEW) +
+                          TGTRLS(&TGTRLS)
+             DLTSPLF    FILE(EXPJRNEC  ) JOB(*) SPLNBR(*LAST)
+             MONMSG     MSGID(CPF0000)
+
+             CRTPGM     PGM(&TOLIB/EXPJRNECC) +
+                          MODULE(&TOLIB/EXPJRNER2 ) +
+                          BNDSRVPGM(&TOLIB/EXPJRNECU  +
+                                    &TOLIB/BASICS1  ) +
+                          BNDDIR(QC2LE) +
+                          ACTGRP(*CALLER   ) +
+                          USRPRF(*USER) +
+                          DETAIL(*BASIC) +
+                          TGTRLS(&TGTRLS)
+             DLTSPLF    FILE(EXPJRNECC ) JOB(*) SPLNBR(*LAST)
+             MONMSG     MSGID(CPF0000)
+
+             CRTPGM     PGM(&TOLIB/EXPJRNECP) +
+                          MODULE(&TOLIB/EXPJRNER1) +
+                          ACTGRP(*CALLER   ) +
+                          USRPRF(*USER) +
+                          DETAIL(*BASIC) +
+                          TGTRLS(&TGTRLS)
+             DLTSPLF    FILE(EXPJRNECP ) JOB(*) SPLNBR(*LAST)
+             MONMSG     MSGID(CPF0000)
+
+             CRTPGM     PGM(&TOLIB/EXPJRNECR) +
+                          MODULE(&TOLIB/EXPJRNER3) +
+                          BNDSRVPGM(&TOLIB/EXPJRNECU  +
+                                    &TOLIB/BASICS1    +
+                                    &TOLIB/RTVFLDA  ) +
+                          BNDDIR(QC2LE     ) +
+                          ACTGRP(*CALLER   ) +
+                          USRPRF(*USER) +
+                          ALWUPD(*YES) +
+                          ALWLIBUPD(*YES) +
+                          DETAIL(*BASIC) +
+                          TGTRLS(&TGTRLS)
+             DLTSPLF    FILE(EXPJRNECR ) JOB(*) SPLNBR(*LAST)
+             MONMSG     MSGID(CPF0000)
+
+     /* -------------------------------- */
+     /*  Create panel groups             */
+     /* -------------------------------- */
+             CRTPNLGRP PNLGRP(&TOLIB/EXPJRNEP) +
+                          SRCFILE(&SRCLIB/&SRCFILE) +
+                          SRCMBR(&PNLGRP)
+             DLTSPLF    FILE(EXPJRNEP  ) JOB(*) SPLNBR(*LAST)
+             MONMSG     MSGID(CPF0000)
+
+     /* -------------------------------- */
+     /*  Create commands                 */
+     /* -------------------------------- */
+             CRTCMD     CMD(&TOLIB/EXPJRNE) +
+                          PGM(&TOLIB/EXPJRNEC) +
+                          SRCFILE(&SRCLIB/&SRCFILE) +
+                          SRCMBR(&CMD) +
+                          PMTOVRPGM(&TOLIB/EXPJRNECP) +
+                          HLPPNLGRP(&TOLIB/EXPJRNEP) +
+                          HLPID(EXPJRNE)
+             DLTSPLF    FILE(&CMD      ) JOB(*) SPLNBR(*LAST)
+             MONMSG     MSGID(CPF0000)
+
+     /* -------------------------------- */
+     /*  Delete obsolete objects         */
+     /* -------------------------------- */
+             DLTMOD    MODULE(&TOLIB/EXPJRNEC1)
+             DLTMOD    MODULE(&TOLIB/EXPJRNER1)
+             DLTMOD    MODULE(&TOLIB/EXPJRNER2)
+             DLTMOD    MODULE(&TOLIB/EXPJRNER3)
+             DLTMOD    MODULE(&TOLIB/EXPJRNER4)
+             DLTMOD    MODULE(&TOLIB/EXPJRNER5)
+             DLTMOD    MODULE(&TOLIB/EXPJRNER6)
+             DLTMOD    MODULE(&TOLIB/EXPJRNER7)
+
+             ENDPGM
