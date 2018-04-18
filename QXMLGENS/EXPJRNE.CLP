@@ -8,6 +8,8 @@
 /* --------------------------------------------------------------- */
              XMLGENINC  XINCLUDE(*YES)
 
+             XMLGENVRS XSRCFILE(QEXPJRNE) XSRCLIB(TOOLS400) XSRCMBR(COPYRIGHT)
+
              XMLGENCND  XMSG('Select language (GER, ENG)') +
                           XVALUES(GER ENG) XVAR(&LANG)
 
@@ -29,6 +31,11 @@
              XMLGENMBR  XMBR(A_MSG_GER ) XMBRATR(CLP  ) +
                           XFROMSRCF(QEXPJRNE  ) XFROMSRCL(TOOLS400) +
                           XTOSRCF(QEXPJRNE  ) XOBJTYPE(*PGM   ) +
+                          XGENCRT(*NO ) XPARAM(*BLANK)
+
+             XMLGENMBR  XMBR(A_README  ) XMBRATR(TXT) +
+                          XFROMSRCF(QEXPJRNE  ) XFROMSRCL(TOOLS400) +
+                          XTOSRCF(QEXPJRNE  ) XOBJTYPE(*PGM) +
                           XGENCRT(*NO ) XPARAM(*BLANK)
 
              XMLGENMBR  XMBR(CEELIB    ) XMBRATR(RPGLE) +
