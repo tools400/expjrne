@@ -369,7 +369,7 @@
      D  io_control                                likeds(control_t)
       *
       *  Local fields
-     D offset          S             10I 0 inz
+     D offsJOESD       S             10I 0 inz
      D fixLength       S             10I 0 inz
      D dataLength      S             10I 0 inz
      D maxDataLength   S             10I 0 inz
@@ -540,8 +540,7 @@
 
                // Get access to the entry data
                if RJNE0200.ofsEntData > 0;
-                  pEntryData = pRJNE0200       +
-                               RJNE0200.ofsEntData;
+                  pEntryData = pRJNE0200 + RJNE0200.ofsEntData;
                else;
                   pEntryData = %addr(clearEntryData);
                endif;
@@ -577,19 +576,17 @@
                dsQADSPJR3_O.JORES    = '';
 
                // Compute offset for entry data
-               offset = %addr(dsQADSPJR3_O.JONVI) - %addr(dsQADSPJR3_O)
-                                                  + %size(dsQADSPJR3_O.JONVI);
+               offsJOESD = %addr(dsQADSPJR3_O.JONVI)
+                           - %addr(dsQADSPJR3_O)
+                           + %size(dsQADSPJR3_O.JONVI);
 
                // Set entry data
                if entryData.length = 0;
-                  %subst(dsQADSPJR3_O: offset+1) = crtEntryDataInitialized(
-                                                               outFile.name
-                                                              :outFile.lib
-                                                              :'JONVI');
+                  %subst(dsQADSPJR3_O: offsJOESD+1) =
+                     crtEntryDataInitialized(outFile.name:outFile.lib:'JONVI');
                else;
-                  %subst(dsQADSPJR3_O: offset+1) = %subst(entryData.value :
-                                                          1               :
-                                                          entryData.length);
+                  %subst(dsQADSPJR3_O: offsJOESD+1) =
+                     %subst(entryData.value: 1: entryData.length);
                endif;
 
                if // (dsQADSPJR3_O.JOINCDAT = '1') or   // Incomplete data, e.g. CLOB/BLOB
@@ -609,6 +606,7 @@
                endif;
             endsl;
 
+            // Check for IO errors.
             if (pRIOFB = *null or rIOFB.numByt <> rFile.bufLen);
                msg = f_newMsg('USR0016': '': cMsg_Escape);
                Message_sendEscapeMsg(msg);
@@ -616,6 +614,7 @@
                numWrites = numWrites + 1;
             endif;
 
+            // Periodically send an information message (non batch jobs).
             if (not g_isBatchJob and %timestamp() > g_nextInfoMsg);
                clear USR0012;
                USR00121 = numWrites;
