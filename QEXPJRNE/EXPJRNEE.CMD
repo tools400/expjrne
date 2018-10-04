@@ -41,6 +41,8 @@
 /*                                                                     */
 /*  24.01.2015  Th.Raddatz    Added option *USER to parameter OUTFILE. */
 /*                                                                     */
+/*  04.10.2018  Th.Raddatz    Added outfile type *TYPE4.               */
+/*                                                                     */
 /* =================================================================== */
 /* >>PRE-COMPILER<<                                                    */
 /*   >>CRTCMD<< CRTCMD       CMD(&LI/EXPJRNE) +                        */
@@ -143,7 +145,10 @@
                           MIN(0)                         +
                           DFT(*TYPE1)                    +
                           RSTD(*YES)                     +
-                          VALUES(*TYPE1 *TYPE2 *TYPE3)   +
+                          VALUES(*TYPE1                  +
+                                 *TYPE2                  +
+                                 *TYPE3                  +
+                                 *TYPE4)                 +
                           PROMPT('Outfile format'  8)
 
              PARM       KWD(JRN)                         +

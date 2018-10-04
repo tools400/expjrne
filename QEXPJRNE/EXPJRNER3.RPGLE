@@ -44,6 +44,8 @@
       *  03.02.2015  Th.Raddatz    Changed to ignore the "Incomplete data"  *
       *                            flag in order to export BLOB/CLOB data.  *
       *                                                                     *
+      *  04.10.2018  Th.Raddatz    Added outfile type *TYPE4.               *
+      *                                                                     *
       *=====================================================================*
       * >>PRE-COMPILER<<                                                    *
       *   >>CRTCMD<< CRTRPGMOD    MODULE(&LI/&OB) +                         *
@@ -174,6 +176,25 @@
       *  Returns the value of the 'Minimized ESD' flag.
      D getJOMINESD...
      D                 PR             1A         extproc('getJOMINESD')
+     D  i_RJNE0200                         const likeds(RJNE0200_t)
+     D                                           options(*varsize)
+      *
+      *  Returns the value of the 'Referential Constraint' flag.
+     D getJORCST...
+     D                 PR             1A         extproc('getJORCST')
+     D  i_RJNE0200                         const likeds(RJNE0200_t)
+     D                                           options(*varsize)
+      *
+      *  Returns the value of the 'Trigger' flag.
+     D getJOTGR...
+     D                 PR             1A         extproc('getJOTGR')
+     D  i_RJNE0200                         const likeds(RJNE0200_t)
+     D                                           options(*varsize)
+      *
+      *  Returns the value of the
+      *  'Ignored during APYJRNCHG or RMVJRNCHG' flag.
+     D getJOIGNAPY...
+     D                 PR             1A         extproc('getJOIGNAPY')
      D  i_RJNE0200                         const likeds(RJNE0200_t)
      D                                           options(*varsize)
       *
@@ -434,6 +455,8 @@
      D                                     qualified
      D dsQADSPJR3_O  E DS         32766    extname(QADSPJR3) inz
      D                                     qualified
+     D dsQADSPJR4_O  E DS         32766    extname(QADSPJR4) inz
+     D                                     qualified
       *
       *  Messages
       /COPY QEXPJRNE,USR0012
@@ -452,7 +475,7 @@
          // Let's look at the buffer
          pdsQADSPJRN = %addr(i_buffer);  // *TYPE1
          pdsQADSPJR2 = %addr(i_buffer);  // *TYPE2
-         pHeader     = %addr(i_buffer);  // *TYPE3
+         pHeader     = %addr(i_buffer);  // *TYPE3, *TYPE4
 
          // Determine the outfile attributes
          outFile.name      = OutputFile_getName();
@@ -603,6 +626,82 @@
                   endif;
                   pRIOFB = Rwrite(g_file.pRFILE
                                   : %addr(dsQADSPJR3_O): rFile.bufLen);
+               endif;
+
+            when outFile.outFilFmt = '*TYPE4';
+
+               // Get access to the retrieved journal entry
+               pRJNE0200 = pHeader + header.ofsJrnE;
+
+               // Get access to the entry data
+               if RJNE0200.ofsEntData > 0;
+                  pEntryData = pRJNE0200 + RJNE0200.ofsEntData;
+               else;
+                  pEntryData = %addr(clearEntryData);
+               endif;
+
+               // Clear output buffer
+               clear dsQADSPJR4_O;
+
+               // Set output data
+               dsQADSPJR4_O.JOENTL   = entryData.length +
+                                       (%addr(dsQADSPJR4_O.JOESD) -
+                                        %addr(dsQADSPJR4_O));
+               dsQADSPJR4_O.JOSEQN   = RJNE0200.seqNbr;
+               dsQADSPJR4_O.JOCODE   = RJNE0200.jrnCode;
+               dsQADSPJR4_O.JOENTT   = RJNE0200.entryType;
+               dsQADSPJR4_O.JOTSTP   = cvtDtsToIso(RJNE0200.timestamp);
+               dsQADSPJR4_O.JOJOB    = RJNE0200.job;
+               dsQADSPJR4_O.JOUSER   = RJNE0200.user;
+               dsQADSPJR4_O.JONBR    = getJONBR(RJNE0200);
+               dsQADSPJR4_O.JOPGM    = RJNE0200.pgm;
+               dsQADSPJR4_O.JOOBJ    = getJOOBJ(RJNE0200);
+               dsQADSPJR4_O.JOLIB    = getJOLIB(RJNE0200);
+               dsQADSPJR4_O.JOMBR    = GETJOMBR(RJNE0200);
+               dsQADSPJR4_O.JOCTRR   = RJNE0200.rrn;
+               dsQADSPJR4_O.JOFLAG   = RJNE0200.indFlag;
+               dsQADSPJR4_O.JOCCID   = RJNE0200.cmtCycleID;
+               dsQADSPJR4_O.JOUSPF   = RJNE0200.userProfile;
+               dsQADSPJR4_O.JOSYNM   = RJNE0200.system;
+
+               dsQADSPJR4_O.JOINCDAT = getJOINCDAT(RJNE0200);
+               dsQADSPJR4_O.JOMINESD = getJOMINESD(RJNE0200);
+               dsQADSPJR4_O.JONVI    = getJONVI(%addr(RJNE0200));
+
+               dsQADSPJR4_O.JORCST   = getJORCST(RJNE0200);
+               dsQADSPJR4_O.JOTGR    = getJOTGR(RJNE0200);
+               dsQADSPJR4_O.JOIGNAPY = getJOIGNAPY(RJNE0200);
+
+               dsQADSPJR4_O.JORES    = '';
+
+               // Compute offset for entry data
+               offsJOESD = %addr(dsQADSPJR4_O.JONVI)
+                           - %addr(dsQADSPJR4_O)
+                           + %size(dsQADSPJR4_O.JONVI);
+
+               // Set entry data
+               if entryData.length = 0;
+                  %subst(dsQADSPJR4_O: offsJOESD+1) =
+                     crtEntryDataInitialized(outFile.name:outFile.lib:'JONVI');
+               else;
+                  %subst(dsQADSPJR4_O: offsJOESD+1) =
+                     %subst(entryData.value: 1: entryData.length);
+               endif;
+
+               if // (dsQADSPJR3_O.JOINCDAT = '1') or   // Incomplete data, e.g. CLOB/BLOB
+                  (dsQADSPJR4_O.JOMINESD = '1');     // Minimized ESD
+                  numErrors = numErrors + 1;
+               else;
+                  dataLength = entryData.length;
+                  if (dataLength > 0);
+                     cvtLargeObjectFieldData(
+                        outFile.name: outFile.lib: 'JORES': dsQADSPJR4_O);
+                     maxDataLength = %size(dsQADSPJR4_O) - dataLength;
+                     mapJrnE(dsQADSPJR4_O.JOCODE: dsQADSPJR4_O.JOENTT
+                             : %addr(dsQADSPJR4_O.JOESD): maxDataLength);
+                  endif;
+                  pRIOFB = Rwrite(g_file.pRFILE
+                                  : %addr(dsQADSPJR4_O): rFile.bufLen);
                endif;
             endsl;
 
@@ -793,6 +892,109 @@
       /endif
 
          return minESD;
+
+      /END-FREE
+     P                 E
+      *
+      *====================================================================
+      *  *** private ***
+      *  Returns the value of the 'Referential Constraint' flag.
+      *====================================================================
+     P getJORCST...
+     P                 B
+     D                 PI             1A
+     D  i_RJNE0200                         const likeds(RJNE0200_t)
+     D                                           options(*varsize)
+      *
+     D rcst            S              1A
+     D RCST_BIT        C                   x'80'
+      * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+      /FREE
+
+      /if defined(*V5R3M0)
+         if %bitand(i_RJNE0200.flags: RCST_BIT) = RCST_BIT; // Set referential constraint flag
+            rcst = '1';
+         else;
+            rcst = '0';
+         endif;
+      /else
+         if bitAND(i_RJNE0200.flags: RCST_BIT) = RCST_BIT;  // Set referential constraint flag
+            rcst = '1';
+         else;
+            rcst = '0';
+         endif;
+      /endif
+
+         return rcst;
+
+      /END-FREE
+     P                 E
+      *
+      *====================================================================
+      *  *** private ***
+      *  Returns the value of the 'Trigger' flag.
+      *====================================================================
+     P getJOTGR...
+     P                 B
+     D                 PI             1A
+     D  i_RJNE0200                         const likeds(RJNE0200_t)
+     D                                           options(*varsize)
+      *
+     D tgr             S              1A
+     D TGR_BIT         C                   x'40'
+      * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+      /FREE
+
+      /if defined(*V5R3M0)
+         if %bitand(i_RJNE0200.flags: TGR_BIT) = TGR_BIT; // Set trigger flag
+            tgr = '1';
+         else;
+            tgr = '0';
+         endif;
+      /else
+         if bitAND(i_RJNE0200.flags: TGR_BIT) = TGR_BIT;  // Set trigger flag
+            tgr = '1';
+         else;
+            tgr = '0';
+         endif;
+      /endif
+
+         return tgr;
+
+      /END-FREE
+     P                 E
+      *
+      *====================================================================
+      *  *** private ***
+      *  Returns the value of the
+      *  'Ignored during APYJRNCHG or RMVJRNCHG' flag.
+      *====================================================================
+     P getJOIGNAPY...
+     P                 B
+     D                 PI             1A
+     D  i_RJNE0200                         const likeds(RJNE0200_t)
+     D                                           options(*varsize)
+      *
+     D ignApy          S              1A
+     D IGNAPY_BIT      C                   x'10'
+      * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+      /FREE
+
+      /if defined(*V5R3M0)
+         if %bitand(i_RJNE0200.flags: IGNAPY_BIT) = IGNAPY_BIT; // Set ignored during APYJRNCHG
+            ignApy = '1';                                       // or RMVJRNCHG flag
+         else;
+            ignApy = '0';
+         endif;
+      /else
+         if bitAND(i_RJNE0200.flags: IGNAPY_BIT) = IGNAPY_BIT;  // Set ignored during APYJRNCHG
+            ignApy = '1';                                       // or RMVJRNCHG flag
+         else;
+            ignApy = '0';
+         endif;
+      /endif
+
+         return ignApy;
 
       /END-FREE
      P                 E

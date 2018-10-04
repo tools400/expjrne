@@ -36,6 +36,8 @@
       *  03.02.2015  Th.Raddatz    Changed to support CLOB/BLOB fields:     *
       *                            sqlTypeToString() / hasCcsidClause().    *
       *                                                                     *
+      *  04.10.2018  Th.Raddatz    Added outfile type *TYPE4.               *
+      *                                                                     *
       *=====================================================================*
       * >>PRE-COMPILER<<                                                    *
       *   >>CRTCMD<< CRTRPGMOD    MODULE(&LI/&OB) +                         *
@@ -444,6 +446,10 @@
      D cType3File      C                   const('QADSPJR3')
      D cType3Lib       C                   const('QTEMP'   )
       *
+      *  ... TYPE4 outfile
+     D cType4File      C                   const('QADSPJR4')
+     D cType4Lib       C                   const('QTEMP'   )
+      *
       *==================================================================*
       *  Returns the date format of the job.
       *==================================================================*
@@ -835,6 +841,9 @@
          when (i_outFilFmt = '*TYPE3');
             expType.name = cType3File;
             expType.lib  = cType3Lib;
+         when (i_outFilFmt = '*TYPE4');
+            expType.name = cType4File;
+            expType.lib  = cType4Lib;
          endsl;
 
          // ... add columns of QADSPJR*, depending of export type

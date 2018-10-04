@@ -43,6 +43,8 @@
 .*                                                                     *
 .*  24.01.2015  Th.Raddatz    Added option *USER to parameter OUTFILE. *
 .*                                                                     *
+.*  04.10.2018  Th.Raddatz    Added outfile type *TYPE4.               *
+.*                                                                     *
 .*=====================================================================*
 .* >>PRE-COMPILER<<                                                    *
 .*   >>CRTCMD<< CRTPNLGRP    PNLGRP(&LI/EXPJRNEP) +                    *
@@ -319,6 +321,11 @@ the output records were generated.
 :PD.Use this option to export journal entries of files
 that contains null-capable fields. The outfile format
 produced is equal to the *TYPE2 format.
+.*
+:PT.:PV.*TYPE4:EPV.
+:PD.Use this option to export the information when *TYPE3
+is specified and the journal identifier, the physical file
+trigger indicator and the referential constraint indicator.
 :EPARML.
 .*
 :EHELP.

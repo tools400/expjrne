@@ -43,6 +43,8 @@
 .*                                                                     *
 .*  24.01.2015  Th.Raddatz    Added option *USER to parameter OUTFILE. *
 .*                                                                     *
+.*  04.10.2018  Th.Raddatz    Added outfile type *TYPE4.               *
+.*                                                                     *
 .*=====================================================================*
 .* >>PRE-COMPILER<<                                                    *
 .*   >>CRTCMD<< CRTPNLGRP    PNLGRP(&LI/EXPJRNEP) +                    *
@@ -324,6 +326,12 @@ wurden.
 :PD.Mit dieser Auswahl können Dateien, die NULL-fähige
 Felder beinhalten exportiert werden. Das erzeugte
 Ausgabeformat entspricht *TYPE2.
+.*
+:PT.:PV.*TYPE4:EPV.
+:PD.Die exportierten Einträge beinhalten die Informationen, die
+bei *TYPE3 ausgegeben werden, sowie die Journal-ID, den Anzeiger
+für den Auslöser einer physischen Datei und den Anzeiger einer
+referenziellen Integritätsbedingung.
 :EPARML.
 .*
 :EHELP.
