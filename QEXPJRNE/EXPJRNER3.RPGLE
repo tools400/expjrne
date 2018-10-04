@@ -53,6 +53,7 @@
       *     >>PARM<< TRUNCNBR(*NO);                                         *
       *     >>PARM<< DBGVIEW(*LIST);                                        *
       *     >>PARM<< TGTRLS(V6R1M0);                                        *
+      *     >>PARM<< OPTION(*EVENTF);                                       *
       *   >>END-IMPORTANT<<                                                 *
       *   >>EXECUTE<<                                                       *
       * >>END-PRE-COMPILER<<                                                *
@@ -133,6 +134,18 @@
      D                 PR                         extproc('p_main')
      D  i_buffer                  65535A          options(*varsize)
      D  io_control                                likeds(control_t)
+      *
+      *  Returns the value of the 'Incomplete data' flag.
+     D getJOINCDAT...
+     D                 PR             1A         extproc('getJOINCDAT')
+     D  i_RJNE0200                         const likeds(RJNE0200_t)
+     D                                           options(*varsize)
+      *
+      *  Returns the value of the 'Minimized ESD' flag.
+     D getJOMINESD...
+     D                 PR             1A         extproc('getJOMINESD')
+     D  i_RJNE0200                         const likeds(RJNE0200_t)
+     D                                           options(*varsize)
       *
       *  Map journal entries to common format.
      D mapJrnE...
@@ -532,32 +545,9 @@
                dsQADSPJR3_O.JOCCID   = RJNE0200.cmtCycleID;
                dsQADSPJR3_O.JOUSPF   = RJNE0200.userProfile;
                dsQADSPJR3_O.JOSYNM   = RJNE0200.system;
-      /if defined(*V5R3M0)
-               if %bitand(RJNE0200.flags: x'20') = x'20';     // Set incomplete data flag
-                  dsQADSPJR3_O.JOINCDAT = '1';
-               else;
-                  dsQADSPJR3_O.JOINCDAT = '0';
-               endif;
-      /else
-               if bitAND(RJNE0200.flags: x'20') = x'20';      // Set incomplete data flag
-                  dsQADSPJR3_O.JOINCDAT = '1';
-               else;
-                  dsQADSPJR3_O.JOINCDAT = '0';
-               endif;
-      /endif
-      /if defined(*V5R3M0)
-               if %bitand(RJNE0200.flags: x'08') = x'08';     // Set minimized ESD flag
-                  dsQADSPJR3_O.JOMINESD = '1';
-               else;
-                  dsQADSPJR3_O.JOMINESD = '0';
-               endif;
-      /else
-               if bitAND(RJNE0200.flags: x'08') = x'08';      // Set minimized ESD flag
-                  dsQADSPJR3_O.JOMINESD = '1';
-               else;
-                  dsQADSPJR3_O.JOMINESD = '0';
-               endif;
-      /endif
+
+               dsQADSPJR3_O.JOINCDAT = getJOINCDAT(RJNE0200);
+               dsQADSPJR3_O.JOMINESD = getJOMINESD(RJNE0200);
 
                dsQADSPJR3_O.JORES    = '';
 
@@ -634,6 +624,74 @@
             // Unload program
             *inlr = *on;
          endif;
+
+      /END-FREE
+     P                 E
+      *
+      *====================================================================
+      *  *** private ***
+      *  Returns the value of the 'Incomplete data' flag.
+      *====================================================================
+     P getJOINCDAT...
+     P                 B
+     D                 PI             1A
+     D  i_RJNE0200                         const likeds(RJNE0200_t)
+     D                                           options(*varsize)
+      *
+     D incDat          S              1A
+     D INCDAT_BIT      C                   x'20'
+      * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+      /FREE
+
+      /if defined(*V5R3M0)
+         if %bitand(i_RJNE0200.flags: INCDAT_BIT) = INCDAT_BIT; // Set incomplete data flag
+            incDat = '1';
+         else;
+            incDat = '0';
+         endif;
+      /else
+         if bitAND(i_RJNE0200.flags: INCDAT_BIT) = INCDAT_BIT;  // Set incomplete data flag
+            incDat = '1';
+         else;
+            incDat = '0';
+         endif;
+      /endif
+
+         return incDat;
+
+      /END-FREE
+     P                 E
+      *
+      *====================================================================
+      *  *** private ***
+      *  Returns the value of the 'Minimized ESD' flag.
+      *====================================================================
+     P getJOMINESD...
+     P                 B
+     D                 PI             1A
+     D  i_RJNE0200                         const likeds(RJNE0200_t)
+     D                                           options(*varsize)
+      *
+     D minESD          S              1A
+     D MINESD_BIT      C                   x'08'
+      * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+      /FREE
+
+      /if defined(*V5R3M0)
+         if %bitand(i_RJNE0200.flags: MINESD_BIT) = MINESD_BIT; // Set minimized ESD flag
+            minESD = '1';
+         else;
+            minESD = '0';
+         endif;
+      /else
+         if bitAND(i_RJNE0200.flags: MINESD_BIT) = MINESD_BIT;  // Set minimized ESD flag
+            minESD = '1';
+         else;
+            minESD = '0';
+         endif;
+      /endif
+
+         return minESD;
 
       /END-FREE
      P                 E
