@@ -112,6 +112,11 @@
      D  flags                219    219I 0
      D  reserved             220    228A
       *
+      *  Null value indicator information
+     D nullValueInd_t  DS                  qualified               based(pDummy)
+     D  length                       10I 0
+     D  indicators                 8000A
+      *
       * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       *  External prototypes
       * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -135,6 +140,31 @@
      D  i_buffer                  65535A          options(*varsize)
      D  io_control                                likeds(control_t)
       *
+      *  Returns the job number.
+     D getJONBR...
+     D                 PR             6S 0       extproc('getJONBR')
+     D  i_RJNE0200                         const likeds(RJNE0200_t)
+     D                                           options(*varsize)
+      *
+      *  Returns the name of the journal object.
+     D getJOOBJ...
+     D                 PR            10A         extproc('getJOOBJ')
+     D  i_RJNE0200                         const likeds(RJNE0200_t)
+     D                                           options(*varsize)
+      *
+      *  Returns the name of the library where the
+      *  journaled object is stored.
+     D getJOLIB...
+     D                 PR            10A         extproc('getJOOBJ')
+     D  i_RJNE0200                         const likeds(RJNE0200_t)
+     D                                           options(*varsize)
+      *
+      *  Returns the name of the journaled member.
+     D getJOMBR...
+     D                 PR            10A         extproc('getJOMBR')
+     D  i_RJNE0200                         const likeds(RJNE0200_t)
+     D                                           options(*varsize)
+      *
       *  Returns the value of the 'Incomplete data' flag.
      D getJOINCDAT...
      D                 PR             1A         extproc('getJOINCDAT')
@@ -146,6 +176,12 @@
      D                 PR             1A         extproc('getJOMINESD')
      D  i_RJNE0200                         const likeds(RJNE0200_t)
      D                                           options(*varsize)
+      *
+      *  Returns the value of the 'Null value indicator' flag.
+     D getJONVI...
+     D                 PR                        like(nullValueInd_t.indicators)
+     D                                           extproc('getJONVI')
+     D  i_pRJNE0200                    *   const
       *
       *  Map journal entries to common format.
      D mapJrnE...
@@ -381,11 +417,6 @@
       *  Journal entry data
      D RJNE0200        DS                  likeds(RJNE0200_t) based(pRJNE0200)
       *
-      *  Null value indicator information
-     D nullValueInd    DS                  qualified based(pNullValueIndicator)
-     D  length                       10I 0
-     D  indicators                 8000A
-      *
       *  Entry data information
      D entryData       DS                  qualified based(pEntryData)
      D  length                        5S 0
@@ -393,8 +424,6 @@
      D  value                     65519A
       *
       *  Empty data structures
-     D clearNullValueInd...
-     D                 DS                  likeds(nullValueInd)   inz
      D clearEntryData...
      D                 DS                  likeds(entryData   )   inz
       *
@@ -467,6 +496,7 @@
 
             select;
             when outFile.outFilFmt = '*TYPE1';
+
                clear dsQADSPJRN_O;
                fixLength  = %addr(dsQADSPJRN.JOESD) - %addr(dsQADSPJRN);
                dataLength = dsQADSPJRN.JOENTL - fixLength;
@@ -485,6 +515,7 @@
                                : %addr(dsQADSPJRN_O): rFile.bufLen);
 
             when outFile.outFilFmt = '*TYPE2';
+
                clear dsQADSPJR2_O;
                fixLength  = %addr(dsQADSPJR2.JOESD) - %addr(dsQADSPJR2);
                dataLength = dsQADSPJR2.JOENTL - fixLength;
@@ -503,16 +534,9 @@
                                : %addr(dsQADSPJR2_O): rFile.bufLen);
 
             when outFile.outFilFmt = '*TYPE3';
+
                // Get access to the retrieved journal entry
                pRJNE0200 = pHeader + header.ofsJrnE;
-
-               // Get access to null value indicators
-               if RJNE0200.ofsNulValInd > 0;
-                  pNullValueIndicator = pRJNE0200       +
-                                        RJNE0200.ofsNulValInd;
-               else;
-                  pNullValueIndicator = %addr(clearNullValueInd);
-               endif;
 
                // Get access to the entry data
                if RJNE0200.ofsEntData > 0;
@@ -535,11 +559,11 @@
                dsQADSPJR3_O.JOTSTP   = cvtDtsToIso(RJNE0200.timestamp);
                dsQADSPJR3_O.JOJOB    = RJNE0200.job;
                dsQADSPJR3_O.JOUSER   = RJNE0200.user;
-               dsQADSPJR3_O.JONBR    = %dec(RJNE0200.jobNbr: 6: 0);
+               dsQADSPJR3_O.JONBR    = getJONBR(RJNE0200);
                dsQADSPJR3_O.JOPGM    = RJNE0200.pgm;
-               dsQADSPJR3_O.JOOBJ    = %subst(RJNE0200.object:  1: 10);
-               dsQADSPJR3_O.JOLIB    = %subst(RJNE0200.object: 11: 10);
-               dsQADSPJR3_O.JOMBR    = %subst(RJNE0200.object: 21: 10);
+               dsQADSPJR3_O.JOOBJ    = getJOOBJ(RJNE0200);
+               dsQADSPJR3_O.JOLIB    = getJOLIB(RJNE0200);
+               dsQADSPJR3_O.JOMBR    = GETJOMBR(RJNE0200);
                dsQADSPJR3_O.JOCTRR   = RJNE0200.rrn;
                dsQADSPJR3_O.JOFLAG   = RJNE0200.indFlag;
                dsQADSPJR3_O.JOCCID   = RJNE0200.cmtCycleID;
@@ -548,15 +572,9 @@
 
                dsQADSPJR3_O.JOINCDAT = getJOINCDAT(RJNE0200);
                dsQADSPJR3_O.JOMINESD = getJOMINESD(RJNE0200);
+               dsQADSPJR3_O.JONVI    = getJONVI(%addr(RJNE0200));
 
                dsQADSPJR3_O.JORES    = '';
-
-               // Set null indicator information
-               if nullValueInd.length > 0;
-                  dsQADSPJR3_O.JONVI = %subst(nullValueInd.indicators:
-                                              1                      :
-                                              nullValueInd.length    );
-               endif;
 
                // Compute offset for entry data
                offset = %addr(dsQADSPJR3_O.JONVI) - %addr(dsQADSPJR3_O)
@@ -630,6 +648,90 @@
       *
       *====================================================================
       *  *** private ***
+      *  Returns the job number.
+      *====================================================================
+     P getJONBR...
+     P                 B
+     D                 PI             6S 0
+     D  i_RJNE0200                         const likeds(RJNE0200_t)
+     D                                           options(*varsize)
+      *
+     D nbr             S              6S 0
+      * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+      /FREE
+
+         nbr = %dec(i_RJNE0200.jobNbr: 6: 0);
+
+         return nbr;
+
+      /END-FREE
+     P                 E
+      *
+      *====================================================================
+      *  *** private ***
+      *  Returns the job number.
+      *====================================================================
+     P getJOOBJ...
+     P                 B
+     D                 PI            10A
+     D  i_RJNE0200                         const likeds(RJNE0200_t)
+     D                                           options(*varsize)
+      *
+     D obj             S             10A
+      * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+      /FREE
+
+         obj = %subst(i_RJNE0200.object:  1: 10);
+
+         return obj;
+
+      /END-FREE
+     P                 E
+      *
+      *====================================================================
+      *  *** private ***
+      *  Returns the job number.
+      *====================================================================
+     P getJOLIB...
+     P                 B
+     D                 PI            10A
+     D  i_RJNE0200                         const likeds(RJNE0200_t)
+     D                                           options(*varsize)
+      *
+     D lib             S             10A
+      * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+      /FREE
+
+         lib = %subst(i_RJNE0200.object: 11: 10);
+
+         return lib;
+
+      /END-FREE
+     P                 E
+      *
+      *====================================================================
+      *  *** private ***
+      *  Returns the job number.
+      *====================================================================
+     P getJOMBR...
+     P                 B
+     D                 PI            10A
+     D  i_RJNE0200                         const likeds(RJNE0200_t)
+     D                                           options(*varsize)
+      *
+     D mbr             S             10A
+      * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+      /FREE
+
+         mbr = %subst(i_RJNE0200.object: 21: 10);
+
+         return mbr;
+
+      /END-FREE
+     P                 E
+      *
+      *====================================================================
+      *  *** private ***
       *  Returns the value of the 'Incomplete data' flag.
       *====================================================================
      P getJOINCDAT...
@@ -692,6 +794,41 @@
       /endif
 
          return minESD;
+
+      /END-FREE
+     P                 E
+      *
+      *====================================================================
+      *  *** private ***
+      *  Returns the value of the 'Null value indicator' flag.
+      *====================================================================
+     P getJONVI...
+     P                 B
+     D                 PI                  like(nullValueInd_t.indicators)
+     D  i_pRJNE0200                    *   const
+      *
+     D nvi             S                   like(nullValueInd_t.indicators)
+      *
+     D RJNE0200        DS                  likeds(RJNE0200_t) based(i_pRJNE0200)
+      *
+      *  Null value indicator information
+     D nullValueInd    DS                  likeds(nullValueInd_t)
+     D                                     based(pNullValueIndicator)
+     D clearNullValueInd...
+     D                 DS                  likeds(nullValueInd)   inz
+      * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+      /FREE
+
+         // Get access to null value indicators
+         if RJNE0200.ofsNulValInd > 0;
+            pNullValueIndicator = %addr(RJNE0200) + RJNE0200.ofsNulValInd;
+         else;
+            pNullValueIndicator = %addr(clearNullValueInd);
+         endif;
+
+         nvi = %subst(nullValueInd.indicators: 1: nullValueInd.length);
+
+         return nvi;
 
       /END-FREE
      P                 E
