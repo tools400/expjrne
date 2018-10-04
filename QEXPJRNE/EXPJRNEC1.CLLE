@@ -90,6 +90,8 @@
      /*                                                                     */
      /*  02.01.2015  Th.Raddatz    Added option *OBJ to parameter OUTFILE.  */
      /*                                                                     */
+     /*  04.10.2018  Th.Raddatz    Fixed external procedure name (typo).    */
+     /*                                                                     */
      /* =================================================================== */
      /* >>PRE-COMPILER<<                                                    */
      /*                                                                     */
@@ -489,7 +491,7 @@ CRTOUTFILE:
                CHGVAR     VAR(&LVLCHK) VALUE('N')
 
                IF         COND(&CRTFILE *EQ 'D') THEN(DO)
-                 CALLPRC    PRC('EXPJRNER4_f_crtOutfile_DDS') +
+                 CALLPRC    PRC('EXPJRNER5_f_crtOutfile_DDS') +
                             PARM(&TPLFILE    +
                                  &TPLLIB     +
                                  &OUTFILE    +

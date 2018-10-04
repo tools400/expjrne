@@ -45,6 +45,8 @@
       *                                                                     *
       *  06.10.2014  Th.Raddatz    Fixed compiler error RNF0203.            *
       *                                                                     *
+      *  04.10.2018  Th.Raddatz    Fixed external procedure name (typo).    *
+      *                                                                     *
       *=====================================================================*
       * >>PRE-COMPILER<<                                                    *
       *   >>CRTCMD<< CRTRPGMOD    MODULE(&LI/&OB) +                         *
