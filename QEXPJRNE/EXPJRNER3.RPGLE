@@ -406,9 +406,9 @@
          endif;
 
          // Let's look at the buffer
-         pdsQADSPJRN = %addr(i_buffer);
-         pdsQADSPJR2 = %addr(i_buffer);
-         pHeader     = %addr(i_buffer);
+         pdsQADSPJRN = %addr(i_buffer);  // *TYPE1
+         pdsQADSPJR2 = %addr(i_buffer);  // *TYPE2
+         pHeader     = %addr(i_buffer);  // *TYPE3
 
          // Determine the outfile attributes
          outFile.name      = OutputFile_getName();
@@ -550,7 +550,7 @@
                   dsQADSPJR3_O.JOMINESD = '0';
                endif;
       /else
-               if bitAND(RJNE0200.flags: x'08') = x'08';      // Set incomplete data flag
+               if bitAND(RJNE0200.flags: x'08') = x'08';      // Set minimized ESD flag
                   dsQADSPJR3_O.JOMINESD = '1';
                else;
                   dsQADSPJR3_O.JOMINESD = '0';
