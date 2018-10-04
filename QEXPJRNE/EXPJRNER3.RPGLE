@@ -367,7 +367,7 @@
 
          CEEUTX(%paddr('AbnEnd_terminateExport'): *omit);
 
-         // return to caller
+         return;
 
          begsr *pssr;
 
@@ -495,6 +495,9 @@
                g_file.pRFile = Ropen(g_file.name
                                      : 'ar, blkrcd=Y, ccsid=65535, secure=Y');
             when outFile.outFilFmt = '*TYPE3';
+               g_file.pRFile = Ropen(g_file.name
+                                     : 'ar, blkrcd=Y, ccsid=65535, secure=Y');
+            when outFile.outFilFmt = '*TYPE4';
                g_file.pRFile = Ropen(g_file.name
                                      : 'ar, blkrcd=Y, ccsid=65535, secure=Y');
             endsl;
@@ -671,6 +674,7 @@
                dsQADSPJR4_O.JORCST   = getJORCST(RJNE0200);
                dsQADSPJR4_O.JOTGR    = getJOTGR(RJNE0200);
                dsQADSPJR4_O.JOIGNAPY = getJOIGNAPY(RJNE0200);
+               dsQADSPJR4_O.JOJID    = RJNE0200.journalID;
 
                dsQADSPJR4_O.JORES    = '';
 

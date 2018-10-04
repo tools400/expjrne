@@ -320,6 +320,9 @@
              IF         COND(&OUTFILFM *EQ '*TYPE3') THEN(DO)
                CHGVAR     VAR(&QADSPJRN) VALUE('QADSPJR3')
              ENDDO
+             IF         COND(&OUTFILFM *EQ '*TYPE4') THEN(DO)
+               CHGVAR     VAR(&QADSPJRN) VALUE('QADSPJR4')
+             ENDDO
 
   /* ------------------------------------------------------------------------ */
   /* Check object.                                                            */
