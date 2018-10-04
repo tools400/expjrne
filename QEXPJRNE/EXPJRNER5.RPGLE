@@ -71,7 +71,7 @@
       *
      D f_crtOutfile_DDS...
      D                 PR              N
-     D                                     extproc('EXPJRNER4_+
+     D                                     extproc('EXPJRNER5_+
      D                                     f_crtOutfile_DDS+
      D                                     ')
      D  i_tplFile                    10A   const
