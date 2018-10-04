@@ -73,6 +73,44 @@
      D  apiInf                       16A
      D  value                     65519A
       *
+      *
+      *  Journal entry data
+     D RJNE0200_t      DS         32766    qualified               based(pDummy)
+     D  ofsNxtHeader           1      4U 0
+     D  ofsNulValInd           5      8U 0
+     D  ofsEntData             9     12U 0
+     D  ofsTransactID         13     16U 0
+     D  ofsLglUnitWrk         17     20U 0
+     D  ofsRcvInf             21     24U 0
+     D  seqNbr                25     32U 0
+     D  timestamp             33     40U 0
+     D  threadID              41     48U 0
+     D  sysSeqNbr             49     56U 0
+     D  rrn                   57     64U 0
+     D  cmtCycleID            65     72U 0
+     D  ptrHandle             73     76U 0
+     D  rmtPort               77     78U 0
+     D  armNbr                79     80U 0
+     D  pgmLibASP             81     82U 0
+     D  rmtAdr                83     98A
+     D  jrnCode               99     99A
+     D  entryType            100    101A
+     D  job                  102    111A
+     D  user                 112    121A
+     D  jobNbr               122    127A
+     D  pgm                  128    137A
+     D  pgmLib               138    147A
+     D  pgmLibASPDev         148    157A
+     D  object               158    187A
+     D  userProfile          188    197A
+     D  journalID            198    207A
+     D  adrFamily            208    208A
+     D  system               209    216A
+     D  indFlag              217    217A
+     D  objnameID            218    218A
+     D  flags                219    219I 0
+     D  reserved             220    228A
+      *
       * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       *  External prototypes
       * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -259,7 +297,7 @@
 
          CEEUTX(%paddr('AbnEnd_terminateExport'): *omit);
 
-         return;
+         // return to caller
 
          begsr *pssr;
 
@@ -277,8 +315,6 @@
       *
      P p_main...
      P                 B
-      *
-     D p_main...
      D                 PI
      D  i_buffer                  65535A          options(*varsize)
      D  io_control                                likeds(control_t)
@@ -330,41 +366,7 @@
      D  reserved              54     65A
       *
       *  Journal entry data
-     D RJNE0200        DS         32766    qualified         based(pRJNE0200)
-     D  ofsNxtHeader           1      4U 0
-     D  ofsNulValInd           5      8U 0
-     D  ofsEntData             9     12U 0
-     D  ofsTransactID         13     16U 0
-     D  ofsLglUnitWrk         17     20U 0
-     D  ofsRcvInf             21     24U 0
-     D  seqNbr                25     32U 0
-     D  timestamp             33     40U 0
-     D  threadID              41     48U 0
-     D  sysSeqNbr             49     56U 0
-     D  rrn                   57     64U 0
-     D  cmtCycleID            65     72U 0
-     D  ptrHandle             73     76U 0
-     D  rmtPort               77     78U 0
-     D  armNbr                79     80U 0
-     D  pgmLibASP             81     82U 0
-     D  rmtAdr                83     98A
-     D  jrnCode               99     99A
-     D  entryType            100    101A
-     D  job                  102    111A
-     D  user                 112    121A
-     D  jobNbr               122    127A
-     D  pgm                  128    137A
-     D  pgmLib               138    147A
-     D  pgmLibASPDev         148    157A
-     D  object               158    187A
-     D  userProfile          188    197A
-     D  journalID            198    207A
-     D  adrFamily            208    208A
-     D  system               209    216A
-     D  indFlag              217    217A
-     D  objnameID            218    218A
-     D  flags                219    219I 0
-     D  reserved             220    228A
+     D RJNE0200        DS                  likeds(RJNE0200_t) based(pRJNE0200)
       *
       *  Null value indicator information
      D nullValueInd    DS                  qualified based(pNullValueIndicator)
@@ -633,21 +635,15 @@
             *inlr = *on;
          endif;
 
-         return;
-
       /END-FREE
-      *
-     P p_main...
      P                 E
       *
       *====================================================================
-    R *  *** private ***
+      *  *** private ***
       *  Map journal entries to common format.
       *====================================================================
      P mapJrnE...
      P                 B
-      *
-     D mapJrnE...
      D                 PI
      D  i_JOCODE                      1A   const
      D  i_JOENTT                      2A   const
@@ -688,22 +684,16 @@
             mapJrnE_E_EA(i_pData: i_length);
          endsl;
 
-         return;
-
       /END-FREE
-      *
-     P mapJrnE...
      P                 E
       *
       *====================================================================
-    R *  *** private ***
+      *  *** private ***
       *  Map Update data area (E EB) journal entry
       *  to common data area journal entry data structure.
       *====================================================================
      P mapJrnE_E_EB...
      P                 B
-      *
-     D mapJrnE_E_EB...
      D                 PI
      D  i_pData                        *   const
      D  i_length                     10I 0 const
@@ -721,22 +711,16 @@
          // no mapping required
          p_assert(%size(jrnEType_e_eb) = %size(jrnEType_e));
 
-         return;
-
       /END-FREE
-      *
-     P mapJrnE_E_EB...
      P                 E
       *
       *====================================================================
-    R *  *** private ***
+      *  *** private ***
       *  Map Update data area (E EA) journal entry
       *  to common data area journal entry data structure.
       *====================================================================
      P mapJrnE_E_EA...
      P                 B
-      *
-     D mapJrnE_E_EA...
      D                 PI
      D  i_pData                        *   const
      D  i_length                     10I 0 const
@@ -754,22 +738,16 @@
          // no mapping required
          p_assert(%size(jrnEType_e_ea) = %size(jrnEType_e));
 
-         return;
-
       /END-FREE
-      *
-     P mapJrnE_E_EA...
      P                 E
       *
       *====================================================================
-    R *  *** private ***
+      *  *** private ***
       *  Map Create data area (E EE) journal entry
       *  to common data area journal entry data structure.
       *====================================================================
      P mapJrnE_E_EE...
      P                 B
-      *
-     D mapJrnE_E_EE...
      D                 PI
      D  i_pData                        *   const
      D  i_length                     10I 0 const
@@ -813,22 +791,16 @@
          enforceBoundaries(i_pData: i_length: pValue: %size(value));
          value  = tmpJrnEType_e_ee.value;
 
-         return;
-
       /END-FREE
-      *
-     P mapJrnE_E_EE...
      P                 E
       *
       *====================================================================
-    R *  *** private ***
+      *  *** private ***
       *  Map Send data queue, no key (Q QS) journal entry
       *  to common data queue journal entry data structure.
       *====================================================================
      P mapJrnE_Q_QS...
      P                 B
-      *
-     D mapJrnE_Q_QS...
      D                 PI
      D  i_pData                        *   const
      D  i_length                     10I 0 const
@@ -885,22 +857,16 @@
             dealloc(N) pTmpData;
          endif;
 
-         return;
-
       /END-FREE
-      *
-     P mapJrnE_Q_QS...
      P                 E
       *
       *====================================================================
-    R *  *** private ***
+      *  *** private ***
       *  Map Received data queue, no key (Q QR) journal entry
       *  to common data queue journal entry data structure.
       *====================================================================
      P mapJrnE_Q_QR...
      P                 B
-      *
-     D mapJrnE_Q_QR...
      D                 PI
      D  i_pData                        *   const
      D  i_length                     10I 0 const
@@ -931,22 +897,16 @@
          jrnEType_q.dataLength = 0;
          jrnEType_q.apiInf     = *ALLx'00';
 
-         return;
-
       /END-FREE
-      *
-     P mapJrnE_Q_QR...
      P                 E
       *
       *====================================================================
-    R *  *** private ***
+      *  *** private ***
       *  Map Data queue cleared, no key (Q QC) journal entry
       *  to common data queue journal entry data structure.
       *====================================================================
      P mapJrnE_Q_QC...
      P                 B
-      *
-     D mapJrnE_Q_QC...
      D                 PI
      D  i_pData                        *   const
      D  i_length                     10I 0 const
@@ -977,22 +937,16 @@
          jrnEType_q.dataLength = 0;
          jrnEType_q.apiInf     = *ALLx'00';
 
-         return;
-
       /END-FREE
-      *
-     P mapJrnE_Q_QC...
      P                 E
       *
       *====================================================================
-    R *  *** private ***
+      *  *** private ***
       *  Map Send data queue, has key (Q QK) journal entry
       *  to common data queue journal entry data structure.
       *====================================================================
      P mapJrnE_Q_QK...
      P                 B
-      *
-     D mapJrnE_Q_QK...
      D                 PI
      D  i_pData                        *   const
      D  i_length                     10I 0 const
@@ -1090,22 +1044,16 @@
             dealloc(N) pTmpData;
          endif;
 
-         return;
-
       /END-FREE
-      *
-     P mapJrnE_Q_QK...
      P                 E
       *
       *====================================================================
-    R *  *** private ***
+      *  *** private ***
       *  Map Received data queue, has key (Q QL) journal entry
       *  to common data queue journal entry data structure.
       *====================================================================
      P mapJrnE_Q_QL...
      P                 B
-      *
-     D mapJrnE_Q_QL...
      D                 PI
      D  i_pData                        *   const
      D  i_length                     10I 0 const
@@ -1159,22 +1107,16 @@
             dealloc(N) pTmpKey;
          endif;
 
-         return;
-
       /END-FREE
-      *
-     P mapJrnE_Q_QL...
      P                 E
       *
       *====================================================================
-    R *  *** private ***
+      *  *** private ***
       *  Map Data queue cleared, has key (Q QJ) journal entry
       *  to common data queue journal entry data structure.
       *====================================================================
      P mapJrnE_Q_QJ...
      P                 B
-      *
-     D mapJrnE_Q_QJ...
      D                 PI
      D  i_pData                        *   const
      D  i_length                     10I 0 const
@@ -1228,21 +1170,15 @@
             dealloc(N) pTmpKey;
          endif;
 
-         return;
-
       /END-FREE
-      *
-     P mapJrnE_Q_QJ...
      P                 E
       *
       *====================================================================
-    R *  *** private ***
+      *  *** private ***
       *  Ensures that memory boundaries are noticed.
       *====================================================================
      P enforceBoundaries...
      P                 B
-      *
-     D enforceBoundaries...
      D                 PI
      D  i_pData                        *   const
      D  i_length                     10I 0 const
@@ -1266,21 +1202,15 @@
          msg = f_newMsg('USR0020': USR0020: cMsg_Escape);
          Message_sendEscapeMsg(msg);
 
-         return;
-
       /END-FREE
-      *
-     P enforceBoundaries...
      P                 E
       *
       *====================================================================
-    R *  *** private ***
+      *  *** private ***
       *  Produces an initialized record for a given file.
       *====================================================================
      P crtEntryDataInitialized...
      P                 B
-      *
-     D crtEntryDataInitialized...
      D                 PI         32766A
      D  i_file                       10A   const
      D  i_lib                        10A   const
@@ -1429,12 +1359,10 @@
          return entryData;
 
       /END-FREE
-      *
-     P crtEntryDataInitialized...
      P                 E
       *
       *====================================================================
-    R *  *** private ***
+      *  *** private ***
       *  Convert large object (CLOB/BLOB) field data.
       *====================================================================
      P cvtLargeObjectFieldData...
@@ -1539,13 +1467,11 @@
      P                 E
       *
       *====================================================================
-    R *  *** private ***
+      *  *** private ***
       *  Converts a DTS timestamp to an ISO timestamp.
       *====================================================================
      P cvtDtsToIso...
      P                 B
-      *
-     D cvtDtsToIso...
      D                 PI              Z
      D  i_dtsTmStmp                  20U 0 value
       *
@@ -1574,18 +1500,14 @@
          return timestamp;
 
       /END-FREE
-      *
-     P cvtDtsToIso...
      P                 E
       *
       *====================================================================
-    R *  *** private ***
+      *  *** private ***
       *  Returns TRUE for a batch job, else FALSE.
       *====================================================================
      P isBatchJob...
      P                 B
-      *
-     D isBatchJob...
      D                 PI              N
       *
       *  Return value
@@ -1618,17 +1540,14 @@
          return isBatchJob;
 
       /END-FREE
-      *
-     P isBatchJob...
      P                 E
       *
       *=====================================================================*
+      *  *** private ***
       *  Closes the output file
       *=====================================================================*
      P closeOutputFile...
      P                 B
-      *
-     D closeOutputFile...
      D                 PI
       * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       /FREE
@@ -1639,8 +1558,6 @@
          endif;
 
       /END-FREE
-      *
-     P closeOutputFile...
      P                 E
       *
       *=====================================================================*
@@ -1648,8 +1565,6 @@
       *=====================================================================*
      P AbnEnd_terminateExport...
      P                 B
-      *
-     D AbnEnd_terminateExport...
      D                 PI
      D  i_pRtxToken                    *   const
       * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -1661,19 +1576,15 @@
          endmon;
 
       /END-FREE
-      *
-     P AbnEnd_terminateExport...
      P                 E
       *
       /if not defined(*V5R3M0)                                                              //
       *=========================================================================
-    R *  *** private ***
+      *  *** private ***
       *  Returns the bit-wise ANDing of the arguments.
       *=========================================================================
      P bitAND...
      P                 B
-      *
-     D bitAND...
      D                 PI            10U 0
      D  i_arg1                       10U 0 value
      D  i_arg2                       10U 0 value
@@ -1690,8 +1601,6 @@
          return result;
 
       /END-FREE
-      *
-     P bitAND...
      P                 E
       *
       /endif
