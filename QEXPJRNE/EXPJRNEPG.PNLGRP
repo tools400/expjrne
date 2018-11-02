@@ -332,6 +332,10 @@ Ausgabeformat entspricht *TYPE2.
 bei *TYPE3 ausgegeben werden, sowie die Journal-ID, den Anzeiger
 für den Auslöser einer physischen Datei und den Anzeiger einer
 referenziellen Integritätsbedingung.
+.*
+:PT.:PV.*TYPE5:EPV.
+:PD.Die exportierten Einträge beinhalten die Informationen, die
+bei *TYPE4 ausgegeben werden, sowie ASP, LUW, XID.
 :EPARML.
 .*
 :EHELP.

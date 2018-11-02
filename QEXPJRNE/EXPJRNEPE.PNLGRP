@@ -326,6 +326,10 @@ produced is equal to the *TYPE2 format.
 :PD.Use this option to export the information when *TYPE3
 is specified and the journal identifier, the physical file
 trigger indicator and the referential constraint indicator.
+.*
+:PT.:PV.*TYPE5:EPV.
+:PD.Use this option to export the information when *TYPE4
+is specified and ASP, LUW, XID.
 :EPARML.
 .*
 :EHELP.

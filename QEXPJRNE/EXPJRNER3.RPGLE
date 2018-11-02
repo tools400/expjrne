@@ -77,11 +77,11 @@
      D  value                     65519A
       *
       *
-      *  Journal entry data
+      *  Journal entry data (QSYSINC/QRPGLESRC.QJOURNAL: QJO00JEH00)
      D RJNE0200_t      DS         32766    qualified               based(pDummy)
-     D  ofsNxtHeader           1      4U 0
-     D  ofsNulValInd           5      8U 0
-     D  ofsEntData             9     12U 0
+     D  ofsNxtHeader           1      4I 0
+     D  ofsNulValInd           5      8I 0
+     D  ofsEntData             9     12I 0
      D  ofsTransactID         13     16U 0
      D  ofsLglUnitWrk         17     20U 0
      D  ofsRcvInf             21     24U 0
@@ -112,12 +112,34 @@
      D  indFlag              217    217A
      D  objnameID            218    218A
      D  flags                219    219I 0
-     D  reserved             220    228A
+     D  objType              220    229A
+     D  reserved_1           230    232A
+     D  nestedCmtLvl         233    236I 0
       *
-      *  Null value indicator information
+      *  Null value indicator information (QSYSINC/QRPGLESRC.QJOURNAL: QJOENVIV)
      D nullValueInd_t  DS                  qualified               based(pDummy)
      D  length                       10I 0
      D  indicators                 8000A
+      *
+      *  Receiver information (QSYSINC/QRPGLESRC.QJOURNAL: QJO200RI)
+     D receiverInf_t   DS                  qualified               based(pDummy)
+     D  rcvName                      10A
+     D  rcvLibName                   10A
+     D  rcvASPDev                    10A
+     D  rcvASPNbr                     5U 0
+      *
+      *  Logical unit of work
+     D luw_t           DS                  qualified               based(pDummy)
+     D  id                           39A
+      *
+      *  Transaction identifier (QSYSINC/H.XA: xid_t)
+     D xid_t           DS                  qualified               based(pDummy)
+     D  formatID                     10I 0
+     D  gtrid_length                 10I 0
+     D  bqual_length                 10I 0
+     D  data                        128A
+      *
+     D XIDDATASIZE     C                   128
       *
       * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       *  External prototypes
@@ -125,6 +147,22 @@
       /COPY QEXPJRNE,CLIB2                         Prototypes of C-Library   Record IO
       /COPY QEXPJRNE,CEELIB                        Prototypes of CEE APIs
       /COPY QEXPJRNE,QUSRJOBI
+      *
+      *  memcpy -- Copy Bytes
+      *     The behavior is undefined if copying takes place
+      *     between objects that overlap.
+      *     The memcpy() function returns a pointer to dest.
+     d*memcpy          pr              *          extproc('memcpy')
+     d* i_pDest                        *   value
+     d* i_pSrc                         *   value
+     d* i_count                      10u 0 value
+      *
+      *  Convert Hex to Character (CVTHC)
+     d*cvthc...
+     d*                pr                  extproc('cvthc')
+     d* pResult                        *   value
+     d* pSource                        *   value
+     d* sourceSize                   10i 0 value
       *
       * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       *  Exported prototypes
@@ -141,6 +179,16 @@
      D                 PR                         extproc('p_main')
      D  i_buffer                  65535A          options(*varsize)
      D  io_control                                likeds(control_t)
+      *
+      *  Converts a 4-byte hex value to an IPv4 address.
+     D cvtToIPv4...
+     D                 PR            15A          extproc('cvtToIPv4')
+     D  i_bytes                       4A   const
+      *
+      *  Converts a 16-byte hex value to an IPv6 address.
+     D cvtToIPv6...
+     D                 PR            39A          extproc('cvtToIPv6')
+     D  i_bytes                      16A   value
       *
       *  Returns the job number.
      D getJONBR...
@@ -167,15 +215,15 @@
      D  i_RJNE0200                         const likeds(RJNE0200_t)
      D                                           options(*varsize)
       *
-      *  Returns the value of the 'Incomplete data' flag.
-     D getJOINCDAT...
-     D                 PR             1A         extproc('getJOINCDAT')
-     D  i_RJNE0200                         const likeds(RJNE0200_t)
-     D                                           options(*varsize)
-      *
       *  Returns the value of the 'Minimized ESD' flag.
      D getJOMINESD...
      D                 PR             1A         extproc('getJOMINESD')
+     D  i_RJNE0200                         const likeds(RJNE0200_t)
+     D                                           options(*varsize)
+      *
+      *  Returns the value of the 'File type indicator' flag.
+     D getJOFILTYP...
+     D                 PR             1A         extproc('getJOFILTYP')
      D  i_RJNE0200                         const likeds(RJNE0200_t)
      D                                           options(*varsize)
       *
@@ -188,6 +236,12 @@
       *  Returns the value of the 'Trigger' flag.
      D getJOTGR...
      D                 PR             1A         extproc('getJOTGR')
+     D  i_RJNE0200                         const likeds(RJNE0200_t)
+     D                                           options(*varsize)
+      *
+      *  Returns the value of the 'Incomplete data' flag.
+     D getJOINCDAT...
+     D                 PR             1A         extproc('getJOINCDAT')
      D  i_RJNE0200                         const likeds(RJNE0200_t)
      D                                           options(*varsize)
       *
@@ -352,6 +406,82 @@
       *
       *=====================================================================*
       *  Program entry point
+      *  gio_control:
+      *
+      *  Byte 1 (Passed to the Exit Program):
+      *  0 - No journal entry is passed on this call of the exit program.
+      *  1 - A single journal entry is passed to the exit program.
+      *  2 - A block of one or more journal entries is passed to the exit program.
+      *  3 - No journal entry is passed on this call to the exit program, and no
+      *      more entries can be passed, because the journal receiver that was
+      *      attached when the receive journal entry operation started is no longer
+      *      attached.
+      *      Note: The system ends the RCVJRNE command after calling the exit
+      *            program once with a reason code of 3.
+      *  4 - No journal entry is passed on this call to the exit program, and no
+      *      more entries can be passed unless the remote journal is activated.
+      *      Note: This value can only be passed to the exit program when
+      *            receiving journal entries from the attached receiver of a
+      *            remote journal and the journal state for the journal is
+      *            currently *INACTIVE.
+      *
+      *  Byte 1 (Passed to the System from the Exit Program):
+      *  8 - Requests the command processing program to start passing one or
+      *      more journal entries in a block. If BLKLEN(*NONE) was not
+      *      specified, then specifying 8 in the first byte of the second
+      *      parameter will have no effect and the first 5 bytes of the first
+      *      parameter will be ignored.
+      *  9 - Requests the RCVJRNE command to end. The exit program returns
+      *      control to the system.
+      *
+      *  Byte 2 (Passed to the Exit Program):
+      *  N - Additional journal entries are not currently available to be
+      *      passed after this call of the exit program, or the RCVJRNE
+      *      command will be ending after this call of the exit program.
+      *  Y - Additional journal entries are currently available to be passed
+      *      after this call of the exit program.
+      *
+      *  Byte 3 (Passed to the Exit Program):
+      *  x'00' - One or more journal entries are being passed to the exit
+      *      program and the object names in the fixed length portion of
+      *      each journal entry do not necessarily reflect the name of the
+      *      object at the time the journal entry was deposited into the
+      *      journal.
+      *      Note: This value is returned only when receiving journal
+      *            entries from a journal receiver that was attached to a
+      *            journal prior to V4R2M0.
+      *  0 - No journal entries are currently being passed, so the
+      *      information normally returned in this byte is not applicable.
+      *  1 - One or more journal entries are being passed to the exit
+      *      program and the object names in the fixed length portion of
+      *      each journal entry reflect the name of the object at the time
+      *      the journal entry was deposited into the journal.
+      *  2 - One or more journal entries are being passed to the exit
+      *      program and the object names in the fixed length portion of
+      *      each journal entry do not necessarily reflect the name of the
+      *      object at the time the journal entry was deposited into the
+      *      journal. The object name in the fixed length portion of the
+      *      journal entry may be returned as a previously known name for
+      *      the object prior to the journal entry being deposited into the
+      *      journal or be returned as *UNKNOWN.
+      *      Note: This value will only be returned when receiving journal
+      *            entries from a remote journal and the remote journal is
+      *            currently being caught up from its source journal. A
+      *            remote journal is being caught up from its source journal
+      *            when the Change Remote Journal (CHGRMTJRN) command or
+      *            Change Journal State (QjoChangeJournalState) API is
+      *            invoked and is currently replicating journal entries to
+      *            the remote journal. After the call to the CHGRMTJRN
+      *            command or QjoChangeJournalState API returns, the remote
+      *            journal is maintained with a synchronous or asynchronous
+      *            delivery mode, and the remote journal is no longer being
+      *            caught up.
+      *  3 - One or more journal entries are being passed to the exit
+      *      program and the object names in the fixed length portion of
+      *      each journal entry do not necessarily reflect the name of the
+      *      object at the time the journal entry was deposited into the
+      *      journal. The object name in the fixed length portion of the
+      *      journal entry may be returned as *UNKNOWN.
       *=====================================================================*
       *
      D EXPJRNER3...
@@ -448,6 +578,26 @@
      D clearEntryData...
      D                 DS                  likeds(entryData   )   inz
       *
+      *  Receiver information
+     D receiverInf     DS                  likeds(receiverInf_t)
+     D                                     based(pReceiverInf)
+     D clearReceiverInf...
+     D                 DS                  likeds(receiverInf_t)  inz
+      *
+      *  Logical unit of work information
+     D logicalUnitOfWork...
+     D                 DS                  likeds(luw_t)
+     D                                     based(pLogicalUnitOfWork)
+     D clearLogicalUnitOfWork...
+     D                 DS                  likeds(luw_t)          inz
+      *
+      *  Transaction ID
+     D transactionId...
+     D                 DS                  likeds(xid_t)
+     D                                     based(pTransactionId)
+     D clearTransactionId...
+     D                 DS                  likeds(xid_t)          inz
+      *
       *  O-Buffer
      D dsQADSPJRN_O  E DS         32766    extname(QADSPJRN) inz
      D                                     qualified
@@ -456,6 +606,8 @@
      D dsQADSPJR3_O  E DS         32766    extname(QADSPJR3) inz
      D                                     qualified
      D dsQADSPJR4_O  E DS         32766    extname(QADSPJR4) inz
+     D                                     qualified
+     D dsQADSPJR5_O  E DS         32766    extname(QADSPJR5) inz
      D                                     qualified
       *
       *  Messages
@@ -475,7 +627,7 @@
          // Let's look at the buffer
          pdsQADSPJRN = %addr(i_buffer);  // *TYPE1
          pdsQADSPJR2 = %addr(i_buffer);  // *TYPE2
-         pHeader     = %addr(i_buffer);  // *TYPE3, *TYPE4
+         pHeader     = %addr(i_buffer);  // *TYPE3, *TYPE4, *TYPE5
 
          // Determine the outfile attributes
          outFile.name      = OutputFile_getName();
@@ -498,6 +650,9 @@
                g_file.pRFile = Ropen(g_file.name
                                      : 'ar, blkrcd=Y, ccsid=65535, secure=Y');
             when outFile.outFilFmt = '*TYPE4';
+               g_file.pRFile = Ropen(g_file.name
+                                     : 'ar, blkrcd=Y, ccsid=65535, secure=Y');
+            when outFile.outFilFmt = '*TYPE5';
                g_file.pRFile = Ropen(g_file.name
                                      : 'ar, blkrcd=Y, ccsid=65535, secure=Y');
             endsl;
@@ -692,7 +847,7 @@
                      %subst(entryData.value: 1: entryData.length);
                endif;
 
-               if // (dsQADSPJR3_O.JOINCDAT = '1') or   // Incomplete data, e.g. CLOB/BLOB
+               if // (dsQADSPJR4_O.JOINCDAT = '1') or   // Incomplete data, e.g. CLOB/BLOB
                   (dsQADSPJR4_O.JOMINESD = '1');     // Minimized ESD
                   numErrors = numErrors + 1;
                else;
@@ -706,6 +861,151 @@
                   endif;
                   pRIOFB = Rwrite(g_file.pRFILE
                                   : %addr(dsQADSPJR4_O): rFile.bufLen);
+               endif;
+
+            when outFile.outFilFmt = '*TYPE5';
+
+               // Get access to the retrieved journal entry
+               pRJNE0200 = pHeader + header.ofsJrnE;
+
+               // Get access to the entry data
+               if RJNE0200.ofsEntData > 0;
+                  pEntryData = pRJNE0200 + RJNE0200.ofsEntData;
+               else;
+                  pEntryData = %addr(clearEntryData);
+               endif;
+
+               // Clear output buffer
+               clear dsQADSPJR5_O;
+
+               // Set output data
+               dsQADSPJR5_O.JOENTL   = entryData.length +
+                                       (%addr(dsQADSPJR5_O.JOESD) -
+                                        %addr(dsQADSPJR5_O));
+               dsQADSPJR5_O.JOSEQN   = %editc(RJNE0200.seqNbr: 'X');
+               dsQADSPJR5_O.JOCODE   = RJNE0200.jrnCode;
+               dsQADSPJR5_O.JOENTT   = RJNE0200.entryType;
+               dsQADSPJR5_O.JOTSTP   = cvtDtsToIso(RJNE0200.timestamp);
+               dsQADSPJR5_O.JOJOB    = RJNE0200.job;
+               dsQADSPJR5_O.JOUSER   = RJNE0200.user;
+               dsQADSPJR5_O.JONBR    = getJONBR(RJNE0200);
+               dsQADSPJR5_O.JOPGM    = RJNE0200.pgm;
+               dsQADSPJR5_O.JOOBJ    = getJOOBJ(RJNE0200);
+               dsQADSPJR5_O.JOLIB    = getJOLIB(RJNE0200);
+               dsQADSPJR5_O.JOMBR    = GETJOMBR(RJNE0200);
+               dsQADSPJR5_O.JOCTRR   = %editc(RJNE0200.rrn: 'X');
+               dsQADSPJR5_O.JOFLAG   = RJNE0200.indFlag;
+               dsQADSPJR5_O.JOCCID   = %editc(RJNE0200.cmtCycleID: 'X');
+               dsQADSPJR5_O.JOUSPF   = RJNE0200.userProfile;
+               dsQADSPJR5_O.JOSYNM   = RJNE0200.system;
+
+               dsQADSPJR5_O.JOINCDAT = getJOINCDAT(RJNE0200);
+               dsQADSPJR5_O.JOMINESD = getJOMINESD(RJNE0200);
+               dsQADSPJR5_O.JONVI    = getJONVI(%addr(RJNE0200));
+
+               dsQADSPJR5_O.JORCST   = getJORCST(RJNE0200);
+               dsQADSPJR5_O.JOTGR    = getJOTGR(RJNE0200);
+               dsQADSPJR5_O.JOIGNAPY = getJOIGNAPY(RJNE0200);
+               dsQADSPJR5_O.JOJID    = RJNE0200.journalID;
+
+               dsQADSPJR5_O.JOOBJIND = RJNE0200.objnameID;
+               dsQADSPJR5_O.JOSYSSEQ = %editc(RJNE0200.sysSeqNbr: 'X');
+
+               if RJNE0200.ofsRcvInf > 0;
+                  pReceiverInf = %addr(RJNE0200) + RJNE0200.ofsRcvInf;
+               else;
+                  pReceiverInf = %addr(clearReceiverInf);
+               endif;
+
+               dsQADSPJR5_O.JORCV    = receiverInf.rcvName;
+               dsQADSPJR5_O.JORCVLIB = receiverInf.rcvLibName;
+               dsQADSPJR5_O.JORCVDEV = receiverInf.rcvASPDev;
+               dsQADSPJR5_O.JORCVASP = receiverInf.rcvASPNbr;
+
+               dsQADSPJR5_O.JOARM    = RJNE0200.armNbr;
+               memcpy(%addr(dsQADSPJR5_O.JOTHD)
+                      : %addr(RJNE0200.threadID)
+                      : %size(dsQADSPJR5_O.JOTHD));
+               cvthc(%addr(dsQADSPJR5_O.JOTHDX)
+                     : %addr(dsQADSPJR5_O.JOTHD)
+                     : %size(dsQADSPJR5_O.JOTHDX));
+               dsQADSPJR5_O.JOADF    = RJNE0200.adrFamily;
+               dsQADSPJR5_O.JORPORT  = RJNE0200.rmtPort;
+
+               select;
+               when dsQADSPJR5_O.JOADF = '4'; // IPv4
+                  if %subst(RJNE0200.rmtAdr: 5) = *ALLx'00';
+                     // Bug. PMR: PMR 33254,031,724
+                     dsQADSPJR5_O.JORADR =
+                        cvtToIPv4(%subst(RJNE0200.rmtAdr: 1: 4));
+                  else;
+                     dsQADSPJR5_O.JORADR = RJNE0200.rmtAdr;
+                  endif;
+               when dsQADSPJR5_O.JOADF = '6'; // IPv6
+                  if %subst(RJNE0200.rmtAdr: 1: 12) =
+                        x'00000000000000000000FFFF';
+                     // Embedded IPv4 address: https://de.wikipedia.org/wiki/IPv6
+                     dsQADSPJR5_O.JOADF = '4';
+                     dsQADSPJR5_O.JORADR =
+                        cvtToIPv4(%subst(RJNE0200.rmtAdr: 13: 4));
+                  else;
+                     dsQADSPJR5_O.JORADR = cvtToIPv6(RJNE0200.rmtAdr);
+                  endif;
+               other;
+                  dsQADSPJR5_O.JORADR = '';
+               endsl;
+
+               if RJNE0200.ofsLglUnitWrk > 0;
+                  pLogicalUnitOfWork = %addr(RJNE0200) + RJNE0200.ofsLglUnitWrk;
+               else;
+                  pLogicalUnitOfWork = %addr(clearLogicalUnitOfWork);
+               endif;
+
+               dsQADSPJR5_O.JOLUW = logicalUnitOfWork.id;
+
+               if RJNE0200.ofsTransactID > 0;
+                  pTransactionId = %addr(RJNE0200) + RJNE0200.ofsTransactID;
+               else;
+                  pTransactionId = %addr(clearTransactionId);
+               endif;
+
+               dsQADSPJR5_O.JOXID = transactionId.data;
+
+               dsQADSPJR5_O.JOOBJTYP = RJNE0200.objType;
+               dsQADSPJR5_O.JOFILTYP = getJOFILTYP(RJNE0200);
+               dsQADSPJR5_O.JOCMTLVL = %editc(%dec(
+                                          RJNE0200.nestedCmtLvl: 7: 0): 'X');
+
+               dsQADSPJR5_O.JORES = '';
+
+               // Compute offset for entry data
+               offsJOESD = %addr(dsQADSPJR5_O.JONVI)
+                           - %addr(dsQADSPJR5_O)
+                           + %size(dsQADSPJR5_O.JONVI);
+
+               // Set entry data
+               if entryData.length = 0;
+                  %subst(dsQADSPJR5_O: offsJOESD+1) =
+                     crtEntryDataInitialized(outFile.name:outFile.lib:'JONVI');
+               else;
+                  %subst(dsQADSPJR5_O: offsJOESD+1) =
+                     %subst(entryData.value: 1: entryData.length);
+               endif;
+
+               if // (dsQADSPJR3_O.JOINCDAT = '1') or  // Incomplete data, e.g. CLOB/BLOB
+                  (dsQADSPJR5_O.JOMINESD = '1');       // Minimized ESD
+                  numErrors = numErrors + 1;
+               else;
+                  dataLength = entryData.length;
+                  if (dataLength > 0);
+                     cvtLargeObjectFieldData(
+                        outFile.name: outFile.lib: 'JORES': dsQADSPJR5_O);
+                     maxDataLength = %size(dsQADSPJR5_O) - dataLength;
+                     mapJrnE(dsQADSPJR5_O.JOCODE: dsQADSPJR5_O.JOENTT
+                             : %addr(dsQADSPJR5_O.JOESD): maxDataLength);
+                  endif;
+                  pRIOFB = Rwrite(g_file.pRFILE
+                                  : %addr(dsQADSPJR5_O): rFile.bufLen);
                endif;
             endsl;
 
@@ -744,6 +1044,73 @@
             // Unload program
             *inlr = *on;
          endif;
+
+      /END-FREE
+     P                 E
+      *
+      *====================================================================
+      *  *** private ***
+      *  Converts a 4-byte hex value to an IPv4 address.
+      *====================================================================
+     P cvtToIPv4...
+     P                 B
+     D                 PI            15A
+     D  i_bytes                       4A   const
+      *
+     D ipv4            S             15A   varying
+      *
+     D i               S             10I 0
+     D converter       DS                  qualified
+     D  byte                          1A
+     D  int                           3U 0 overlay(byte)
+      * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+      /FREE
+
+         for i = 1 to 4;
+            converter.byte = %subst(i_bytes: i: 1);
+            if (ipv4 <> '');
+               ipv4 = ipv4 + '.';
+            endif;
+            ipv4 = ipv4 + %editc(converter.int: 'X');
+         endfor;
+
+         return ipv4;
+
+      /END-FREE
+     P                 E
+      *
+      *====================================================================
+      *  *** private ***
+      *  Converts a 16-byte hex value to an IPv6 address.
+      *====================================================================
+     P cvtToIPv6...
+     P                 B
+     D                 PI            39A
+     D  i_bytes                      16A   value
+      *
+     D ipv6            S             39A   varying
+      *
+     D offset          S             10I 0
+     D pSource         S               *
+     D chunk           S              4A
+      * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+      /FREE
+
+         offset = 0;
+
+         dow offset < %size(i_bytes);
+            pSource = %addr(i_bytes) + offset;
+            cvthc(%addr(chunk)
+                  : pSource
+                  : %size(chunk));
+            if (ipv6 <> '');
+               ipv6 = ipv6 + ':';
+            endif;
+            ipv6 = ipv6 + chunk;
+            offset = offset + 2;
+         enddo;
+
+         return ipv6;
 
       /END-FREE
      P                 E
@@ -834,40 +1201,6 @@
       *
       *====================================================================
       *  *** private ***
-      *  Returns the value of the 'Incomplete data' flag.
-      *====================================================================
-     P getJOINCDAT...
-     P                 B
-     D                 PI             1A
-     D  i_RJNE0200                         const likeds(RJNE0200_t)
-     D                                           options(*varsize)
-      *
-     D incDat          S              1A
-     D INCDAT_BIT      C                   x'20'
-      * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-      /FREE
-
-      /if defined(*V5R3M0)
-         if %bitand(i_RJNE0200.flags: INCDAT_BIT) = INCDAT_BIT; // Set incomplete data flag
-            incDat = '1';
-         else;
-            incDat = '0';
-         endif;
-      /else
-         if bitAND(i_RJNE0200.flags: INCDAT_BIT) = INCDAT_BIT;  // Set incomplete data flag
-            incDat = '1';
-         else;
-            incDat = '0';
-         endif;
-      /endif
-
-         return incDat;
-
-      /END-FREE
-     P                 E
-      *
-      *====================================================================
-      *  *** private ***
       *  Returns the value of the 'Minimized ESD' flag.
       *====================================================================
      P getJOMINESD...
@@ -883,19 +1216,60 @@
 
       /if defined(*V5R3M0)
          if %bitand(i_RJNE0200.flags: MINESD_BIT) = MINESD_BIT; // Set minimized ESD flag
-            minESD = '1';
+            minESD = '1'; // This entry has minimized entry specific data.
          else;
-            minESD = '0';
+            minESD = '0'; // This entry has complete entry specific data.
          endif;
       /else
          if bitAND(i_RJNE0200.flags: MINESD_BIT) = MINESD_BIT;  // Set minimized ESD flag
-            minESD = '1';
+            minESD = '1'; // This entry has minimized entry specific data.
          else;
-            minESD = '0';
+            minESD = '0'; // This entry has complete entry specific data.
          endif;
       /endif
 
          return minESD;
+
+      /END-FREE
+     P                 E
+      *
+      *====================================================================
+      *  *** private ***
+      *  Returns the value of the 'File type indicator' flag.
+      *====================================================================
+     P getJOFILTYP...
+     P                 B
+     D                 PI             1A
+     D  i_RJNE0200                         const likeds(RJNE0200_t)
+     D                                           options(*varsize)
+      *
+     D filTyp          S              1A
+     D FILTYP_BIT      C                   x'04'
+      * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+      /FREE
+
+         if (i_RJNE0200.objType = '*FILE');
+            // Returning 'L' and 'P', because that is what DSPJRN writes to an
+            // output file.
+            // PMR: 33254,031,724 (05.10.2018)
+      /if defined(*V5R3M0)
+            if %bitand(i_RJNE0200.flags: FILTYP_BIT) = FILTYP_BIT; // Set file type indicator flag
+               filTyp = 'L'; // This entry is associated with a logical file.
+            else;
+               filTyp = 'P'; // This entry is not associated with a logical file
+            endif;
+      /else
+            if bitAND(i_RJNE0200.flags: FILTYP_BIT) = FILTYP_BIT;  // Set file type indicator flag
+               filTyp = 'L'; // This entry is associated with a logical file.
+            else;
+               filTyp = 'P'; // This entry is not associated with a logical file
+            endif;
+      /endif
+         else;
+            filTyp = '';
+         endif;
+
+         return filTyp;
 
       /END-FREE
      P                 E
@@ -917,15 +1291,15 @@
 
       /if defined(*V5R3M0)
          if %bitand(i_RJNE0200.flags: RCST_BIT) = RCST_BIT; // Set referential constraint flag
-            rcst = '1';
+            rcst = '1'; // This entry was created as part of a referential constraint.
          else;
-            rcst = '0';
+            rcst = '0'; // This entry was not created as part of a referential constraint.
          endif;
       /else
          if bitAND(i_RJNE0200.flags: RCST_BIT) = RCST_BIT;  // Set referential constraint flag
-            rcst = '1';
+            rcst = '1'; // This entry was created as part of a referential constraint.
          else;
-            rcst = '0';
+            rcst = '0'; // This entry was not created as part of a referential constraint.
          endif;
       /endif
 
@@ -951,19 +1325,53 @@
 
       /if defined(*V5R3M0)
          if %bitand(i_RJNE0200.flags: TGR_BIT) = TGR_BIT; // Set trigger flag
-            tgr = '1';
+            tgr = '1'; // This entry was created as the result of a trigger program.
          else;
-            tgr = '0';
+            tgr = '0'; // This entry was not created as the result of a trigger program.
          endif;
       /else
          if bitAND(i_RJNE0200.flags: TGR_BIT) = TGR_BIT;  // Set trigger flag
-            tgr = '1';
+            tgr = '1'; // This entry was created as the result of a trigger program.
          else;
-            tgr = '0';
+            tgr = '0'; // This entry was not created as the result of a trigger program.
          endif;
       /endif
 
          return tgr;
+
+      /END-FREE
+     P                 E
+      *
+      *====================================================================
+      *  *** private ***
+      *  Returns the value of the 'Incomplete data' flag.
+      *====================================================================
+     P getJOINCDAT...
+     P                 B
+     D                 PI             1A
+     D  i_RJNE0200                         const likeds(RJNE0200_t)
+     D                                           options(*varsize)
+      *
+     D incDat          S              1A
+     D INCDAT_BIT      C                   x'20'
+      * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+      /FREE
+
+      /if defined(*V5R3M0)
+         if %bitand(i_RJNE0200.flags: INCDAT_BIT) = INCDAT_BIT; // Set incomplete data flag
+            incDat = '1'; // This entry does have pointers included.
+         else;
+            incDat = '0'; // This entry does not have any pointers included.
+         endif;
+      /else
+         if bitAND(i_RJNE0200.flags: INCDAT_BIT) = INCDAT_BIT;  // Set incomplete data flag
+            incDat = '1'; // This entry does have pointers included.
+         else;
+            incDat = '0'; // This entry does not have any pointers included.
+         endif;
+      /endif
+
+         return incDat;
 
       /END-FREE
      P                 E
@@ -986,15 +1394,15 @@
 
       /if defined(*V5R3M0)
          if %bitand(i_RJNE0200.flags: IGNAPY_BIT) = IGNAPY_BIT; // Set ignored during APYJRNCHG
-            ignApy = '1';                                       // or RMVJRNCHG flag
+            ignApy = '1'; // This entry will be ignored during APYJRNCHG or RMVJRNCHG
          else;
-            ignApy = '0';
+            ignApy = '0'; // This entry will not be ignored during APYJRNCHG or RMVJRNCHG
          endif;
       /else
          if bitAND(i_RJNE0200.flags: IGNAPY_BIT) = IGNAPY_BIT;  // Set ignored during APYJRNCHG
-            ignApy = '1';                                       // or RMVJRNCHG flag
+            ignApy = '1'; // This entry will be ignored during APYJRNCHG or RMVJRNCHG
          else;
-            ignApy = '0';
+            ignApy = '0'; // This entry will not be ignored during APYJRNCHG or RMVJRNCHG
          endif;
       /endif
 

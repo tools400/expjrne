@@ -148,7 +148,8 @@
                           VALUES(*TYPE1                  +
                                  *TYPE2                  +
                                  *TYPE3                  +
-                                 *TYPE4)                 +
+                                 *TYPE4                  +
+                                 *TYPE5)                 +
                           PROMPT('Outfile format'  8)
 
              PARM       KWD(JRN)                         +

@@ -450,6 +450,10 @@
      D cType4File      C                   const('QADSPJR4')
      D cType4Lib       C                   const('QTEMP'   )
       *
+      *  ... TYPE5 outfile
+     D cType5File      C                   const('QADSPJR5')
+     D cType5Lib       C                   const('QTEMP'   )
+      *
       *==================================================================*
       *  Returns the date format of the job.
       *==================================================================*
@@ -844,6 +848,9 @@
          when (i_outFilFmt = '*TYPE4');
             expType.name = cType4File;
             expType.lib  = cType4Lib;
+         when (i_outFilFmt = '*TYPE5');
+            expType.name = cType5File;
+            expType.lib  = cType5Lib;
          endsl;
 
          // ... add columns of QADSPJR*, depending of export type
