@@ -41,7 +41,7 @@
 /*                                                                     */
 /*  24.01.2015  Th.Raddatz    Added option *USER to parameter OUTFILE. */
 /*                                                                     */
-/*  04.10.2018  Th.Raddatz    Added outfile type *TYPE4.               */
+/*  04.10.2018  Th.Raddatz    Added outfile types *TYPE4 and *TYPE5.   */
 /*                                                                     */
 /* =================================================================== */
 /* >>PRE-COMPILER<<                                                    */

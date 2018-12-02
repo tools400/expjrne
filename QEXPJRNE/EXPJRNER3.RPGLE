@@ -44,7 +44,7 @@
       *  03.02.2015  Th.Raddatz    Changed to ignore the "Incomplete data"  *
       *                            flag in order to export BLOB/CLOB data.  *
       *                                                                     *
-      *  04.10.2018  Th.Raddatz    Added outfile type *TYPE4.               *
+      *  04.10.2018  Th.Raddatz    Added outfile types *TYPE4 and *TYPE5.   *
       *                                                                     *
       *=====================================================================*
       * >>PRE-COMPILER<<                                                    *

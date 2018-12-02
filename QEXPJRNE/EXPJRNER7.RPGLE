@@ -36,7 +36,7 @@
       *  03.02.2015  Th.Raddatz    Changed to support CLOB/BLOB fields:     *
       *                            sqlTypeToString() / hasCcsidClause().    *
       *                                                                     *
-      *  04.10.2018  Th.Raddatz    Added outfile type *TYPE4.               *
+      *  04.10.2018  Th.Raddatz    Added outfile types *TYPE4 and *TYPE5.   *
       *                                                                     *
       *=====================================================================*
       * >>PRE-COMPILER<<                                                    *
