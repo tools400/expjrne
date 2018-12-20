@@ -51,7 +51,7 @@
       appblddate CDATA #REQUIRED
      >
      ]>
-<upload  appname="EXPJRNE"  appauthor="Thomas Raddatz"  appblddate="12/03/2018">
+<upload  appname="EXPJRNE"  appauthor="Thomas Raddatz"  appblddate="12/20/2018">
 <install_instructions><![CDATA[
      *----------------------------------------------------------------      ------
      *  1. Upload entire XML to your AS/400 to a source file 112 long, into any mbr
@@ -1315,7 +1315,7 @@ srccssid=  "01141">
      /* =================================================================== */
      /*  History:                                                           */
      /*                                                                     */
-     /*  Datum       Name           nderung                                 */
+     /*  Datum       Name          Änderung                                 */
      /*  ----------  ------------  ---------------------------------------  */
      /*                                                                     */
      /* =================================================================== */
@@ -1633,7 +1633,7 @@ srccssid=  "01141">
              DCL        VAR(&LI) TYPE(*CHAR) LEN(10)
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD f r Message-ID :   TXT0001                    */
+     /*   Cmd-ADDMSGD für Message-ID :   TXT0001                    */
      /* EXPJRNE - Exported journal entries                          */
      /*-------------------------------------------------------------*/
 
@@ -1650,7 +1650,7 @@ srccssid=  "01141">
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD f r Message-ID :   USR0001                    */
+     /*   Cmd-ADDMSGD für Message-ID :   USR0001                    */
      /* Producing SQL 'CREATE TABLE' commands ...                   */
      /*-------------------------------------------------------------*/
 
@@ -1667,7 +1667,7 @@ srccssid=  "01141">
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD f r Message-ID :   USR0002                    */
+     /*   Cmd-ADDMSGD für Message-ID :   USR0002                    */
      /* Retrieving outfile record format ...                        */
      /*-------------------------------------------------------------*/
 
@@ -1684,7 +1684,7 @@ srccssid=  "01141">
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD f r Message-ID :   USR0003                    */
+     /*   Cmd-ADDMSGD für Message-ID :   USR0003                    */
      /* Creating outfile ...                                        */
      /*-------------------------------------------------------------*/
 
@@ -1701,7 +1701,7 @@ srccssid=  "01141">
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD f r Message-ID :   USR0004                    */
+     /*   Cmd-ADDMSGD für Message-ID :   USR0004                    */
      /* Deleting temporary objects ...                              */
      /*-------------------------------------------------------------*/
 
@@ -1718,7 +1718,7 @@ srccssid=  "01141">
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD f r Message-ID :   USR0005                    */
+     /*   Cmd-ADDMSGD für Message-ID :   USR0005                    */
      /* Outfile default name can not be generated. File name to lon */
      /*-------------------------------------------------------------*/
 
@@ -1735,7 +1735,7 @@ srccssid=  "01141">
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD f r Message-ID :   USR0006                    */
+     /*   Cmd-ADDMSGD für Message-ID :   USR0006                    */
      /* Records can not be added when a new outfile is created.     */
      /*-------------------------------------------------------------*/
 
@@ -1752,7 +1752,7 @@ srccssid=  "01141">
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD f r Message-ID :   USR0007                    */
+     /*   Cmd-ADDMSGD für Message-ID :   USR0007                    */
      /* Retrieving journal information ...                          */
      /*-------------------------------------------------------------*/
 
@@ -1769,7 +1769,7 @@ srccssid=  "01141">
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD f r Message-ID :   USR0008                    */
+     /*   Cmd-ADDMSGD für Message-ID :   USR0008                    */
      /* Specified object is not journaled. Journal records can not  */
      /*-------------------------------------------------------------*/
 
@@ -1787,7 +1787,7 @@ d.'                                                                   +
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD f r Message-ID :   USR0009                    */
+     /*   Cmd-ADDMSGD für Message-ID :   USR0009                    */
      /* File record length could not be determined.                 */
      /*-------------------------------------------------------------*/
 
@@ -1804,7 +1804,7 @@ d.'                                                                   +
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD f r Message-ID :   USR0010                    */
+     /*   Cmd-ADDMSGD für Message-ID :   USR0010                    */
      /* Outfile could not be created.                               */
      /*-------------------------------------------------------------*/
 
@@ -1821,7 +1821,7 @@ d.'                                                                   +
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD f r Message-ID :   USR0011                    */
+     /*   Cmd-ADDMSGD für Message-ID :   USR0011                    */
      /* Exporting journal entries ...                               */
      /*-------------------------------------------------------------*/
 
@@ -1838,7 +1838,7 @@ d.'                                                                   +
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD f r Message-ID :   USR0012                    */
+     /*   Cmd-ADDMSGD für Message-ID :   USR0012                    */
      /* Exporting journal entries (&1) ...                          */
      /*-------------------------------------------------------------*/
 
@@ -1857,7 +1857,7 @@ d.'                                                                   +
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD f r Message-ID :   USR0014                    */
+     /*   Cmd-ADDMSGD für Message-ID :   USR0014                    */
      /* &3 Journal entries exported to outfile &2/&1.               */
      /*-------------------------------------------------------------*/
 
@@ -1878,7 +1878,7 @@ d.'                                                                   +
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD f r Message-ID :   USR0015                    */
+     /*   Cmd-ADDMSGD für Message-ID :   USR0015                    */
      /* No journal entries available for file &2/&1.                */
      /*-------------------------------------------------------------*/
 
@@ -1898,7 +1898,7 @@ d.'                                                                   +
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD f r Message-ID :   USR0016                    */
+     /*   Cmd-ADDMSGD für Message-ID :   USR0016                    */
      /* Command ended in error - See joblog.                        */
      /*-------------------------------------------------------------*/
 
@@ -1915,7 +1915,7 @@ d.'                                                                   +
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD f r Message-ID :   USR0017                    */
+     /*   Cmd-ADDMSGD für Message-ID :   USR0017                    */
      /* Data type of field &1 is not supported.                     */
      /*-------------------------------------------------------------*/
 
@@ -1934,7 +1934,7 @@ d.'                                                                   +
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD f r Message-ID :   USR0018                    */
+     /*   Cmd-ADDMSGD für Message-ID :   USR0018                    */
      /* Skipped &1 journal entries due to errors.                   */
      /*-------------------------------------------------------------*/
 
@@ -1958,7 +1958,7 @@ ecause of incomplete data or because of journal parameter ''MINENTDTA'-
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD f r Message-ID :   USR0019                    */
+     /*   Cmd-ADDMSGD für Message-ID :   USR0019                    */
      /* Renamed field or record format &1 to &2.                    */
      /*-------------------------------------------------------------*/
 
@@ -1982,7 +1982,7 @@ to &2 because the name contained invalid characters.'                 +
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD f r Message-ID :   USR0020                    */
+     /*   Cmd-ADDMSGD für Message-ID :   USR0020                    */
      /* Memory adressing violation. Program halted.                 */
      /*-------------------------------------------------------------*/
 
@@ -2003,7 +2003,7 @@ the specified boundaries. Please report that error to the developer.' +
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD f r Message-ID :   USR0021                    */
+     /*   Cmd-ADDMSGD für Message-ID :   USR0021                    */
      /* Level check on file &1 in library &2.                       */
      /*-------------------------------------------------------------*/
 
@@ -2026,7 +2026,7 @@ the specified boundaries. Please report that error to the developer.' +
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD f r Message-ID :   USR0022                    */
+     /*   Cmd-ADDMSGD für Message-ID :   USR0022                    */
      /* Level check on field &3 in file &1 in library &2.           */
      /*-------------------------------------------------------------*/
 
@@ -2051,7 +2051,7 @@ y &2 do not match expected values.'                                   +
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD f r Message-ID :   USR0023                    */
+     /*   Cmd-ADDMSGD für Message-ID :   USR0023                    */
      /* &1: &2                                                      */
      /*-------------------------------------------------------------*/
 
@@ -2071,7 +2071,7 @@ y &2 do not match expected values.'                                   +
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD f r Message-ID :   USR0024                    */
+     /*   Cmd-ADDMSGD für Message-ID :   USR0024                    */
      /* Failed to execute SQL statement to create the output file.  */
      /*-------------------------------------------------------------*/
 
@@ -2093,7 +2093,7 @@ y &2 do not match expected values.'                                   +
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD f r Message-ID :   USR0025                    */
+     /*   Cmd-ADDMSGD für Message-ID :   USR0025                    */
      /* Failed to execute SQL statement to set the field descriptio */
      /*-------------------------------------------------------------*/
 
@@ -2116,7 +2116,7 @@ utput file.'                                                          +
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD f r Message-ID :   USR0026                    */
+     /*   Cmd-ADDMSGD für Message-ID :   USR0026                    */
      /* Failed to execute SQL statement to set the column headings  */
      /*-------------------------------------------------------------*/
 
@@ -2139,7 +2139,7 @@ put file.'                                                            +
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD f r Message-ID :   USR0027                    */
+     /*   Cmd-ADDMSGD für Message-ID :   USR0027                    */
      /* Failed to execute SQL statement to set the text description */
      /*-------------------------------------------------------------*/
 
@@ -2162,7 +2162,7 @@ tput file.'                                                           +
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD f r Message-ID :   USR0028                    */
+     /*   Cmd-ADDMSGD für Message-ID :   USR0028                    */
      /* Parameter OBJTYPE contains an invalid value.                */
      /*-------------------------------------------------------------*/
 
@@ -2187,7 +2187,7 @@ M0. The release level of your system is: &2.'                         +
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD f r Message-ID :   USR0029                    */
+     /*   Cmd-ADDMSGD für Message-ID :   USR0029                    */
      /* Output file must be different from the input file.          */
      /*-------------------------------------------------------------*/
 
@@ -2209,7 +2209,7 @@ for the output file and try your request again.'                      +
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD f r Message-ID :   USR0101                    */
+     /*   Cmd-ADDMSGD für Message-ID :   USR0101                    */
      /* Create temporary source file ...                            */
      /*-------------------------------------------------------------*/
 
@@ -2226,7 +2226,7 @@ for the output file and try your request again.'                      +
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD f r Message-ID :   USR0102                    */
+     /*   Cmd-ADDMSGD für Message-ID :   USR0102                    */
      /* Retrieving outfile record format ...                        */
      /*-------------------------------------------------------------*/
 
@@ -2243,7 +2243,7 @@ for the output file and try your request again.'                      +
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD f r Message-ID :   USR0103                    */
+     /*   Cmd-ADDMSGD für Message-ID :   USR0103                    */
      /* Creating outfile ...                                        */
      /*-------------------------------------------------------------*/
 
@@ -2260,7 +2260,7 @@ for the output file and try your request again.'                      +
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD f r Message-ID :   USR0104                    */
+     /*   Cmd-ADDMSGD für Message-ID :   USR0104                    */
      /* Deleting temporary objects ...                              */
      /*-------------------------------------------------------------*/
 
@@ -2277,7 +2277,7 @@ for the output file and try your request again.'                      +
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD f r Message-ID :   USR0200                    */
+     /*   Cmd-ADDMSGD für Message-ID :   USR0200                    */
      /* Connecting to DB Server ...                                 */
      /*-------------------------------------------------------------*/
 
@@ -2294,7 +2294,7 @@ for the output file and try your request again.'                      +
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD f r Message-ID :   USR0201                    */
+     /*   Cmd-ADDMSGD für Message-ID :   USR0201                    */
      /* Disconnecting from DB server ...                            */
      /*-------------------------------------------------------------*/
 
@@ -2346,15 +2346,15 @@ srccssid=  "01141">
              DCL        VAR(&LI) TYPE(*CHAR) LEN(10)
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD f r Message-ID :   TXT0001                    */
-     /* EXPJRNE - Exportierte Journaleintr ge                       */
+     /*   Cmd-ADDMSGD für Message-ID :   TXT0001                    */
+     /* EXPJRNE - Exportierte Journaleinträge                       */
      /*-------------------------------------------------------------*/
 
              ADDMSGD +
                 MSGID(TXT0001) +
                 MSGF(&LI/EXPJRNE) +
                 MSG(+
-'EXPJRNE - Exportierte Journaleintr ge'                               +
+'EXPJRNE - Exportierte Journaleinträge'                               +
                 ) +
                 SEV(00) +
      /*   Keine Ersatzvariablen definiert!                          */ +
@@ -2363,7 +2363,7 @@ srccssid=  "01141">
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD f r Message-ID :   USR0001                    */
+     /*   Cmd-ADDMSGD für Message-ID :   USR0001                    */
      /* Erzeugen SQL 'CREATE TABLE' Befehle ...                     */
      /*-------------------------------------------------------------*/
 
@@ -2380,7 +2380,7 @@ srccssid=  "01141">
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD f r Message-ID :   USR0002                    */
+     /*   Cmd-ADDMSGD für Message-ID :   USR0002                    */
      /* Abrufen Format der Ausgabedatei ...                         */
      /*-------------------------------------------------------------*/
 
@@ -2397,7 +2397,7 @@ srccssid=  "01141">
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD f r Message-ID :   USR0003                    */
+     /*   Cmd-ADDMSGD für Message-ID :   USR0003                    */
      /* Erstellen der Ausgabedatei ...                              */
      /*-------------------------------------------------------------*/
 
@@ -2414,15 +2414,15 @@ srccssid=  "01141">
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD f r Message-ID :   USR0004                    */
-     /* L schen tempor rer Arbeitsobjekte ...                       */
+     /*   Cmd-ADDMSGD für Message-ID :   USR0004                    */
+     /* Löschen temporärer Arbeitsobjekte ...                       */
      /*-------------------------------------------------------------*/
 
              ADDMSGD +
                 MSGID(USR0004) +
                 MSGF(&LI/EXPJRNE) +
                 MSG(+
-'L schen tempor rer Arbeitsobjekte ...'                               +
+'Löschen temporärer Arbeitsobjekte ...'                               +
                 ) +
                 SEV(00) +
      /*   Keine Ersatzvariablen definiert!                          */ +
@@ -2431,15 +2431,15 @@ srccssid=  "01141">
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD f r Message-ID :   USR0005                    */
-     /* Standardname f r Ausgabedatei kann nicht generiert werden.  */
+     /*   Cmd-ADDMSGD für Message-ID :   USR0005                    */
+     /* Standardname für Ausgabedatei kann nicht generiert werden.  */
      /*-------------------------------------------------------------*/
 
              ADDMSGD +
                 MSGID(USR0005) +
                 MSGF(&LI/EXPJRNE) +
                 MSG(+
-'Standardname f r Ausgabedatei kann nicht generiert werden. Name der D-
+'Standardname für Ausgabedatei kann nicht generiert werden. Name der D-
 atei zu lang.'                                                        +
                 ) +
                 SEV(00) +
@@ -2449,15 +2449,15 @@ atei zu lang.'                                                        +
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD f r Message-ID :   USR0006                    */
-     /* S tze k nnen nicht hinzugef gt werden, wenn die Ausgabedate */
+     /*   Cmd-ADDMSGD für Message-ID :   USR0006                    */
+     /* Sätze können nicht hinzugefügt werden, wenn die Ausgabedate */
      /*-------------------------------------------------------------*/
 
              ADDMSGD +
                 MSGID(USR0006) +
                 MSGF(&LI/EXPJRNE) +
                 MSG(+
-'S tze k nnen nicht hinzugef gt werden, wenn die Ausgabedatei neu erst-
+'Sätze können nicht hinzugefügt werden, wenn die Ausgabedatei neu erst-
 ellt werden soll.'                                                    +
                 ) +
                 SEV(00) +
@@ -2467,7 +2467,7 @@ ellt werden soll.'                                                    +
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD f r Message-ID :   USR0007                    */
+     /*   Cmd-ADDMSGD für Message-ID :   USR0007                    */
      /* Journalzuordnung wird ermittelt ...                         */
      /*-------------------------------------------------------------*/
 
@@ -2484,15 +2484,15 @@ ellt werden soll.'                                                    +
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD f r Message-ID :   USR0008                    */
-     /* Ausgew hltes Objekt wird nicht journalisiert.               */
+     /*   Cmd-ADDMSGD für Message-ID :   USR0008                    */
+     /* Ausgewähltes Objekt wird nicht journalisiert.               */
      /*-------------------------------------------------------------*/
 
              ADDMSGD +
                 MSGID(USR0008) +
                 MSGF(&LI/EXPJRNE) +
                 MSG(+
-'Ausgew hltes Objekt wird nicht journalisiert.'                       +
+'Ausgewähltes Objekt wird nicht journalisiert.'                       +
                 ) +
                 SEV(00) +
      /*   Keine Ersatzvariablen definiert!                          */ +
@@ -2501,15 +2501,15 @@ ellt werden soll.'                                                    +
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD f r Message-ID :   USR0009                    */
-     /* Satzl nge konnte nicht ermittelt werden.                    */
+     /*   Cmd-ADDMSGD für Message-ID :   USR0009                    */
+     /* Satzlänge konnte nicht ermittelt werden.                    */
      /*-------------------------------------------------------------*/
 
              ADDMSGD +
                 MSGID(USR0009) +
                 MSGF(&LI/EXPJRNE) +
                 MSG(+
-'Satzl nge konnte nicht ermittelt werden.'                            +
+'Satzlänge konnte nicht ermittelt werden.'                            +
                 ) +
                 SEV(00) +
      /*   Keine Ersatzvariablen definiert!                          */ +
@@ -2518,7 +2518,7 @@ ellt werden soll.'                                                    +
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD f r Message-ID :   USR0010                    */
+     /*   Cmd-ADDMSGD für Message-ID :   USR0010                    */
      /* Ausgabedatei konnte nicht erstellt werden.                  */
      /*-------------------------------------------------------------*/
 
@@ -2535,15 +2535,15 @@ ellt werden soll.'                                                    +
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD f r Message-ID :   USR0011                    */
-     /* Export der Journaleintr ge l uft ...                        */
+     /*   Cmd-ADDMSGD für Message-ID :   USR0011                    */
+     /* Export der Journaleinträge läuft ...                        */
      /*-------------------------------------------------------------*/
 
              ADDMSGD +
                 MSGID(USR0011) +
                 MSGF(&LI/EXPJRNE) +
                 MSG(+
-'Export der Journaleintr ge l uft ...'                                +
+'Export der Journaleinträge läuft ...'                                +
                 ) +
                 SEV(00) +
      /*   Keine Ersatzvariablen definiert!                          */ +
@@ -2552,15 +2552,15 @@ ellt werden soll.'                                                    +
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD f r Message-ID :   USR0012                    */
-     /* Export der Journaleintr ge l uft (&1) ...                   */
+     /*   Cmd-ADDMSGD für Message-ID :   USR0012                    */
+     /* Export der Journaleinträge läuft (&1) ...                   */
      /*-------------------------------------------------------------*/
 
              ADDMSGD +
                 MSGID(USR0012) +
                 MSGF(&LI/EXPJRNE) +
                 MSG(+
-'Export der Journaleintr ge l uft (&1) ...'                           +
+'Export der Journaleinträge läuft (&1) ...'                           +
                 ) +
                 SEV(00) +
                 FMT( +
@@ -2571,15 +2571,15 @@ ellt werden soll.'                                                    +
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD f r Message-ID :   USR0014                    */
-     /* &3 Journaleintr ge in Datei &2/&1 gestellt.                 */
+     /*   Cmd-ADDMSGD für Message-ID :   USR0014                    */
+     /* &3 Journaleinträge in Datei &2/&1 gestellt.                 */
      /*-------------------------------------------------------------*/
 
              ADDMSGD +
                 MSGID(USR0014) +
                 MSGF(&LI/EXPJRNE) +
                 MSG(+
-'&3 Journaleintr ge in Datei &2/&1 gestellt.'                         +
+'&3 Journaleinträge in Datei &2/&1 gestellt.'                         +
                 ) +
                 SEV(00) +
                 FMT( +
@@ -2592,15 +2592,15 @@ ellt werden soll.'                                                    +
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD f r Message-ID :   USR0015                    */
-     /* Keine Journalaufzeichnungen f r Datei &2/&1 gefunden.       */
+     /*   Cmd-ADDMSGD für Message-ID :   USR0015                    */
+     /* Keine Journalaufzeichnungen für Datei &2/&1 gefunden.       */
      /*-------------------------------------------------------------*/
 
              ADDMSGD +
                 MSGID(USR0015) +
                 MSGF(&LI/EXPJRNE) +
                 MSG(+
-'Keine Journalaufzeichnungen f r Datei &2/&1 gefunden.'               +
+'Keine Journalaufzeichnungen für Datei &2/&1 gefunden.'               +
                 ) +
                 SEV(00) +
                 FMT( +
@@ -2612,7 +2612,7 @@ ellt werden soll.'                                                    +
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD f r Message-ID :   USR0016                    */
+     /*   Cmd-ADDMSGD für Message-ID :   USR0016                    */
      /* Befehl fehlerhaft beendet - Siehe Jobprotokoll.             */
      /*-------------------------------------------------------------*/
 
@@ -2629,15 +2629,15 @@ ellt werden soll.'                                                    +
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD f r Message-ID :   USR0017                    */
-     /* Datentyp von Feld &1 wird nicht unterst tzt.                */
+     /*   Cmd-ADDMSGD für Message-ID :   USR0017                    */
+     /* Datentyp von Feld &1 wird nicht unterstützt.                */
      /*-------------------------------------------------------------*/
 
              ADDMSGD +
                 MSGID(USR0017) +
                 MSGF(&LI/EXPJRNE) +
                 MSG(+
-'Datentyp von Feld &1 wird nicht unterst tzt.'                        +
+'Datentyp von Feld &1 wird nicht unterstützt.'                        +
                 ) +
                 SEV(00) +
                 FMT( +
@@ -2648,19 +2648,19 @@ ellt werden soll.'                                                    +
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD f r Message-ID :   USR0018                    */
-     /* &1 Journaleintr ge aufgrund von Fehlern  bergangen.         */
+     /*   Cmd-ADDMSGD für Message-ID :   USR0018                    */
+     /* &1 Journaleinträge aufgrund von Fehlern übergangen.         */
      /*-------------------------------------------------------------*/
 
              ADDMSGD +
                 MSGID(USR0018) +
                 MSGF(&LI/EXPJRNE) +
                 MSG(+
-'&1 Journaleintr ge aufgrund von Fehlern  bergangen.'                 +
+'&1 Journaleinträge aufgrund von Fehlern übergangen.'                 +
                 ) +
                 SECLVL(+
-'&N &N Information . . :   &1 Journaleintr ge wurden nicht exportiert,-
- weil die Daten unvollst ndig waren oder weil im Journal der Parameter-
+'&N &N Information . . :   &1 Journaleinträge wurden nicht exportiert,-
+ weil die Daten unvollständig waren oder weil im Journal der Parameter-
  ''MINENTDTA'' gesetzt ist.'                                          +
                 ) +
                 SEV(00) +
@@ -2672,7 +2672,7 @@ ellt werden soll.'                                                    +
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD f r Message-ID :   USR0019                    */
+     /*   Cmd-ADDMSGD für Message-ID :   USR0019                    */
      /* Feld oder Datzformat &1 umbenannt nach &2.                  */
      /*-------------------------------------------------------------*/
 
@@ -2684,7 +2684,7 @@ ellt werden soll.'                                                    +
                 ) +
                 SECLVL(+
 '&N &N Information . . :   Feld oder Satzformat &1 wurde nach &2 umben-
-annt, weil der Name &1 ung ltige Zeichen beinhaltet.'                 +
+annt, weil der Name &1 ungültige Zeichen beinhaltet.'                 +
                 ) +
                 SEV(00) +
                 FMT( +
@@ -2696,7 +2696,7 @@ annt, weil der Name &1 ung ltige Zeichen beinhaltet.'                 +
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD f r Message-ID :   USR0020                    */
+     /*   Cmd-ADDMSGD für Message-ID :   USR0020                    */
      /* Unerlaubter Speicherzugriff. Programm beendet.              */
      /*-------------------------------------------------------------*/
 
@@ -2708,8 +2708,8 @@ annt, weil der Name &1 ung ltige Zeichen beinhaltet.'                 +
                 ) +
                 SECLVL(+
 '&N &N Information . . :   Es wurde versucht auf Speicherbereiche auss-
-erhalb der zul ssigen Grenzen zuzugreifen. Bitte informieren Sie den E-
-ntwickler  ber diesen Fehler.'                                        +
+erhalb der zulässigen Grenzen zuzugreifen. Bitte informieren Sie den E-
+ntwickler über diesen Fehler.'                                        +
                 ) +
                 SEV(00) +
      /*   Keine Ersatzvariablen definiert!                          */ +
@@ -2718,15 +2718,15 @@ ntwickler  ber diesen Fehler.'                                        +
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD f r Message-ID :   USR0021                    */
-     /* Aktualit tspr fung f r Datei &1 in Bibliothek &2.           */
+     /*   Cmd-ADDMSGD für Message-ID :   USR0021                    */
+     /* Aktualitätsprüfung für Datei &1 in Bibliothek &2.           */
      /*-------------------------------------------------------------*/
 
              ADDMSGD +
                 MSGID(USR0021) +
                 MSGF(&LI/EXPJRNE) +
                 MSG(+
-'Aktualit tspr fung f r Datei &1 in Bibliothek &2.'                   +
+'Aktualitätsprüfung für Datei &1 in Bibliothek &2.'                   +
                 ) +
                 SECLVL(+
 '&N &N Information . . :   Die Anzahl Felder sind unterschiedlich.'   +
@@ -2741,15 +2741,15 @@ ntwickler  ber diesen Fehler.'                                        +
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD f r Message-ID :   USR0022                    */
-     /* Aktualit tspr fung f r Feld &3 in Datei &1 in Bibliothek &2 */
+     /*   Cmd-ADDMSGD für Message-ID :   USR0022                    */
+     /* Aktualitätsprüfung für Feld &3 in Datei &1 in Bibliothek &2 */
      /*-------------------------------------------------------------*/
 
              ADDMSGD +
                 MSGID(USR0022) +
                 MSGF(&LI/EXPJRNE) +
                 MSG(+
-'Aktualit tspr fung f r Feld &3 in Datei &1 in Bibliothek &2.'        +
+'Aktualitätsprüfung für Feld &3 in Datei &1 in Bibliothek &2.'        +
                 ) +
                 SECLVL(+
 '&N &N Information . . :   Die Attribute von Feld &3 in der Datei &1 i-
@@ -2766,7 +2766,7 @@ n der Bibliothek &2 entsprechen nicht den erwarteten Werten.'         +
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD f r Message-ID :   USR0023                    */
+     /*   Cmd-ADDMSGD für Message-ID :   USR0023                    */
      /* &1: &2                                                      */
      /*-------------------------------------------------------------*/
 
@@ -2786,15 +2786,15 @@ n der Bibliothek &2 entsprechen nicht den erwarteten Werten.'         +
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD f r Message-ID :   USR0024                    */
-     /* Ausf hrung der SQL Anweisung zum Erstellen der Ausgabedatei */
+     /*   Cmd-ADDMSGD für Message-ID :   USR0024                    */
+     /* Ausführung der SQL Anweisung zum Erstellen der Ausgabedatei */
      /*-------------------------------------------------------------*/
 
              ADDMSGD +
                 MSGID(USR0024) +
                 MSGF(&LI/EXPJRNE) +
                 MSG(+
-'Ausf hrung der SQL Anweisung zum Erstellen der Ausgabedatei fehlgesch-
+'Ausführung der SQL Anweisung zum Erstellen der Ausgabedatei fehlgesch-
 lagen.'                                                               +
                 ) +
                 SECLVL(+
@@ -2809,15 +2809,15 @@ lagen.'                                                               +
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD f r Message-ID :   USR0025                    */
-     /* Ausf hrung der SQL Anweisung zum Setzen der Feldbeschreibun */
+     /*   Cmd-ADDMSGD für Message-ID :   USR0025                    */
+     /* Ausführung der SQL Anweisung zum Setzen der Feldbeschreibun */
      /*-------------------------------------------------------------*/
 
              ADDMSGD +
                 MSGID(USR0025) +
                 MSGF(&LI/EXPJRNE) +
                 MSG(+
-'Ausf hrung der SQL Anweisung zum Setzen der Feldbeschreibungen der Au-
+'Ausführung der SQL Anweisung zum Setzen der Feldbeschreibungen der Au-
 sgabedatei fehlgeschlagen.'                                           +
                 ) +
                 SECLVL(+
@@ -2832,15 +2832,15 @@ sgabedatei fehlgeschlagen.'                                           +
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD f r Message-ID :   USR0026                    */
-     /* Ausf hrung der ASL Anweisung zum setzen der Spalten berschr */
+     /*   Cmd-ADDMSGD für Message-ID :   USR0026                    */
+     /* Ausführung der ASL Anweisung zum setzen der Spaltenüberschr */
      /*-------------------------------------------------------------*/
 
              ADDMSGD +
                 MSGID(USR0026) +
                 MSGF(&LI/EXPJRNE) +
                 MSG(+
-'Ausf hrung der ASL Anweisung zum setzen der Spalten berschriften der -
+'Ausführung der ASL Anweisung zum setzen der Spaltenüberschriften der -
 Felder der Ausgabedatei fehlgeschlagen.'                              +
                 ) +
                 SECLVL(+
@@ -2855,15 +2855,15 @@ Felder der Ausgabedatei fehlgeschlagen.'                              +
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD f r Message-ID :   USR0027                    */
-     /* Ausf hrung der SQL Anweisung zum Setzen der Textbeschreibun */
+     /*   Cmd-ADDMSGD für Message-ID :   USR0027                    */
+     /* Ausführung der SQL Anweisung zum Setzen der Textbeschreibun */
      /*-------------------------------------------------------------*/
 
              ADDMSGD +
                 MSGID(USR0027) +
                 MSGF(&LI/EXPJRNE) +
                 MSG(+
-'Ausf hrung der SQL Anweisung zum Setzen der Textbeschreibung der Ausg-
+'Ausführung der SQL Anweisung zum Setzen der Textbeschreibung der Ausg-
 abedatei fehlgeschlagen.'                                             +
                 ) +
                 SECLVL(+
@@ -2878,19 +2878,19 @@ abedatei fehlgeschlagen.'                                             +
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD f r Message-ID :   USR0028                    */
-     /* Wert f r Parameter OBJTYPE ist ung ltig.                    */
+     /*   Cmd-ADDMSGD für Message-ID :   USR0028                    */
+     /* Wert für Parameter OBJTYPE ist ungültig.                    */
      /*-------------------------------------------------------------*/
 
              ADDMSGD +
                 MSGID(USR0028) +
                 MSGF(&LI/EXPJRNE) +
                 MSG(+
-'Wert f r Parameter OBJTYPE ist ung ltig.'                            +
+'Wert für Parameter OBJTYPE ist ungültig.'                            +
                 ) +
                 SECLVL(+
 '&N &N Ursache . . . . :   Der Wert &1 wird von dem aktuellen Release -
-des Betriebssystems nicht unterst tzt. Der mindestens erforderliche Re-
+des Betriebssystems nicht unterstützt. Der mindestens erforderliche Re-
 leasestand ist V5R4M0. Der aktuelle Releasestand ist: &2.'            +
                 ) +
                 SEV(00) +
@@ -2903,7 +2903,7 @@ leasestand ist V5R4M0. Der aktuelle Releasestand ist: &2.'            +
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD f r Message-ID :   USR0029                    */
+     /*   Cmd-ADDMSGD für Message-ID :   USR0029                    */
      /* Die Ausgabedatei darf nicht identisch mit der Eingabedatei  */
      /*-------------------------------------------------------------*/
 
@@ -2915,8 +2915,8 @@ leasestand ist V5R4M0. Der aktuelle Releasestand ist: &2.'            +
                 ) +
                 SECLVL(+
 '&N &N Ursache . . . . :   Die Ausgabedatei darf nicht identisch mit d-
-er Datei sein, deren Journaleintr ge exportiert werden. Bitte w hlen s-
-ie einen anderen Namen f r die Ausgabedatei und f hren sie die Exporta-
+er Datei sein, deren Journaleinträge exportiert werden. Bitte wählen s-
+ie einen anderen Namen für die Ausgabedatei und führen sie die Exporta-
 nforderung erneut aus.'                                               +
                 ) +
                 SEV(00) +
@@ -2926,15 +2926,15 @@ nforderung erneut aus.'                                               +
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD f r Message-ID :   USR0101                    */
-     /* Erzeugen tempor re Quellendatei ...                         */
+     /*   Cmd-ADDMSGD für Message-ID :   USR0101                    */
+     /* Erzeugen temporäre Quellendatei ...                         */
      /*-------------------------------------------------------------*/
 
              ADDMSGD +
                 MSGID(USR0101) +
                 MSGF(&LI/EXPJRNE) +
                 MSG(+
-'Erzeugen tempor re Quellendatei ...'                                 +
+'Erzeugen temporäre Quellendatei ...'                                 +
                 ) +
                 SEV(00) +
      /*   Keine Ersatzvariablen definiert!                          */ +
@@ -2943,7 +2943,7 @@ nforderung erneut aus.'                                               +
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD f r Message-ID :   USR0102                    */
+     /*   Cmd-ADDMSGD für Message-ID :   USR0102                    */
      /* Abrufen Format der Ausgabedatei ...                         */
      /*-------------------------------------------------------------*/
 
@@ -2960,7 +2960,7 @@ nforderung erneut aus.'                                               +
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD f r Message-ID :   USR0103                    */
+     /*   Cmd-ADDMSGD für Message-ID :   USR0103                    */
      /* Erstellen der Ausgabedatei ...                              */
      /*-------------------------------------------------------------*/
 
@@ -2977,15 +2977,15 @@ nforderung erneut aus.'                                               +
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD f r Message-ID :   USR0104                    */
-     /* L schen tempor rer Arbeitsobjekte ...                       */
+     /*   Cmd-ADDMSGD für Message-ID :   USR0104                    */
+     /* Löschen temporärer Arbeitsobjekte ...                       */
      /*-------------------------------------------------------------*/
 
              ADDMSGD +
                 MSGID(USR0104) +
                 MSGF(&LI/EXPJRNE) +
                 MSG(+
-'L schen tempor rer Arbeitsobjekte ...'                               +
+'Löschen temporärer Arbeitsobjekte ...'                               +
                 ) +
                 SEV(00) +
      /*   Keine Ersatzvariablen definiert!                          */ +
@@ -2994,7 +2994,7 @@ nforderung erneut aus.'                                               +
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD f r Message-ID :   USR0200                    */
+     /*   Cmd-ADDMSGD für Message-ID :   USR0200                    */
      /* Verbinden mit Datenbankserver ...                           */
      /*-------------------------------------------------------------*/
 
@@ -3011,7 +3011,7 @@ nforderung erneut aus.'                                               +
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD f r Message-ID :   USR0201                    */
+     /*   Cmd-ADDMSGD für Message-ID :   USR0201                    */
      /* Trennen von Datenbankserver ...                             */
      /*-------------------------------------------------------------*/
 
@@ -3427,13 +3427,13 @@ srclen  =  "00112"
 srccssid=  "01141">
 <copysrc><![CDATA[
       /if not defined(COPYRIGHT_DSPEC)
-     h copyright('V5.0 - 02.11.2018 - mailto: thomas.raddatz@tools400.de')
+     h copyright('V5.1 - 20.12.2018 - mailto: thomas.raddatz@tools400.de')
       /eof
       /endif
      D EXPJRNE_VERSION...
-     D                 C                   '5.0'
+     D                 C                   '5.1'
      D EXPJRNE_DATE...
-     D                 C                   '02.11.2018'
+     D                 C                   '20.12.2018'
 ]]>  </copysrc>
 </mbr>
 <sendmsg  sendmsgid="CPF9897" sendmsgtype = "*STATUS   "><![CDATA[
@@ -5267,7 +5267,7 @@ QUAL4:       QUAL       TYPE(*NAME)                      +
                           DFT(*LIBL)                     +
                           SPCVAL((*LIBL  )               +
                                  (*CURLIB))              +
-                          PROMPT('Library')
+                          PROMPT('Bibliothek')
 
 JRN:         QUAL       TYPE(*NAME)                      +
                           LEN(10)                        +
@@ -5406,7 +5406,7 @@ srccssid=  "01141">
 :IMHELP name='EXPJRNE/JRN       '.
 :EHELP.
 .*--------------------------------------------------------------------
-.* Hilfetext f r den Befehl
+.* Hilfetext für den Befehl
 .*--------------------------------------------------------------------
 :HELP NAME='EXPJRNE'.
 Export Journal Entries (EXPJRNE) - Help
@@ -5420,7 +5420,7 @@ the associated journal is retrieved from the object.
 :EHELP.
 .*
 .*--------------------------------------------------------------------
-.* Hilfetext f r Schl sselwort OBJ
+.* Hilfetext für Schlüsselwort OBJ
 .*--------------------------------------------------------------------
 :HELP name='EXPJRNE/OBJ       '.
 Object - Help
@@ -5455,7 +5455,7 @@ library for the job, the QGPL is used.
 :EHELP.
 .*
 .*--------------------------------------------------------------------
-.* Hilfetext f r Schl sselwort OBJTYPE
+.* Hilfetext für Schlüsselwort OBJTYPE
 .*--------------------------------------------------------------------
 :HELP name='EXPJRNE/OBJTYPE   '.
 Object type - Help
@@ -5501,7 +5501,7 @@ exported to the output file.
 :EHELP.
 .*
 .*--------------------------------------------------------------------
-.* Hilfetext f r Schl sselwort MBR
+.* Hilfetext für Schlüsselwort MBR
 .*--------------------------------------------------------------------
 :HELP name='EXPJRNE/MBR       '.
 Member - Help
@@ -5530,7 +5530,7 @@ exported to the output file.
 :EHELP.
 .*
 .*--------------------------------------------------------------------
-.* Hilfetext f r Schl sselwort FROMDATE
+.* Hilfetext für Schlüsselwort FROMDATE
 .*--------------------------------------------------------------------
 :HELP name='EXPJRNE/FROMDATE  '.
 Starting Date - Help
@@ -5552,7 +5552,7 @@ point for the range of entries to be exported.
 :EHELP.
 .*
 .*--------------------------------------------------------------------
-.* Hilfetext f r Schl sselwort FROMTIME
+.* Hilfetext für Schlüsselwort FROMTIME
 .*--------------------------------------------------------------------
 :HELP name='EXPJRNE/FROMTIME  '.
 Starting Time - Help
@@ -5574,7 +5574,7 @@ point for the range of entries to be exported.
 :EHELP.
 .*
 .*--------------------------------------------------------------------
-.* Hilfetext f r Schl sselwort TODATE
+.* Hilfetext für Schlüsselwort TODATE
 .*--------------------------------------------------------------------
 :HELP name='EXPJRNE/TODATE    '.
 Ending Date - Hepl
@@ -5597,7 +5597,7 @@ be exported.
 :EHELP.
 .*
 .*--------------------------------------------------------------------
-.* Hilfetext f r Schl sselwort TOTIME
+.* Hilfetext für Schlüsselwort TOTIME
 .*--------------------------------------------------------------------
 :HELP name='EXPJRNE/TOTIME  '.
 Ending Time - Help
@@ -5620,7 +5620,7 @@ be exported.
 :EHELP.
 .*
 .*--------------------------------------------------------------------
-.* Hilfetext f r Schl sselwort OUTFILFMT
+.* Hilfetext für Schlüsselwort OUTFILFMT
 .*--------------------------------------------------------------------
 :HELP name='EXPJRNE/OUTFILFMT '.
 Outfile format - Help
@@ -5664,7 +5664,7 @@ is specified and ASP, LUW, XID.
 :EHELP.
 .*
 .*--------------------------------------------------------------------
-.* Hilfetext f r Schl sselwort OUTFILE
+.* Hilfetext für Schlüsselwort OUTFILE
 .*--------------------------------------------------------------------
 :HELP name='EXPJRNE/OUTFILE   '.
 Outfile - Help
@@ -5677,7 +5677,7 @@ it. Records may replace or be added to the current data in the
 file member.
 :P.
 :HP2.Attention::EHP2. If a new file is created, the file description
-is set to "Ausgabedatei f r EXPJRNE".
+is set to "Ausgabedatei für EXPJRNE".
 .*
 :IMHELP name='COM/OPTPARM'.
 :P.
@@ -5718,7 +5718,7 @@ is searched for the output file.
 :EHELP.
 .*
 .*--------------------------------------------------------------------
-.* Hilfetext f r Schl sselwort OUTMBR
+.* Hilfetext für Schlüsselwort OUTMBR
 .*--------------------------------------------------------------------
 :HELP name='EXPJRNE/OUTMBR    '.
 Output member options - Help
@@ -5741,7 +5741,7 @@ existing records.
 :EHELP.
 .*
 .*--------------------------------------------------------------------
-.* Hilfetext f r Schl sselwort CRTFILE
+.* Hilfetext für Schlüsselwort CRTFILE
 .*--------------------------------------------------------------------
 :HELP name='EXPJRNE/CRTFILE   '.
 Create outfile - Help
@@ -5780,7 +5780,7 @@ that contain invalid data.
 :EHELP.
 .*
 .*--------------------------------------------------------------------
-.* Hilfetext f r Schl sselwort TPLFILE.
+.* Hilfetext für Schlüsselwort TPLFILE.
 .*--------------------------------------------------------------------
 :HELP name='EXPJRNE/TPLFILE   '.
 Template file - Help
@@ -5824,7 +5824,7 @@ library is used.
 :EHELP.
 .*
 .*--------------------------------------------------------------------
-.* Hilfetext f r Schl sselwort SIZE
+.* Hilfetext für Schlüsselwort SIZE
 .*--------------------------------------------------------------------
 :HELP name='EXPJRNE/SIZE      '.
 Member size - Help
@@ -5890,7 +5890,7 @@ number of records value is 0, this value must also be 0.
 :EHELP.
 .*
 .*--------------------------------------------------------------------
-.* Hilfetext f r Schl sselwort LVLCHK
+.* Hilfetext für Schlüsselwort LVLCHK
 .*--------------------------------------------------------------------
 :HELP name='EXPJRNE/LVLCHK    '.
 Record format level check - Help
@@ -5917,7 +5917,7 @@ an escape message is send.
 :EHELP.
 .*
 .*--------------------------------------------------------------------
-.* Hilfetext f r Schl sselwort JRN
+.* Hilfetext für Schlüsselwort JRN
 .*--------------------------------------------------------------------
 :HELP name='EXPJRNE/JRN       '.
 Journal - Help
@@ -5963,7 +5963,7 @@ job, QGPL is used.
 :EHELP.
 .*
 .*--------------------------------------------------------------------
-.* Hilfetext f r Schl sselwort RCVRNG
+.* Hilfetext für Schlüsselwort RCVRNG
 .*--------------------------------------------------------------------
 :HELP name='EXPJRNE/RCVRNG    '.
 Range of journal receivers - Help
@@ -6229,7 +6229,7 @@ Bibliothekswerte qualifiziert werden:
 :PARML.
 :PT.:PK DEF.*LIBL:EPK.
 :PD.Alle Bibliotheken in der Bibliotheksliste des Jobs werden
-durchsucht, bis die erste Übereinstimmung gefunden wird.
+durchsucht, bis die erste Ã bereinstimmung gefunden wird.
 .*
 :PT.:PV.*CURLIB:EPV.
 :PD.Die aktuelle Jobbibliothek wird durchsucht. Falls keine aktuelle
@@ -6251,7 +6251,7 @@ Objektart - Hilfe
 :XH3.Objektart (OBJTYPE)
 :P.
 Gibt die Objektart des Objekts an, dessen Journaleinträge exportiert werden. Zur
-Zeit werden folgende Objektarten unterst tzt:
+Zeit werden folgende Objektarten unterstï¿½tzt:
 :LINES.
 Objekt                         Codes   Types
 ----------------------------   -----   ---------------------------
@@ -6307,7 +6307,7 @@ werden sollen.
 .*
 :PT.:PV.*ALL:EPV.
 :PD.Die Journaleinträge aller physischen Dateien der
-angegebenen Bibliothek, deren aufgezeichnete Änderungen
+angegebenen Bibliothek, deren aufgezeichnete Ã nderungen
 sich derzeit im Journalempfänger befinden, werden
 exportiert.
 .*
@@ -6495,7 +6495,7 @@ Gültige Bibliothekswerte sind:
 :PARML.
 :PT.:PK DEF.*LIBL:EPK.
 :PD.Alle Bibliotheken in der Bibliotheksliste des Jobs werden
-durchsucht, bis die erste Übereinstimmung gefunden wird.
+durchsucht, bis die erste Ã bereinstimmung gefunden wird.
 .*
 :PT.:PV.*CURLIB:EPV.
 :PD.Die aktuelle Jobbibliothek wird durchsucht. Falls keine aktuelle
@@ -6607,7 +6607,7 @@ Bibliothekswerte qualifiziert werden:
 :PARML.
 :PT.:PK DEF.*LIBL:EPK.
 :PD.Alle Bibliotheken in der Bibliotheksliste des Jobs werden
-durchsucht, bis die erste Übereinstimmung gefunden wird.
+durchsucht, bis die erste Ã bereinstimmung gefunden wird.
 .*
 :PT.:PV.*CURLIB:EPV.
 :PD.Die aktuelle Jobbibliothek wird durchsucht. Falls keine aktuelle
@@ -6748,7 +6748,7 @@ am Parameter :HP2.Objekt (OBJ):EHP2. angegebenen Objekt ermittelt.
 :PT.:PK DEF.*LIBL:EPK.
 :PD.Alle Bibliotheken in der Bibliotheksliste des
 aktuellen Threads werden durchsucht, bis die erste
-Übereinstimmung gefunden wird.
+Ã bereinstimmung gefunden wird.
 .*
 :PT.:PV.*CURLIB:EPV.
 :PD.Die aktuelle Jobbibliothek wird durchsucht. Ist für
@@ -6787,7 +6787,7 @@ Journaleinträge umgesetzt.
 :PARML.
 :PT.:PK DEF.*CURCHAIN:EPK.
 :PD.Die Journalempfängerkette, zu der der Journalempfänger gehört, der
-beim Beginn des Umsetzens der Journaleintr ge angehängt ist, wird
+beim Beginn des Umsetzens der Journaleintrï¿½ge angehängt ist, wird
 verwendet. Diese Empfängerkette überbrückt keine Unterbrechung der
 Kette. Kommt es zu einer Unterbrechung der Kette, so reicht der
 Empfängerbereich von der letzten Unterbrechung der Kette bis zum dem
@@ -6817,7 +6817,7 @@ für die Ausgabe umgesetzt werden sollen.
 :PARML.
 :PT.:PK DEF.*LIBL:EPK.
 :PD.Alle Bibliotheken in der Bibliotheksliste des Jobs werden
-durchsucht, bis die erste Übereinstimmung gefunden wird.
+durchsucht, bis die erste Ã bereinstimmung gefunden wird.
 .*
 :PT.:PV.*CURLIB:EPV.
 :PD.Der Journalempfänger wird in der aktuellen Jobbibliothek
@@ -6857,7 +6857,7 @@ Fehlernachricht gesendet und Journaleinträge werden nicht abgerufen.
 :PARML.
 :PT.:PK DEF.*LIBL:EPK.
 :PD.Alle Bibliotheken in der Bibliotheksliste des Jobs werden
-durchsucht, bis die erste Übereinstimmung gefunden wird.
+durchsucht, bis die erste Ã bereinstimmung gefunden wird.
 .*
 :PT.:PV.*CURLIB:EPV.
 :PD.Der Journalempfänger wird in der aktuellen Jobbibliothek
@@ -17107,7 +17107,7 @@ srccssid=  "01141">
       // ---------------------------------------------------------------
       //  Data structure for message ID: TXT0001
       //
-      //EXPJRNE - Exportierte Journaleintr ge
+      //EXPJRNE - Exportierte Journaleinträge
       //
      d TXT0001         ds
       //  No replacement variables available!
@@ -17131,7 +17131,7 @@ srccssid=  "01141">
       // ---------------------------------------------------------------
       //  Data structure for message ID: USR0012
 
-      //  Export der Journaleintr ge l uft (&1) ...
+      //  Export der Journaleinträge läuft (&1) ...
 
      d USR0012         ds
      d  USR00121                   0015P 0 inz(*ZEROS )
@@ -17154,7 +17154,7 @@ srccssid=  "01141">
       // ---------------------------------------------------------------
       //  Data structure for message ID: USR0018
 
-      //  &1 Journaleintr ge aufgrund von Fehlern  bergangen.
+      //  &1 Journaleinträge aufgrund von Fehlern übergangen.
 
      d USR0018         ds
      d  USR00181                   0010A   inz(*BLANKS)
@@ -17224,7 +17224,7 @@ srccssid=  "01141">
       // ---------------------------------------------------------------
       //  Data structure for message ID: USR0021
 
-      //  Aktualit tspr fung f r Datei &1 in Bibliothek &2.
+      //  Aktualitätsprüfung für Datei &1 in Bibliothek &2.
 
      d USR0021         ds
      d  USR00211                   0010A   inz(*BLANKS)
@@ -17248,7 +17248,7 @@ srccssid=  "01141">
       // ---------------------------------------------------------------
       //  Data structure for message ID: USR0022
 
-      //  Aktualit tspr fung f r Feld &3 in Datei &1 in Bibliothek &2
+      //  Aktualitätsprüfung für Feld &3 in Datei &1 in Bibliothek &2
 
      d USR0022         ds
      d  USR00221                   0010A   inz(*BLANKS)
@@ -17297,7 +17297,7 @@ srccssid=  "01141">
       // ---------------------------------------------------------------
       //  Data structure for message ID: USR0024
 
-      //  Ausf hrung der SQL Anweisung zum Erstellen der Ausgabedatei
+      //  Ausführung der SQL Anweisung zum Erstellen der Ausgabedatei
 
      d USR0024         ds
      d  USR00241                   0512A   inz(*BLANKS)
@@ -17320,7 +17320,7 @@ srccssid=  "01141">
       // ---------------------------------------------------------------
       //  Data structure for message ID: USR0025
 
-      //  Ausf hrung der SQL Anweisung zum Setzen der Feldbeschreibun
+      //  Ausführung der SQL Anweisung zum Setzen der Feldbeschreibun
 
      d USR0025         ds
      d  USR00251                   0512A   inz(*BLANKS)
@@ -17343,7 +17343,7 @@ srccssid=  "01141">
       // ---------------------------------------------------------------
       //  Data structure for message ID: USR0026
 
-      //  Ausf hrung der ASL Anweisung zum setzen der Spalten berschr
+      //  Ausführung der ASL Anweisung zum setzen der Spaltenüberschr
 
      d USR0026         ds
      d  USR00261                   0512A   inz(*BLANKS)
@@ -17366,7 +17366,7 @@ srccssid=  "01141">
       // ---------------------------------------------------------------
       //  Data structure for message ID: USR0027
 
-      //  Ausf hrung der SQL Anweisung zum Setzen der Textbeschreibun
+      //  Ausführung der SQL Anweisung zum Setzen der Textbeschreibun
 
      d USR0027         ds
      d  USR00271                   0512A   inz(*BLANKS)

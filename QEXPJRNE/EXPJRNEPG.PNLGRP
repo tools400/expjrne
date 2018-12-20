@@ -77,30 +77,30 @@
 :IMHELP name='EXPJRNE/JRN       '.
 :EHELP.
 .*--------------------------------------------------------------------
-.* Hilfetext fÃ¼r den Befehl
+.* Hilfetext für den Befehl
 .*--------------------------------------------------------------------
 :HELP NAME='EXPJRNE'.
-JournaleintrÃ¤ge exportieren (EXPJRNE) - Hilfe
+Journaleinträge exportieren (EXPJRNE) - Hilfe
 :P.
-Mit dem Befehl EXPJRNE kÃ¶nnen JournaleintrÃ¤ge aus einem Journal abgerufen
+Mit dem Befehl EXPJRNE können Journaleinträge aus einem Journal abgerufen
 und in eine durch QUERY oder SQL auswertbare Ausgabedatei gestellt werden.
 .*
 :EHELP.
 .*
 .*--------------------------------------------------------------------
-.* Hilfetext fÃ¼r SchlÃ¼sselwort OBJ
+.* Hilfetext für Schlüsselwort OBJ
 .*--------------------------------------------------------------------
 :HELP name='EXPJRNE/OBJ       '.
 Objekt - Hilfe
 :XH3.Objekt (OBJ)
 :P.
 Gibt den qualifizierten Namen des Objekts an, dessen
-JournaleintrÃ¤ge exportiert werden sollen.
+Journaleinträge exportiert werden sollen.
 .*
 :IMHELP name='COM/REQPARM'.
 :P.
 :HP2.Objektname::eHP2.
-Den Namen des Objekts angeben, dessen JournaleintrÃ¤ge exportiert
+Den Namen des Objekts angeben, dessen Journaleinträge exportiert
 werden sollen.
 :P.
 Der Name des Objekts kann durch einen der folgenden
@@ -113,7 +113,7 @@ durchsucht, bis die erste Ãœbereinstimmung gefunden wird.
 .*
 :PT.:PV.*CURLIB:EPV.
 :PD.Die aktuelle Jobbibliothek wird durchsucht. Falls keine aktuelle
-Bibliothek fÃ¼r den Job angegeben wurde, wird die Bibliothek QGPL
+Bibliothek für den Job angegeben wurde, wird die Bibliothek QGPL
 verwendet.
 .*
 :PT.:PV.Bibliotheksname:EPV.
@@ -124,13 +124,13 @@ verwendet.
 :EHELP.
 .*
 .*--------------------------------------------------------------------
-.* Hilfetext fÃ¼r SchlÃ¼sselwort OBJTYPE
+.* Hilfetext für Schlüsselwort OBJTYPE
 .*--------------------------------------------------------------------
 :HELP name='EXPJRNE/OBJTYPE   '.
 Objektart - Hilfe
 :XH3.Objektart (OBJTYPE)
 :P.
-Gibt die Objektart des Objekts an, dessen JournaleintrÃ¤ge exportiert werden. Zur
+Gibt die Objektart des Objekts an, dessen Journaleinträge exportiert werden. Zur
 Zeit werden folgende Objektarten unterstï¿½tzt:
 :LINES.
 Objekt                         Codes   Types
@@ -160,46 +160,46 @@ Objekt                         Codes   Types
 :P.
 :PARML.
 :PT.:PK DEF.*FILE:EPK.
-:PD.Die JournaleintrÃ¤ge einer Datei werden exportiert.
+:PD.Die Journaleinträge einer Datei werden exportiert.
 .*
 :PT.:PV.Objektart:EPV.
-:PD.Die Objektart des Objekts angeben, dessen JournaleintrÃ¤ge
+:PD.Die Objektart des Objekts angeben, dessen Journaleinträge
 exportiert werden.
 :EPARML.
 .*
 :EHELP.
 .*
 .*--------------------------------------------------------------------
-.* Hilfetext fÃ¼r SchlÃ¼sselwort MBR
+.* Hilfetext für Schlüsselwort MBR
 .*--------------------------------------------------------------------
 :HELP name='EXPJRNE/MBR       '.
 Teildatei - Hilfe
 :XH3.Teildatei (MBR)
 :P.
-Gibt den Namen der Teildatei an, deren JournaleintrÃ¤ge exportiert
+Gibt den Namen der Teildatei an, deren Journaleinträge exportiert
 werden sollen.
 .*
 :IMHELP name='COM/OPTPARM'.
 :P.
 :PARML.
 :PT.:PK DEF.*FIRST:EPK.
-:PD.Die JournaleintrÃ¤ge in der ersten Teildatei werden exportiert.
+:PD.Die Journaleinträge in der ersten Teildatei werden exportiert.
 .*
 :PT.:PV.*ALL:EPV.
-:PD.Die JournaleintrÃ¤ge aller physischen Dateien der
+:PD.Die Journaleinträge aller physischen Dateien der
 angegebenen Bibliothek, deren aufgezeichnete Ã„nderungen
-sich derzeit im JournalempfÃ¤nger befinden, werden
+sich derzeit im Journalempfänger befinden, werden
 exportiert.
 .*
 :PT.:PV.Teildateiname:EPV.
-:PD.Den Namen der Teildatei angeben, deren JournaleintrÃ¤ge
+:PD.Den Namen der Teildatei angeben, deren Journaleinträge
 exportiert werden sollen.
 :EPARML.
 .*
 :EHELP.
 .*
 .*--------------------------------------------------------------------
-.* Hilfetext fÃ¼r SchlÃ¼sselwort FROMDATE
+.* Hilfetext für Schlüsselwort FROMDATE
 .*--------------------------------------------------------------------
 :HELP name='EXPJRNE/FROMDATE  '.
 Startdatum - Hilfe
@@ -214,16 +214,16 @@ exportiert werden soll.
 :PT.:PV.Startdatum:EPV.
 :PD.Das Startdatum angeben. Startdatum und -zeit des
 ersten Journaleintrags mit dem angegebenen oder
-nÃ¤chstspÃ¤teren Datum und der angegebenen oder
-nÃ¤chstspÃ¤teren Uhrzeit geben den Anfangspunkt des
-Bereichs mit JournaleintrÃ¤gen an, die exportiert
+nächstspäteren Datum und der angegebenen oder
+nächstspäteren Uhrzeit geben den Anfangspunkt des
+Bereichs mit Journaleinträgen an, die exportiert
 werden sollen.
 :EPARML.
 .*
 :EHELP.
 .*
 .*--------------------------------------------------------------------
-.* Hilfetext fÃ¼r SchlÃ¼sselwort FROMTIME
+.* Hilfetext für Schlüsselwort FROMTIME
 .*--------------------------------------------------------------------
 :HELP name='EXPJRNE/FROMTIME  '.
 Startzeit - Hilfe
@@ -238,16 +238,16 @@ exportiert werden soll.
 :PT.:PV.Startzeit:EPV.
 :PD.Die Startzeit angeben. Startdatum und -zeit des ersten
 Journaleintrags mit dem angegebenen oder
-nÃ¤chstspÃ¤teren Datum und der angegebenen oder
-nÃ¤chstspÃ¤teren Uhrzeit geben den Anfangspunkt des
-Bereichs mit JournaleintrÃ¤gen an, die exportiert werden
+nächstspäteren Datum und der angegebenen oder
+nächstspäteren Uhrzeit geben den Anfangspunkt des
+Bereichs mit Journaleinträgen an, die exportiert werden
 sollen.
 :EPARML.
 .*
 :EHELP.
 .*
 .*--------------------------------------------------------------------
-.* Hilfetext fÃ¼r SchlÃ¼sselwort TODATE
+.* Hilfetext für Schlüsselwort TODATE
 .*--------------------------------------------------------------------
 :HELP name='EXPJRNE/TODATE    '.
 Enddatum - Hilfe
@@ -262,16 +262,16 @@ letzten Journaleintrags an, der exportiert werden soll.
 :PT.:PV.Enddatum:EPV.
 :PD.Das Enddatum angeben. Enddatum und -zeit des ersten
 Journaleintrags mit dem angegebenen oder
-nÃ¤chstfrÃ¼heren Datum und der angegebenen oder
-nÃ¤chstfrÃ¼heren Uhrzeit geben den Endpunkt des Bereichs
-mit JournaleintrÃ¤gen an, der exportiert werden
+nächstfrüheren Datum und der angegebenen oder
+nächstfrüheren Uhrzeit geben den Endpunkt des Bereichs
+mit Journaleinträgen an, der exportiert werden
 soll.
 :EPARML.
 .*
 :EHELP.
 .*
 .*--------------------------------------------------------------------
-.* Hilfetext fÃ¼r SchlÃ¼sselwort TOTIME
+.* Hilfetext für Schlüsselwort TOTIME
 .*--------------------------------------------------------------------
 :HELP name='EXPJRNE/TOTIME  '.
 Endzeit - Hilfe
@@ -286,66 +286,66 @@ letzten Journaleintrags an, der exportiert werden soll.
 :PT.:PV.Endzeit:EPV.
 :PD.Die Endzeit angeben. Enddatum und -zeit des erstensten
 Journaleintrags mit dem angegebenen oder
-nÃ¤chstfrÃ¼heren Datum und der angegebenen oder
-nÃ¤chstfrÃ¼heren Uhrzeit geben den Endpunkt des Bereichs
-mit JournaleintrÃ¤gen an, der exportiert werden soll.
+nächstfrüheren Datum und der angegebenen oder
+nächstfrüheren Uhrzeit geben den Endpunkt des Bereichs
+mit Journaleinträgen an, der exportiert werden soll.
 :EPARML.
 .*
 :EHELP.
 .*
 .*--------------------------------------------------------------------
-.* Hilfetext fÃ¼r SchlÃ¼sselwort OUTFILFMT
+.* Hilfetext für Schlüsselwort OUTFILFMT
 .*--------------------------------------------------------------------
 :HELP name='EXPJRNE/OUTFILFMT '.
 Format der Ausgabedatei - Hilfe
 :XH3.Format der Ausgabedatei (OUTFILFMT)
 :P.
-Gibt das Format der JournaleintrÃ¤ge an, die in die
+Gibt das Format der Journaleinträge an, die in die
 Ausgabedatei geschrieben werden, die mit dem Parameter
-:HP2.Datei fÃ¼r Ausgabe (OUTFILE):EHP2. angegeben ist.Dieser Parameter
-kann nur angegeben werden, wenn fÃ¼r den Parameter OUTPUT
+:HP2.Datei für Ausgabe (OUTFILE):EHP2. angegeben ist.Dieser Parameter
+kann nur angegeben werden, wenn für den Parameter OUTPUT
 der Wert *OUTFILE angegeben ist.
 .*
 :IMHELP name='COM/OPTPARM'.
 :P.
 :PARML.
 :PT.:PK DEF.*TYPE1:EPK.
-:PD.Die umgesetzten JournaleintrÃ¤ge werden formatiert, um
+:PD.Die umgesetzten Journaleinträge werden formatiert, um
 das Minimum an Daten, das angegeben werden kann, zu
 umfassen.
 .*
 :PT.:PV.*TYPE2:EPV.
-:PD.Die umgesetzten EintrÃ¤ge umfassen die Daten, die bei
-Angabe von OUTFILFMT(*TYPE1) zurÃ¼ckgegeben werden, den
-Namen des Benutzerprofils fÃ¼r den Job, der die
-angezeigten JournaleintrÃ¤ge erstellt hat, und den
-Namen des Systems, in dem die AusgabesÃ¤tze erstellt
+:PD.Die umgesetzten Einträge umfassen die Daten, die bei
+Angabe von OUTFILFMT(*TYPE1) zurückgegeben werden, den
+Namen des Benutzerprofils für den Job, der die
+angezeigten Journaleinträge erstellt hat, und den
+Namen des Systems, in dem die Ausgabesätze erstellt
 wurden.
 .*
 :PT.:PV.*TYPE3:EPV.
-:PD.Mit dieser Auswahl kÃ¶nnen Dateien, die NULL-fÃ¤hige
+:PD.Mit dieser Auswahl können Dateien, die NULL-fähige
 Felder beinhalten exportiert werden. Das erzeugte
 Ausgabeformat entspricht *TYPE2.
 .*
 :PT.:PV.*TYPE4:EPV.
-:PD.Die exportierten EintrÃ¤ge beinhalten die Informationen, die
+:PD.Die exportierten Einträge beinhalten die Informationen, die
 bei *TYPE3 ausgegeben werden, sowie die Journal-ID, den Anzeiger
-fÃ¼r den AuslÃ¶ser einer physischen Datei und den Anzeiger einer
-referenziellen IntegritÃ¤tsbedingung.
+für den Auslöser einer physischen Datei und den Anzeiger einer
+referenziellen Integritätsbedingung.
 .*
 :PT.:PV.*TYPE5:EPV.
-:PD.Die exportierten EintrÃ¤ge beinhalten die Informationen, die
+:PD.Die exportierten Einträge beinhalten die Informationen, die
 bei *TYPE4 ausgegeben werden, sowie ASP, LUW, XID.
 :EPARML.
 .*
 :EHELP.
 .*
 .*--------------------------------------------------------------------
-.* Hilfetext fÃ¼r SchlÃ¼sselwort OUTFILE
+.* Hilfetext für Schlüsselwort OUTFILE
 .*--------------------------------------------------------------------
 :HELP name='EXPJRNE/OUTFILE   '.
-Datei fÃ¼r Ausgabe - Hilfe
-:XH3.Datei fÃ¼r Ausgabe (OUTFILE)
+Datei für Ausgabe - Hilfe
+:XH3.Datei für Ausgabe (OUTFILE)
 :P.
 Gibt den Namen und die Bibliothek der Datenbankdatei an, in die die
 Ausgabe des Befehls gestellt wird. Besteht die Datei noch nicht, wird
@@ -353,7 +353,7 @@ durch diesen Befehl in der angegebenen Bibliothek eine Datenbankdatei
 erstellt.
 :P.
 :HP2.Hinweis::EHP2. Wenn eine neue Datei erstellt wird, ist der Text zur
-Beschreibung der Datei "Ausgabedatei fÃ¼r EXPJRNE".
+Beschreibung der Datei "Ausgabedatei für EXPJRNE".
 .*
 :IMHELP name='COM/OPTPARM'.
 :P.
@@ -370,7 +370,7 @@ welches am Parameter .HP2.Objekt (OBJ).EHP2. angegeben ist.
 :PD.Den Namen der Ausgabedatei angeben.
 :EPARML.
 :P.
-GÃ¼ltige Bibliothekswerte sind:
+Gültige Bibliothekswerte sind:
 :P.
 :PARML.
 :PT.:PK DEF.*LIBL:EPK.
@@ -379,7 +379,7 @@ durchsucht, bis die erste Ãœbereinstimmung gefunden wird.
 .*
 :PT.:PV.*CURLIB:EPV.
 :PD.Die aktuelle Jobbibliothek wird durchsucht. Falls keine aktuelle
-Bibliothek fÃ¼r den Job angegeben wurde, wird die Bibliothek QGPL
+Bibliothek für den Job angegeben wurde, wird die Bibliothek QGPL
 verwendet.
 .*
 :PT.:PV.*USER:EPV.
@@ -393,29 +393,29 @@ wird nach der Ausgabedatei durchsucht.
 :EHELP.
 .*
 .*--------------------------------------------------------------------
-.* Hilfetext fÃ¼r SchlÃ¼sselwort OUTMBR
+.* Hilfetext für Schlüsselwort OUTMBR
 .*--------------------------------------------------------------------
 :HELP name='EXPJRNE/OUTMBR    '.
-Auswahl fÃ¼r Ausgabeteildatei - Hilfe
-:XH3.Auswahl fÃ¼r Ausgabeteildatei (OUTMBR)
+Auswahl für Ausgabeteildatei - Hilfe
+:XH3.Auswahl für Ausgabeteildatei (OUTMBR)
 :P.
-Gibt die Art der Speicherung der exportierten JournaleintrÃ¤ge an.
+Gibt die Art der Speicherung der exportierten Journaleinträge an.
 .*
 :IMHELP name='COM/OPTPARM'.
 :P.
 :PARML.
 :PT.:PK DEF.*REPLACE:EPK.
-:PD.Das System lÃ¶scht den Inhalt der vorhandenen Teildatei und fÃ¼gt die
-neuen SÃ¤tze hinzu.
+:PD.Das System löscht den Inhalt der vorhandenen Teildatei und fügt die
+neuen Sätze hinzu.
 .*
 :PT.:PV.*ADD:EPV.
-:PD.Das System fÃ¼gt die neuen SÃ¤tze am Ende der vorhandenen SÃ¤tze hinzu.
+:PD.Das System fügt die neuen Sätze am Ende der vorhandenen Sätze hinzu.
 :EPARML.
 .*
 :EHELP.
 .*
 .*--------------------------------------------------------------------
-.* Hilfetext fÃ¼r SchlÃ¼sselwort CRTFILE
+.* Hilfetext für Schlüsselwort CRTFILE
 .*--------------------------------------------------------------------
 :HELP name='EXPJRNE/CRTFILE   '.
 Ausgabedatei neu erstellen - Hilfe
@@ -423,7 +423,7 @@ Ausgabedatei neu erstellen - Hilfe
 :P.
 Gibt an, ob die Ausgabedatei neu erstellt werden soll. Eine Neuerstellung
 der Ausgabedatei kann dann erforderlich werden, wenn sich das Satzformat
-der Datei, deren JournaleintrÃ¤ge exportiert werden sollen, geÃ¤ndert hat.
+der Datei, deren Journaleinträge exportiert werden sollen, geändert hat.
 .*
 :IMHELP name='COM/OPTPARM'.
 :P.
@@ -435,21 +435,21 @@ Ausgabedatei wird nicht neu erstellt.
 :PT.:PV.*YES:EPV.
 :PD.Die Ausgabedatei wird auch dann neu erstellt, wenn sie
 bereits existieren sollte. Diese Auswahl dient nur noch zur
-Wahrung der AbwÃ¤rtkompatibilitÃ¤t und ist ansonsten gleich
+Wahrung der Abwärtkompatibilität und ist ansonsten gleich
 der Auswahl *SQL.
 .*
 :PT.:PV.*SQL:EPV.
 :PD.Die Ausgabedatei wird auch dann neu erstellt, wenn sie
-bereits existieren sollte. *SQL ist ein Alias fÃ¼r den Wert
+bereits existieren sollte. *SQL ist ein Alias für den Wert
 *YES und beschreibt, dass die Ausgabedatei per SQL erstellt
-wird. SQL beschriebene Dateien kÃ¶nnen keine DatensÃ¤tze mit
-fehlerhaften Daten aufnehmen. Sollen DatensÃ¤tze mit Dezimalfehlern
+wird. SQL beschriebene Dateien können keine Datensätze mit
+fehlerhaften Daten aufnehmen. Sollen Datensätze mit Dezimalfehlern
 exportiert werden, so muss dieser Parameter mit *DDS angegeben werden.
 .*
 :PT.:PV.*DDS:EPV.
 :PD.Die Ausgabedatei wird auch dann neu erstellt, wenn sie
 bereits existieren sollte. Die Ausgabedatei wird mit DDS
-erzeugt und kann daher DatensÃ¤tze mit fehlerhaften Daten
+erzeugt und kann daher Datensätze mit fehlerhaften Daten
 aufnehmen.
 .*
 :EPARML.
@@ -457,25 +457,25 @@ aufnehmen.
 :EHELP.
 .*
 .*--------------------------------------------------------------------
-.* Hilfetext fÃ¼r SchlÃ¼sselwort TPLFILE
+.* Hilfetext für Schlüsselwort TPLFILE
 .*--------------------------------------------------------------------
 :HELP name='EXPJRNE/TPLFILE   '.
-Vorlage fÃ¼r Ausgabedatei - Hilfe
-:XH3.Vorlage fÃ¼r Ausgabedatei (TPLFILE)
+Vorlage für Ausgabedatei - Hilfe
+:XH3.Vorlage für Ausgabedatei (TPLFILE)
 :P.
-Gibt an, welche Datei als Vorlage fÃ¼r das Satzformat der Ausgabedatei
+Gibt an, welche Datei als Vorlage für das Satzformat der Ausgabedatei
 verwendet wird.
 :P.
-Dieser Parameter ist fÃ¼r den Export alter JournaleintrÃ¤ge gedacht,
+Dieser Parameter ist für den Export alter Journaleinträge gedacht,
 wenn sich das Format der journalisierten Datei zwischenzeitlich
-geÃ¤ndert hat.
+geändert hat.
 .*
 :IMHELP name='COM/OPTPARM'.
 :P.
 :PARML.
 :PT.:PK DEF.*OBJECT:EPK.
 :PD.Die am Parameter :HP2.Objekt:EHP2. angegebene Datei wird
-als Vorlage fÃ¼r das Satzformat der Ausgabedatei verwendet.
+als Vorlage für das Satzformat der Ausgabedatei verwendet.
 .*
 :PT.:PV.file-name:EPV.
 :PD.Name der als Vorlage zu verwendenden Datei.
@@ -491,7 +491,7 @@ durchsucht, bis die erste Ãœbereinstimmung gefunden wird.
 .*
 :PT.:PV.*CURLIB:EPV.
 :PD.Die aktuelle Jobbibliothek wird durchsucht. Falls keine aktuelle
-Bibliothek fÃ¼r den Job angegeben wurde, wird die Bibliothek QGPL
+Bibliothek für den Job angegeben wurde, wird die Bibliothek QGPL
 verwendet.
 .*
 :PT.:PV.Bibliotheksname:EPV.
@@ -501,94 +501,94 @@ verwendet.
 :EHELP.
 .*
 .*--------------------------------------------------------------------
-.* Hilfetext fÃ¼r SchlÃ¼sselwort SIZE
+.* Hilfetext für Schlüsselwort SIZE
 .*--------------------------------------------------------------------
 :HELP name='EXPJRNE/SIZE      '.
-GrÃ¶ÃŸe der Teildatei - Hilfe
-:XH3.GrÃ¶ÃŸe der Teildatei (SIZE)
+Größe der Teildatei - Hilfe
+:XH3.Größe der Teildatei (SIZE)
 :P.
-Gibt die Anfangsanzahl von SÃ¤tzen in jeder Teildatei derf
-Datei, die Anzahl der SÃ¤tze fÃ¼r jede ErhÃ¶hung, die zur
-Teildatei hinzugefÃ¼gt wurde und auÃŸerdem an, wie oft die
-ErhÃ¶hung automatisch angelegt wurde.
+Gibt die Anfangsanzahl von Sätzen in jeder Teildatei derf
+Datei, die Anzahl der Sätze für jede Erhöhung, die zur
+Teildatei hinzugefügt wurde und außerdem an, wie oft die
+Erhöhung automatisch angelegt wurde.
 :P.
-:HP2.GÃ¼ltige Werte:EHP2.
+:HP2.Gültige Werte:EHP2.
 .*
 :PARML.
 :PT.:PK DEF.*NOMAX:EPK.
-:PD.Die Anzahl der SÃ¤tze, die zu jeder Teildatei der Datei
-hinzugefÃ¼gt werden kÃ¶nnen, wird nicht durch den Benutzer beschrÃ¤nkt.
+:PD.Die Anzahl der Sätze, die zu jeder Teildatei der Datei
+hinzugefügt werden können, wird nicht durch den Benutzer beschränkt.
 .*
 :EPARML.
 :P.
-:HP2.Element 1: Anfangsanzahl SÃ¤tze:EHP2.
+:HP2.Element 1: Anfangsanzahl Sätze:EHP2.
 .*
 :PARML.
 :PT.:PK DEF.*SAME:EPK.
-:PD.Der Wert Ã¤ndert sich nicht.
+:PD.Der Wert ändert sich nicht.
 .*
 :PT.:PV.1-2147483646:EPV.
-:PD.Die Anzahl der SÃ¤tze angeben, die eingefÃ¼gt werden
-kÃ¶nnen, bevor eine automatische Erweiterung eintritt.
-Sind automatische Erweiterungen unerwÃ¼nscht, Null fÃ¼r
+:PD.Die Anzahl der Sätze angeben, die eingefügt werden
+können, bevor eine automatische Erweiterung eintritt.
+Sind automatische Erweiterungen unerwünscht, Null für
 den zweiten und dritten Wert in der Liste eingeben.
 :EPARML.
 :P.
-:HP2.Element 2: Satzanzahl fÃ¼r Erweiterung:EHP2.
+:HP2.Element 2: Satzanzahl für Erweiterung:EHP2.
 .*
 :PARML.
 :PT.:PK DEF.*SAME:EPK.
-:PD.Der Wert Ã¤ndert sich nicht.
+:PD.Der Wert ändert sich nicht.
 .*
 :PT.:PV.0-32767:EPV.
-:PD.Einen Wert fÃ¼r die Anzahl der zusÃ¤tzlichen SÃ¤tze
-angeben, die zur Teildatei hinzugefÃ¼gt werden sollen,
-wenn die Anzahl der SÃ¤tze in der Teildatei die
-Anfanganzahl der SÃ¤tze oder die Satzanzahl der
-aktuellen ErhÃ¶hung Ã¼berschreitet.
+:PD.Einen Wert für die Anzahl der zusätzlichen Sätze
+angeben, die zur Teildatei hinzugefügt werden sollen,
+wenn die Anzahl der Sätze in der Teildatei die
+Anfanganzahl der Sätze oder die Satzanzahl der
+aktuellen Erhöhung überschreitet.
 Bei Eingabe von 0 werden automatische Erweiterungen
 nicht zugelassen. Dieser Wert muss 0 lauten, wenn auch
-der Wert fÃ¼r die maximalen ErhÃ¶hungen 0 lautet.
+der Wert für die maximalen Erhöhungen 0 lautet.
 :EPARML.
 :P.
 :HP2.Element 3: Maximale Erweiterungen:EHP2.
 .*
 :PARML.
 :PT.:PK DEF.*SAME:EPK.
-:PD.Der Wert Ã¤ndert sich nicht.
+:PD.Der Wert ändert sich nicht.
 .*
 :PT.:PV.0-32767:EPV.
-:PD.Maximal zulÃ¤ssige Anzahl an ErhÃ¶hungen angeben, die
+:PD.Maximal zulässige Anzahl an Erhöhungen angeben, die
 automatisch zur Teildatei bzw. zu den Teildateien
-hinzugefÃ¼gt werden kÃ¶nnen. Bei Eingabe von 0 werden
+hinzugefügt werden können. Bei Eingabe von 0 werden
 automatische Erweiterungen nicht zugelassen. Wenn der
-Wert fÃ¼r die SatzerhÃ¶hungsanzahl 0 lautet, dann muss
+Wert für die Satzerhöhungsanzahl 0 lautet, dann muss
 dieser Wert ebenfalls 0 lauten.
 :EPARML.
 .*
 :EHELP.
 .*
 .*--------------------------------------------------------------------
-.* Hilfetext fÃ¼r SchlÃ¼sselwort LVLCHK
+.* Hilfetext für Schlüsselwort LVLCHK
 .*--------------------------------------------------------------------
 :HELP name='EXPJRNE/LVLCHK    '.
-Satzformat-AktualitÃ¤tsprÃ¼fung - Hilfe
-:XH3.Satzformat-AktualitÃ¤tsprÃ¼fung (LVLCHK)
+Satzformat-Aktualitätsprüfung - Hilfe
+:XH3.Satzformat-Aktualitätsprüfung (LVLCHK)
 :P.
-Gibt an, ob das AktualitÃ¤tskennzeichen des Satzformats der
-Ausgabedatei geprÃ¼ft wird, bevor die JournaleintrÃ¤ge exportiert
+Gibt an, ob das Aktualitätskennzeichen des Satzformats der
+Ausgabedatei geprüft wird, bevor die Journaleinträge exportiert
 werden.
 .*
 :IMHELP name='COM/OPTPARM'.
 :P.
 :PARML.
 :PT.:PK DEF.*NO:EPK.
-:PD.Das AktualitÃ¤tskennzeichen des Satzformats wird nicht
-Ã¼berprÃ¼ft.
+:PD.Das Aktualitätskennzeichen des Satzformats wird nicht
+überprüft.
 .*
 :PT.:PV.*YES:EPV.
-:PD.Das AktualitÃ¤tskennzeichen des Satzformats wird
-Ã¼berprÃ¼ft. Wenn das AktualitÃ¤tskennzeichen nicht stimmt, wird
+:PD.Das Aktualitätskennzeichen des Satzformats wird
+überprüft. Wenn das Aktualitätskennzeichen nicht stimmt, wird
 eine Abbruchnachricht gesendet und die Verarbeitung damit abgebrochen.
 .*
 :EPARML.
@@ -596,13 +596,13 @@ eine Abbruchnachricht gesendet und die Verarbeitung damit abgebrochen.
 :EHELP.
 .*
 .*--------------------------------------------------------------------
-.* Hilfetext fÃ¼r SchlÃ¼sselwort JRN
+.* Hilfetext für Schlüsselwort JRN
 .*--------------------------------------------------------------------
 :HELP name='EXPJRNE/JRN       '.
 Journal - Hilfe
 :XH3.Journal (JRN)
 :P.
-Gibt das Journal an, dessen JournaleintrÃ¤ge zur Umsetzung
+Gibt das Journal an, dessen Journaleinträge zur Umsetzung
 und Ausgabe abgerufen werden.
 .*
 :IMHELP name='COM/OPTPARM'.
@@ -631,7 +631,7 @@ aktuellen Threads werden durchsucht, bis die erste
 Ãœbereinstimmung gefunden wird.
 .*
 :PT.:PV.*CURLIB:EPV.
-:PD.Die aktuelle Jobbibliothek wird durchsucht. Ist fÃ¼r
+:PD.Die aktuelle Jobbibliothek wird durchsucht. Ist für
 den Job keine aktuelle Bibliothek angegeben, wird QGPL
 benutzt.
 .*
@@ -642,22 +642,22 @@ benutzt.
 :EHELP.
 .*
 .*--------------------------------------------------------------------
-.* Hilfetext fÃ¼r SchlÃ¼sselwort RCVRNG
+.* Hilfetext für Schlüsselwort RCVRNG
 .*--------------------------------------------------------------------
 :HELP name='EXPJRNE/RCVRNG    '.
-Bereich der JournalempfÃ¤nger - Hilfe
-:XH3.Bereich der JournalempfÃ¤nger (RCVRNG)
+Bereich der Journalempfänger - Hilfe
+:XH3.Bereich der Journalempfänger (RCVRNG)
 :P.
-Gibt den ersten JournalempfÃ¤nger (Start) und den letzten
-JournalempfÃ¤nger (Ende) an, d. h. den EmpfÃ¤ngerbereich, der
-JournaleintrÃ¤ge enthÃ¤lt, die fÃ¼r die Ausgabe umgesetzt werden sollen.
-Das System beginnt mit dem ersten JournalempfÃ¤nger (angegeben durch den
-ersten Wert) und arbeitet die EmpfÃ¤ngerkette ab, bis der letzte
-EmpfÃ¤nger (angegeben durch den letzten Wert) verarbeitet ist.
+Gibt den ersten Journalempfänger (Start) und den letzten
+Journalempfänger (Ende) an, d. h. den Empfängerbereich, der
+Journaleinträge enthält, die für die Ausgabe umgesetzt werden sollen.
+Das System beginnt mit dem ersten Journalempfänger (angegeben durch den
+ersten Wert) und arbeitet die Empfängerkette ab, bis der letzte
+Empfänger (angegeben durch den letzten Wert) verarbeitet ist.
 :P.
-:HP2.Anmerkung::EHP2.  Wenn die maximale Anzahl an EmpfÃ¤ngern im Bereich
-Ã¼berschritten wird, tritt ein Fehler auf, und es werden keine
-JournaleintrÃ¤ge umgesetzt.
+:HP2.Anmerkung::EHP2.  Wenn die maximale Anzahl an Empfängern im Bereich
+überschritten wird, tritt ein Fehler auf, und es werden keine
+Journaleinträge umgesetzt.
 .*
 :IMHELP name='COM/OPTPARM'.
 :P.
@@ -666,29 +666,29 @@ JournaleintrÃ¤ge umgesetzt.
 .*
 :PARML.
 :PT.:PK DEF.*CURCHAIN:EPK.
-:PD.Die JournalempfÃ¤ngerkette, zu der der JournalempfÃ¤nger gehÃ¶rt, der
-beim Beginn des Umsetzens der Journaleintrï¿½ge angehÃ¤ngt ist, wird
-verwendet. Diese EmpfÃ¤ngerkette Ã¼berbrÃ¼ckt keine Unterbrechung der
+:PD.Die Journalempfängerkette, zu der der Journalempfänger gehört, der
+beim Beginn des Umsetzens der Journaleintrï¿½ge angehängt ist, wird
+verwendet. Diese Empfängerkette überbrückt keine Unterbrechung der
 Kette. Kommt es zu einer Unterbrechung der Kette, so reicht der
-EmpfÃ¤ngerbereich von der letzten Unterbrechung der Kette bis zum dem
-EmpfÃ¤nger, der beim Beginn des Umsetzens der JournaleintrÃ¤ge
-angehÃ¤ngt ist.
+Empfängerbereich von der letzten Unterbrechung der Kette bis zum dem
+Empfänger, der beim Beginn des Umsetzens der Journaleinträge
+angehängt ist.
 .*
 :PT.:PV.*CURRENT:EPV.
-:PD.Der aktuelle EmpfÃ¤nger, der beim Beginn des Umsetzens der
-JournaleintrÃ¤ge angehÃ¤ngt ist, wird verwendet.
+:PD.Der aktuelle Empfänger, der beim Beginn des Umsetzens der
+Journaleinträge angehängt ist, wird verwendet.
 .*
 :EPARML.
 :P.
-:HP2.Element 1: Start JournalempfÃ¤nger:EHP2.
+:HP2.Element 1: Start Journalempfänger:EHP2.
 :P.
-:HP2.Qualifikationsmerkmal 1: Start JournalempfÃ¤nger Name:EHP2.
+:HP2.Qualifikationsmerkmal 1: Start Journalempfänger Name:EHP2.
 :P.
 .*
 :PARML.
-:PT.:PV.JournalempfÃ¤nger:EPV.
-:PD.Den Namen des ersten JournalempfÃ¤ngers angeben, dessen EintrÃ¤ge
-fÃ¼r die Ausgabe umgesetzt werden sollen.
+:PT.:PV.Journalempfänger:EPV.
+:PD.Den Namen des ersten Journalempfängers angeben, dessen Einträge
+für die Ausgabe umgesetzt werden sollen.
 :EPARML.
 :P.
 :HP2.Qualifikationsmerkmal 2: Bibliothek:EHP2.
@@ -700,35 +700,35 @@ fÃ¼r die Ausgabe umgesetzt werden sollen.
 durchsucht, bis die erste Ãœbereinstimmung gefunden wird.
 .*
 :PT.:PV.*CURLIB:EPV.
-:PD.Der JournalempfÃ¤nger wird in der aktuellen Jobbibliothek
-gesucht. Ist fÃ¼r den Job keine aktuelle Bibliothek angegeben,
+:PD.Der Journalempfänger wird in der aktuellen Jobbibliothek
+gesucht. Ist für den Job keine aktuelle Bibliothek angegeben,
 wird QGPL benutzt.
 .*
 :PT.:PV.Bibliothek:EPV.
-:PD.Bibliothek angeben, in der sich der JournalempfÃ¤nger befindet.
+:PD.Bibliothek angeben, in der sich der Journalempfänger befindet.
 .*
 :EPARML.
 :P.
-:HP2.Element 2: Ende JournalempfÃ¤nger:EHP2.
+:HP2.Element 2: Ende Journalempfänger:EHP2.
 :P.
 :HP2.Einzelwerte:EHP2.
 :P.
 .*
 :PARML.
 :PT.:PK DEF.*CURRENT:EPK.
-:PD.Der aktuelle EmpfÃ¤nger, der beim Beginn des Umsetzens der
-JournaleintrÃ¤ge angehÃ¤ngt ist, wird verwendet.
+:PD.Der aktuelle Empfänger, der beim Beginn des Umsetzens der
+Journaleinträge angehängt ist, wird verwendet.
 :EPARML.
 :P.
-:HP2.Qualifikationsmerkmal 1: Ende JournalempfÃ¤nger Name:EHP2.
+:HP2.Qualifikationsmerkmal 1: Ende Journalempfänger Name:EHP2.
 :P.
 .*
 :PARML.
-:PT.:PV.JournalempfÃ¤nger:EPV.
-:PD.Den Namen des letzten JournalempfÃ¤ngers angeben, der abzurufende
-JournaleintrÃ¤ge enthÃ¤lt. Wird das Ende der EmpfÃ¤ngerkette erreicht
-bevor ein EmpfÃ¤nger dieses Namens gefunden wird, wird eine
-Fehlernachricht gesendet und JournaleintrÃ¤ge werden nicht abgerufen.
+:PT.:PV.Journalempfänger:EPV.
+:PD.Den Namen des letzten Journalempfängers angeben, der abzurufende
+Journaleinträge enthält. Wird das Ende der Empfängerkette erreicht
+bevor ein Empfänger dieses Namens gefunden wird, wird eine
+Fehlernachricht gesendet und Journaleinträge werden nicht abgerufen.
 :EPARML.
 :P.
 :HP2.Qualifikationsmerkmal 2: Bibliothek:EHP2.
@@ -740,12 +740,12 @@ Fehlernachricht gesendet und JournaleintrÃ¤ge werden nicht abgerufen.
 durchsucht, bis die erste Ãœbereinstimmung gefunden wird.
 .*
 :PT.:PV.*CURLIB:EPV.
-:PD.Der JournalempfÃ¤nger wird in der aktuellen Jobbibliothek
-gesucht. Ist fÃ¼r den Job keine aktuelle Bibliothek angegeben,
+:PD.Der Journalempfänger wird in der aktuellen Jobbibliothek
+gesucht. Ist für den Job keine aktuelle Bibliothek angegeben,
 wird QGPL benutzt.
 .*
 :PT.:PV.Bibliothek:EPV.
-:PD.Bibliothek angeben, in der sich der JournalempfÃ¤nger befindet.
+:PD.Bibliothek angeben, in der sich der Journalempfänger befindet.
 .*
 :EPARML.
 .*
@@ -781,7 +781,7 @@ Dieser Parameter ist optional.
 .*=====================================
 :HELP NAME='COM/VALUES'.
 :P.
-MÃ¶gliche Werte sind:
+Mögliche Werte sind:
 :EHELP.
 .*
 :EPNLGRP.
