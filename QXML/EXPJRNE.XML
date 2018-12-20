@@ -1289,7 +1289,7 @@ mbrtext =  "EXPJRNE - Installer                               "
 srcfile =  "QEXPJRNE  "
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "01141">
+srccssid=  "00273">
 <copysrc><![CDATA[
      /* =================================================================== */
      /*                                                                     */
@@ -1613,7 +1613,7 @@ mbrtext =  "MSG: TXT0001 - USR0201                            "
 srcfile =  "QEXPJRNE  "
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "01141">
+srccssid=  "00273">
 <copysrc><![CDATA[
      /*-----------------------------------------------------------------------*/
      /* STRPREPRC Compile Options:                                            */
@@ -2326,7 +2326,7 @@ mbrtext =  "MSG: TXT0001 - USR0201                            "
 srcfile =  "QEXPJRNE  "
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "01141">
+srccssid=  "00273">
 <copysrc><![CDATA[
      /*-----------------------------------------------------------------------*/
      /* STRPREPRC Compile Options:                                            */
@@ -3043,7 +3043,7 @@ mbrtext =  "EXPJRNE Readme                                    "
 srcfile =  "QEXPJRNE  "
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "01141">
+srccssid=  "00273">
 <copysrc><![CDATA[
 EXPJRNE - A Tools/400 Service Program
 -------------------------------------
@@ -3078,7 +3078,7 @@ mbrtext =  "Prototypes of CEE APIs                   (include)"
 srcfile =  "QEXPJRNE  "
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "01141">
+srccssid=  "00273">
 <copysrc><![CDATA[
       /if not defined(CEELIB)
       /define CEELIB
@@ -3223,7 +3223,7 @@ mbrtext =  "Prototypes of C-Library   Record IO      (include)"
 srcfile =  "QEXPJRNE  "
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "01141">
+srccssid=  "00273">
 <copysrc><![CDATA[
       /if not defined(CLIB2)
       /define CLIB2
@@ -3424,7 +3424,7 @@ mbrtext =  "Copyright information                             "
 srcfile =  "QEXPJRNE  "
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "01141">
+srccssid=  "00273">
 <copysrc><![CDATA[
       /if not defined(COPYRIGHT_DSPEC)
      h copyright('V5.1 - 20.12.2018 - mailto: thomas.raddatz@tools400.de')
@@ -3447,7 +3447,7 @@ mbrtext =  "                                                  "
 srcfile =  "QEXPJRNE  "
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "01141">
+srccssid=  "00273">
 <copysrc><![CDATA[
       * ======================================================================== *
       *      >>PRE-COMPILER<<                                                    *
@@ -3492,7 +3492,7 @@ mbrtext =  "                                                  "
 srcfile =  "QEXPJRNE  "
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "01141">
+srccssid=  "00273">
 <copysrc><![CDATA[
 -- ======================================================================== */
 --      >>PRE-COMPILER<<                                                    */
@@ -3539,7 +3539,7 @@ mbrtext =  "Export Journal Entries                            "
 srcfile =  "QEXPJRNE  "
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "01141">
+srccssid=  "00273">
 <copysrc><![CDATA[
      /* =================================================================== */
      /*                                                                     */
@@ -3605,7 +3605,7 @@ mbrtext =  "Export Journal Entries - CHOICE                   "
 srcfile =  "QEXPJRNE  "
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "01141">
+srccssid=  "00273">
 <copysrc><![CDATA[
      /* =================================================================== */
      /*                                                                     */
@@ -3663,7 +3663,7 @@ mbrtext =  "Export Journal Entries - POP                      "
 srcfile =  "QEXPJRNE  "
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "01141">
+srccssid=  "00273">
 <copysrc><![CDATA[
      /* =================================================================== */
      /*                                                                     */
@@ -3717,7 +3717,7 @@ mbrtext =  "Export Journal Entries - RCVJRN                   "
 srcfile =  "QEXPJRNE  "
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "01141">
+srccssid=  "00273">
 <copysrc><![CDATA[
      /* =================================================================== */
      /*                                                                     */
@@ -3777,7 +3777,7 @@ mbrtext =  "Export Journal Entries - UTIL                     "
 srcfile =  "QEXPJRNE  "
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "01141">
+srccssid=  "00273">
 <copysrc><![CDATA[
      /* =================================================================== */
      /*                                                                     */
@@ -3895,7 +3895,7 @@ mbrtext =  "Export Journal Entries - CPP                      "
 srcfile =  "QEXPJRNE  "
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "01141">
+srccssid=  "00273">
 <copysrc><![CDATA[
      /* =================================================================== */
      /*                                                                     */
@@ -4739,7 +4739,7 @@ mbrtext =  "Export Journal Entries - Eng                      "
 srcfile =  "QEXPJRNE  "
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "01141">
+srccssid=  "00273">
 <copysrc><![CDATA[
 /* =================================================================== */
 /*                                                                     */
@@ -5032,7 +5032,7 @@ mbrtext =  "Export Journal Entries - Ger                      "
 srcfile =  "QEXPJRNE  "
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "01141">
+srccssid=  "00273">
 <copysrc><![CDATA[
 /* =================================================================== */
 /*                                                                     */
@@ -5325,7 +5325,7 @@ mbrtext =  "Export Journal Entries - Eng                      "
 srcfile =  "QEXPJRNE  "
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "01141">
+srccssid=  "00273">
 <copysrc><![CDATA[
 .*=====================================================================*
 .*                                                                     *
@@ -6116,7 +6116,7 @@ mbrtext =  "Export Journal Entries - Ger                      "
 srcfile =  "QEXPJRNE  "
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "01141">
+srccssid=  "00273">
 <copysrc><![CDATA[
 .*=====================================================================*
 .*                                                                     *
@@ -6918,7 +6918,7 @@ mbrtext =  "Export Journal Entries - POP                      "
 srcfile =  "QEXPJRNE  "
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "01141">
+srccssid=  "00273">
 <copysrc><![CDATA[
       *=====================================================================*
       *                                                                     *
@@ -7033,7 +7033,7 @@ mbrtext =  "Export Journal Entries - CHOICE                   "
 srcfile =  "QEXPJRNE  "
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "01141">
+srccssid=  "00273">
 <copysrc><![CDATA[
       *=====================================================================*
       *                                                                     *
@@ -7180,7 +7180,7 @@ mbrtext =  "Export Journal Entries - RCVJRN                   "
 srcfile =  "QEXPJRNE  "
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "01141">
+srccssid=  "00273">
 <copysrc><![CDATA[
       *=====================================================================*
       *                                                                     *
@@ -9609,7 +9609,7 @@ mbrtext =  "Export Journal Entries - SQL                      "
 srcfile =  "QEXPJRNE  "
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "01141">
+srccssid=  "00273">
 <copysrc><![CDATA[
       /IF NOT DEFINED(EXPJRNE_PROTOTYPE)
       *=====================================================================*
@@ -10070,7 +10070,7 @@ mbrtext =  "Export Journal Entries - DDS                      "
 srcfile =  "QEXPJRNE  "
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "01141">
+srccssid=  "00273">
 <copysrc><![CDATA[
       /IF NOT DEFINED(EXPJRNE_PROTOTYPE)
       *=====================================================================*
@@ -10753,7 +10753,7 @@ mbrtext =  "Export Journal Entries - SQLCLI                   "
 srcfile =  "QEXPJRNE  "
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "01141">
+srccssid=  "00273">
 <copysrc><![CDATA[
       /IF NOT DEFINED(EXPJRNE_PROTOTYPE)
       *=====================================================================*
@@ -11809,7 +11809,7 @@ mbrtext =  "Export Journal Entries - UTIL                     "
 srcfile =  "QEXPJRNE  "
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "01141">
+srccssid=  "00273">
 <copysrc><![CDATA[
       /IF NOT DEFINED(EXPJRNE_PROTOTYPE)
       *=====================================================================*
@@ -13991,7 +13991,7 @@ mbrtext =  "EXPJRNE - Validity Checker Example                "
 srcfile =  "QEXPJRNE  "
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "01141">
+srccssid=  "00273">
 <copysrc><![CDATA[
      /* =================================================================== */
      /*                                                                     */
@@ -14218,7 +14218,7 @@ mbrtext =  "cpybk   : File information data structure         "
 srcfile =  "QEXPJRNE  "
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "01141">
+srccssid=  "00273">
 <copysrc><![CDATA[
       /if not defined(fileInfDS_t)
       /define fileInfDS_t
@@ -14465,7 +14465,7 @@ mbrtext =  "cpybk   : QUSROBJD API - OBJD0400                 "
 srcfile =  "QEXPJRNE  "
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "01141">
+srccssid=  "00273">
 <copysrc><![CDATA[
       /if not defined(objd0400_t)
       /define objd0400_t
@@ -14570,7 +14570,7 @@ mbrtext =  "cpybk   : Qualified job name                      "
 srcfile =  "QEXPJRNE  "
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "01141">
+srccssid=  "00273">
 <copysrc><![CDATA[
       /if not defined(qJob_t    )
       /define qJob_t
@@ -14597,7 +14597,7 @@ mbrtext =  "H-Specifications                                  "
 srcfile =  "QEXPJRNE  "
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "01141">
+srccssid=  "00273">
 <copysrc><![CDATA[
      h debug
      h option(*SRCSTMT : *NODEBUGIO)
@@ -14623,7 +14623,7 @@ mbrtext =  "Layouts for var.-length portion of journal entries"
 srcfile =  "QEXPJRNE  "
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "01141">
+srccssid=  "00273">
 <copysrc><![CDATA[
       /if not defined(JRNETYPES)
       /define JRNETYPES
@@ -14770,7 +14770,7 @@ mbrtext =  "Retrieve Data Queue Description (QMHQRDQD) API    "
 srcfile =  "QEXPJRNE  "
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "01141">
+srccssid=  "00273">
 <copysrc><![CDATA[
       /if not defined(QMHQRDQD)
       /define QMHQRDQD
@@ -14833,7 +14833,7 @@ mbrtext =  "Retrieve Job Information (QUSRJOBI) API           "
 srcfile =  "QEXPJRNE  "
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "01141">
+srccssid=  "00273">
 <copysrc><![CDATA[
       /if not defined(QUSRJOBI)
       /define QUSRJOBI
@@ -15030,7 +15030,7 @@ mbrtext =  "Retrieve Object Description (QUSROBJD) API        "
 srcfile =  "QEXPJRNE  "
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "01141">
+srccssid=  "00273">
 <copysrc><![CDATA[
       /if not defined(QUSROBJD)
       /define QUSROBJD
@@ -15067,7 +15067,7 @@ mbrtext =  "Retrieve Data Area (QWCRDTAA) API                 "
 srcfile =  "QEXPJRNE  "
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "01141">
+srccssid=  "00273">
 <copysrc><![CDATA[
       /if not defined(QWCRDTAA)
       /define QWCRDTAA
@@ -15117,7 +15117,7 @@ mbrtext =  "Programm Status Datenstruktur                     "
 srcfile =  "QEXPJRNE  "
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "01141">
+srccssid=  "00273">
 <copysrc><![CDATA[
       /if not defined(SDS)
       /define SDS
@@ -15173,7 +15173,7 @@ mbrtext =  "Embedded SQL type definitions and constants       "
 srcfile =  "QEXPJRNE  "
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "01141">
+srccssid=  "00273">
 <copysrc><![CDATA[
       /if not defined(SQL)
       /define SQL
@@ -15325,7 +15325,7 @@ mbrtext =  "SQL-Call Level Interface      SQLCLI.h            "
 srcfile =  "QEXPJRNE  "
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "01141">
+srccssid=  "00273">
 <copysrc><![CDATA[
       *** START HEADER FILE SPECIFICATIONS *****************************/
       *                                                                */
@@ -17102,7 +17102,7 @@ mbrtext =  "MSG: EXPJRNE - Exportierte Journaleinträge        "
 srcfile =  "QEXPJRNE  "
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "01141">
+srccssid=  "00273">
 <copysrc><![CDATA[
       // ---------------------------------------------------------------
       //  Data structure for message ID: TXT0001
@@ -17126,7 +17126,7 @@ mbrtext =  "MSG: Export der Journaleinträge läuft ( 1) ...    "
 srcfile =  "QEXPJRNE  "
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "01141">
+srccssid=  "00273">
 <copysrc><![CDATA[
       // ---------------------------------------------------------------
       //  Data structure for message ID: USR0012
@@ -17149,7 +17149,7 @@ mbrtext =  "MSG:  1 Journaleinträge aufgrund von Fehlern überg"
 srcfile =  "QEXPJRNE  "
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "01141">
+srccssid=  "00273">
 <copysrc><![CDATA[
       // ---------------------------------------------------------------
       //  Data structure for message ID: USR0018
@@ -17172,7 +17172,7 @@ mbrtext =  "MSG: Feld oder Datzformat  1 umbenannt nach  2.   "
 srcfile =  "QEXPJRNE  "
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "01141">
+srccssid=  "00273">
 <copysrc><![CDATA[
       // ---------------------------------------------------------------
       //  Data structure for message ID: USR0019
@@ -17196,7 +17196,7 @@ mbrtext =  "MSG: Unerlaubter Speicherzugriff. Programm beendet"
 srcfile =  "QEXPJRNE  "
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "01141">
+srccssid=  "00273">
 <copysrc><![CDATA[
       // ---------------------------------------------------------------
       //  Data structure for message ID: USR0020
@@ -17219,7 +17219,7 @@ mbrtext =  "MSG: Aktualitätsprüfung für Datei  1 in Bibliothek"
 srcfile =  "QEXPJRNE  "
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "01141">
+srccssid=  "00273">
 <copysrc><![CDATA[
       // ---------------------------------------------------------------
       //  Data structure for message ID: USR0021
@@ -17243,7 +17243,7 @@ mbrtext =  "MSG: Aktualitätsprüfung für Feld  3 in Datei  1 in"
 srcfile =  "QEXPJRNE  "
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "01141">
+srccssid=  "00273">
 <copysrc><![CDATA[
       // ---------------------------------------------------------------
       //  Data structure for message ID: USR0022
@@ -17268,7 +17268,7 @@ mbrtext =  "MSG:  1:  2                                       "
 srcfile =  "QEXPJRNE  "
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "01141">
+srccssid=  "00273">
 <copysrc><![CDATA[
       // ---------------------------------------------------------------
       //  Data structure for message ID: USR0023
@@ -17292,7 +17292,7 @@ mbrtext =  "MSG: Ausführung der SQL Anweisung zum Erstellen de"
 srcfile =  "QEXPJRNE  "
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "01141">
+srccssid=  "00273">
 <copysrc><![CDATA[
       // ---------------------------------------------------------------
       //  Data structure for message ID: USR0024
@@ -17315,7 +17315,7 @@ mbrtext =  "MSG: Ausführung der SQL Anweisung zum Setzen der F"
 srcfile =  "QEXPJRNE  "
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "01141">
+srccssid=  "00273">
 <copysrc><![CDATA[
       // ---------------------------------------------------------------
       //  Data structure for message ID: USR0025
@@ -17338,7 +17338,7 @@ mbrtext =  "MSG: Ausführung der ASL Anweisung zum setzen der S"
 srcfile =  "QEXPJRNE  "
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "01141">
+srccssid=  "00273">
 <copysrc><![CDATA[
       // ---------------------------------------------------------------
       //  Data structure for message ID: USR0026
@@ -17361,7 +17361,7 @@ mbrtext =  "MSG: Ausführung der SQL Anweisung zum Setzen der T"
 srcfile =  "QEXPJRNE  "
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "01141">
+srccssid=  "00273">
 <copysrc><![CDATA[
       // ---------------------------------------------------------------
       //  Data structure for message ID: USR0027
