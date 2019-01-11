@@ -73,7 +73,10 @@
              DLTPGM    PGM(&TOLIB/EXPJRNECR)
              MONMSG     MSGID(CPF2105)
 
-             DLTPGM    PGM(&TOLIB/EXPJRNECU)
+             DLTPGM    PGM(&TOLIB/EXPJRNEV)
+             MONMSG     MSGID(CPF2105)
+
+             DLTSRVPGM SRVPGM(&TOLIB/EXPJRNECU)
              MONMSG     MSGID(CPF2105)
 
              DLTMOD    MODULE(&TOLIB/EXPJRNEC1)
@@ -284,12 +287,12 @@
      /* -------------------------------- */
      /*  Create commands                 */
      /* -------------------------------- */
-             CRTCMD     CMD(&TOLIB/EXPJRNE) +
-                          PGM(&TOLIB/EXPJRNEC) +
-                          SRCFILE(&SRCLIB/&SRCFILE) +
-                          SRCMBR(&CMD) +
+             CRTCMD     CMD(&TOLIB/EXPJRNE)           +
+                          PGM(&TOLIB/EXPJRNEC)        +
+                          SRCFILE(&SRCLIB/&SRCFILE)   +
+                          SRCMBR(&CMD)                +
                           PMTOVRPGM(&TOLIB/EXPJRNECP) +
-                          HLPPNLGRP(&TOLIB/EXPJRNEP) +
+                          HLPPNLGRP(&TOLIB/EXPJRNEP)  +
                           HLPID(EXPJRNE)
              DLTSPLF    FILE(&CMD      ) JOB(*) SPLNBR(*LAST)
              MONMSG     MSGID(CPF0000)

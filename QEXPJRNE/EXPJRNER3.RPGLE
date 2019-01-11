@@ -380,7 +380,7 @@
       /COPY QEXPJRNE,JRNETYPES
       *
       /DEFINE EXPJRNE_PROTOTYPE
-      /COPY QEXPJRNE,EXPJRNER7
+      /COPY QEXPJRNE,EXPJRNER7                    Tool: EXPJRNE Utilities
       /UNDEFINE EXPJRNE_PROTOTYPE
       *
      D QWCCVTDT        PR                  ExtPgm('QWCCVTDT')

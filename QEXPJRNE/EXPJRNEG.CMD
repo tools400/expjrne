@@ -180,10 +180,6 @@
                                  (*NO  'N'))             +
                           PROMPT('Satzformat-Aktualitätsprüfung' 14)
 
-             PARM       KWD(MSGF      ) TYPE(*CHAR)        +
-                          LEN(10)                          +
-                          CONSTANT(EXPJRNE  )
-
 /* ----------------------------------------------------------------- */
 
  QUAL1:      QUAL       TYPE(*NAME)                      +

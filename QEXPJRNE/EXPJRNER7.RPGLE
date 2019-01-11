@@ -459,8 +459,6 @@
       *==================================================================*
      P rtvJobDateFmt...
      P                 B                   export
-      *
-     D rtvJobDateFmt...
      D                 PI            10A          varying
       *
       *  Return value
@@ -483,8 +481,6 @@
          return dateFmt;
 
       /END-FREE
-      *
-     P rtvJobDateFmt...
      P                 E
       *
       *====================================================================
@@ -515,8 +511,6 @@
       *====================================================================
      P rtvJrnInf...
      P                 B                   export
-      *
-     D rtvJrnInf...
      D                 PI              N
      D  i_obj                        10A   const
      D  i_lib                        10A   const
@@ -591,8 +585,6 @@
          return cTrue;
 
       /END-FREE
-      *
-     P rtvJrnInf...
      P                 E
       *
       *====================================================================
@@ -606,8 +598,6 @@
       *====================================================================
      P sqlTypeToString...
      P                 B                   export
-      *
-     D sqlTypeToString...
      D                 PI            32A          varying
      D  i_sqltype                    10I 0 const
       *
@@ -663,8 +653,6 @@
          return dataType;
 
       /END-FREE
-      *
-     P sqlTypeToString...
      P                 E
       *
       *====================================================================
@@ -678,8 +666,6 @@
       *====================================================================
      P rpgTypeToSqlString...
      P                 B                   export
-      *
-     D rpgTypeToSqlString...
      D                 PI            32A          varying
      D  i_rpgType                     1A   const
      D  i_length                     10I 0 const  options(*nopass)
@@ -764,8 +750,6 @@
          return dataType;
 
       /END-FREE
-      *
-     P rpgTypeToSqlString...
      P                 E
       *
       *====================================================================
@@ -777,8 +761,6 @@
       *====================================================================
      P xlate...
      P                 B                   export
-      *
-     D xlate...
      D                 PI           512A          varying
      D  i_string                    512A   const  varying
       *
@@ -806,8 +788,6 @@
          return string;
 
       /END-FREE
-      *
-     P xlate...
      P                 E
       *
       *====================================================================
@@ -821,8 +801,6 @@
       *====================================================================
      P getOutputFileColumns...
      P                 B                   export
-      *
-     D getOutputFileColumns...
      D                 PI
      D  i_hList                            const  like(BasicList_handle_t )
      D  i_outFilFmt                  10A   const
@@ -885,11 +863,7 @@
             addColumns(i_hList: i_tplFile);
          endsl;
 
-         return;
-
       /END-FREE
-      *
-     P getOutputFileColumns...
      P                 E
       *
       *====================================================================
@@ -901,8 +875,6 @@
       *====================================================================
      P hasCcsidClause...
      P                 B                   export
-      *
-     D hasCcsidClause...
      D                 PI              N
      D  i_type                        1A   const
      D  i_ccsid                      10U 0 const
@@ -924,8 +896,6 @@
          return hasCcsid;
 
       /END-FREE
-      *
-     P hasCcsidClause...
      P                 E
       *
       *====================================================================
@@ -940,8 +910,6 @@
       *====================================================================
      P addColumns...
      P                 B
-      *
-     D addColumns...
      D                 PI                         like(SQLRETCODE_t )
      D  i_hList                            const  like(BasicList_handle_t )
      D  i_file                             const  likeds(qObj_t     )
@@ -998,8 +966,6 @@
          return rc;
 
       /END-FREE
-      *
-     P addColumns...
      P                 E
       *
       *====================================================================
@@ -1012,8 +978,6 @@
       *====================================================================
      P addDataAreaVarLenFields...
      P                 B
-      *
-     D addDataAreaVarLenFields...
      D                 PI                         like(SQLRETCODE_t )
      D  i_hList                            const  like(BasicList_handle_t )
       *
@@ -1055,8 +1019,6 @@
          return rc;
 
       /END-FREE
-      *
-     P addDataAreaVarLenFields...
      P                 E
       *
       *====================================================================
@@ -1069,8 +1031,6 @@
       *====================================================================
      P addDataQueueVarLenFields...
      P                 B
-      *
-     D addDataQueueVarLenFields...
      D                 PI                         like(SQLRETCODE_t )
      D  i_hList                            const  like(BasicList_handle_t )
       *
@@ -1122,8 +1082,6 @@
          return rc;
 
       /END-FREE
-      *
-     P addDataQueueVarLenFields...
      P                 E
       *
       *====================================================================
@@ -1141,8 +1099,6 @@
       *====================================================================
      P produceFldAttr...
      P                 B
-      *
-     D produceFldAttr...
      D                 PI                         likeds(fldAttr_t  )
      D  i_name                       10A   const
      D  i_type                        1A   const
@@ -1213,8 +1169,6 @@
          return fldAttr;
 
       /END-FREE
-      *
-     P produceFldAttr...
      P                 E
       *
       *====================================================================
@@ -1228,8 +1182,6 @@
       *====================================================================
      P getDataAreaType...
      P                 B
-      *
-     D getDataAreaType...
      D                 PI                         likeds(fldAttr_t  )
      D  i_dtaAra                     10A   const
      D  i_lib                        10A   const
@@ -1280,8 +1232,6 @@
          return fldAttr;
 
       /END-FREE
-      *
-     P getDataAreaType...
      P                 E
       *
       *====================================================================
@@ -1295,8 +1245,6 @@
       *====================================================================
      P getDataQueueType...
      P                 B
-      *
-     D getDataQueueType...
      D                 PI                         likeds(fldAttr_t  )
      D  i_dtaQ                       10A   const
      D  i_lib                        10A   const
@@ -1323,8 +1271,6 @@
          return fldAttr;
 
       /END-FREE
-      *
-     P getDataQueueType...
      P                 E
       *
       *====================================================================
@@ -1338,8 +1284,6 @@
       *====================================================================
      P getDataQueueKey...
      P                 B
-      *
-     D getDataQueueKey...
      D                 PI                         likeds(fldAttr_t  )
      D  i_dtaQ                       10A   const
      D  i_lib                        10A   const
@@ -1370,8 +1314,6 @@
          return fldAttr;
 
       /END-FREE
-      *
-     P getDataQueueKey...
      P                 E
       *
       *====================================================================
@@ -1383,8 +1325,6 @@
       *====================================================================
      P OutputFile_setName...
      P                 B                   export
-      *
-     D OutputFile_setName...
      D                 PI
      D  i_file                       10A   const
       * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -1392,11 +1332,7 @@
 
          g_state.qOutFile.name = i_file;
 
-         return;
-
       /END-FREE
-      *
-     P OutputFile_setName...
      P                 E
       *
       *====================================================================
@@ -1409,8 +1345,6 @@
       *====================================================================
      P OutputFile_setLibrary...
      P                 B                   export
-      *
-     D OutputFile_setLibrary...
      D                 PI
      D  i_lib                        10A   const
       * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -1418,11 +1352,7 @@
 
          g_state.qOutFile.lib = i_lib;
 
-         return;
-
       /END-FREE
-      *
-     P OutputFile_setLibrary...
      P                 E
       *
       *====================================================================
@@ -1436,8 +1366,6 @@
       *====================================================================
      P OutputFile_setMember...
      P                 B                   export
-      *
-     D OutputFile_setMember...
      D                 PI
      D  i_mbr                        10A   const
       * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -1445,11 +1373,7 @@
 
          g_state.outMbr = i_mbr;
 
-         return;
-
       /END-FREE
-      *
-     P OutputFile_setMember...
      P                 E
       *
       *====================================================================
@@ -1461,8 +1385,6 @@
       *====================================================================
      P OutputFile_setOutputFileFormat...
      P                 B                   export
-      *
-     D OutputFile_setOutputFileFormat...
      D                 PI
      D  i_outFilFmt                  10A   const
       * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -1470,11 +1392,7 @@
 
          g_state.outFilFmt = i_outFilFmt;
 
-         return;
-
       /END-FREE
-      *
-     P OutputFile_setOutputFileFormat...
      P                 E
       *
       *====================================================================
@@ -1486,8 +1404,6 @@
       *====================================================================
      P TemplateFile_setName...
      P                 B                   export
-      *
-     D TemplateFile_setName...
      D                 PI
      D  i_file                       10A   const
       * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -1495,11 +1411,7 @@
 
          g_state.qTplFile.name = i_file;
 
-         return;
-
       /END-FREE
-      *
-     P TemplateFile_setName...
      P                 E
       *
       *====================================================================
@@ -1512,8 +1424,6 @@
       *====================================================================
      P TemplateFile_setLibrary...
      P                 B                   export
-      *
-     D TemplateFile_setLibrary...
      D                 PI
      D  i_lib                        10A   const
       * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -1521,11 +1431,7 @@
 
          g_state.qTplFile.lib = i_lib;
 
-         return;
-
       /END-FREE
-      *
-     P TemplateFile_setLibrary...
      P                 E
       *
       *====================================================================
@@ -1537,8 +1443,6 @@
       *====================================================================
      P TemplateFile_getName...
      P                 B                   export
-      *
-     D TemplateFile_getName...
      D                 PI            10A
       * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       /FREE
@@ -1546,8 +1450,6 @@
          return g_state.qTplFile.name;
 
       /END-FREE
-      *
-     P TemplateFile_getName...
      P                 E
       *
       *====================================================================
@@ -1560,8 +1462,6 @@
       *====================================================================
      P TemplateFile_getLibrary...
      P                 B                   export
-      *
-     D TemplateFile_getLibrary...
      D                 PI            10A
       * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       /FREE
@@ -1569,8 +1469,6 @@
          return g_state.qTplFile.lib;
 
       /END-FREE
-      *
-     P TemplateFile_getLibrary...
      P                 E
       *
       *====================================================================
@@ -1582,8 +1480,6 @@
       *====================================================================
      P OutputFile_getName...
      P                 B                   export
-      *
-     D OutputFile_getName...
      D                 PI            10A
       * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       /FREE
@@ -1591,8 +1487,6 @@
          return g_state.qOutFile.name;
 
       /END-FREE
-      *
-     P OutputFile_getName...
      P                 E
       *
       *====================================================================
@@ -1605,8 +1499,6 @@
       *====================================================================
      P OutputFile_getLibrary...
      P                 B                   export
-      *
-     D OutputFile_getLibrary...
      D                 PI            10A
       * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       /FREE
@@ -1614,8 +1506,6 @@
          return g_state.qOutFile.lib;
 
       /END-FREE
-      *
-     P OutputFile_getLibrary...
      P                 E
       *
       *====================================================================
@@ -1629,8 +1519,6 @@
       *====================================================================
      P OutputFile_getMember...
      P                 B                   export
-      *
-     D OutputFile_getMember...
      D                 PI            10A
       * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       /FREE
@@ -1638,8 +1526,6 @@
          return g_state.outMbr;
 
       /END-FREE
-      *
-     P OutputFile_getMember...
      P                 E
       *
       *====================================================================
@@ -1651,8 +1537,6 @@
       *====================================================================
      P OutputFile_getOutputFileFormat...
      P                 B                   export
-      *
-     D OutputFile_getOutputFileFormat...
      D                 PI            10A
       * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       /FREE
@@ -1660,8 +1544,6 @@
          return g_state.outFilFmt;
 
       /END-FREE
-      *
-     P OutputFile_getOutputFileFormat...
      P                 E
       *
       *====================================================================
@@ -1674,8 +1556,6 @@
       *====================================================================
      P OutputFile_isLevelCheck...
      P                 B                   export
-      *
-     D OutputFile_isLevelCheck...
      D                 PI              N
      D  o_msg                                     likeds(msg_t )
      D                                            options(*nopass)
@@ -1775,8 +1655,6 @@
          return isLevelCheck;
 
       /END-FREE
-      *
-     P OutputFile_isLevelCheck...
      P                 E
       *
       *====================================================================
@@ -1789,8 +1667,6 @@
       *====================================================================
      P Object_setName...
      P                 B                   export
-      *
-     D Object_setName...
      D                 PI
      D  i_obj                        10A   const
       * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -1798,11 +1674,7 @@
 
          g_state.qObj.name = i_obj;
 
-         return;
-
       /END-FREE
-      *
-     P Object_setName...
      P                 E
       *
       *====================================================================
@@ -1816,8 +1688,6 @@
       *====================================================================
      P Object_setLibrary...
      P                 B                   export
-      *
-     D Object_setLibrary...
      D                 PI
      D  i_lib                        10A   const
       * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -1825,11 +1695,7 @@
 
          g_state.qObj.lib = i_lib;
 
-         return;
-
       /END-FREE
-      *
-     P Object_setLibrary...
      P                 E
       *
       *====================================================================
@@ -1842,8 +1708,6 @@
       *====================================================================
      P Object_setType...
      P                 B                   export
-      *
-     D Object_setType...
      D                 PI
      D  i_type                       10A   const
       * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -1851,11 +1715,7 @@
 
          g_state.objType = i_type;
 
-         return;
-
       /END-FREE
-      *
-     P Object_setType...
      P                 E
       *
       *====================================================================
@@ -1868,8 +1728,6 @@
       *====================================================================
      P Object_getName...
      P                 B                   export
-      *
-     D Object_getName...
      D                 PI            10A
       * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       /FREE
@@ -1877,8 +1735,6 @@
          return g_state.qObj.name;
 
       /END-FREE
-      *
-     P Object_getName...
      P                 E
       *
       *====================================================================
@@ -1892,8 +1748,6 @@
       *====================================================================
      P Object_getLibrary...
      P                 B                   export
-      *
-     D Object_getLibrary...
      D                 PI            10A
       * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       /FREE
@@ -1901,8 +1755,6 @@
          return g_state.qObj.lib;
 
       /END-FREE
-      *
-     P Object_getLibrary...
      P                 E
       *
       *====================================================================
@@ -1915,8 +1767,6 @@
       *====================================================================
      P Object_getType...
      P                 B                   export
-      *
-     D Object_getType...
      D                 PI            10A
       * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       /FREE
@@ -1924,8 +1774,6 @@
          return g_state.objType;
 
       /END-FREE
-      *
-     P Object_getType...
      P                 E
       *
       *====================================================================
@@ -1937,19 +1785,13 @@
       *====================================================================
      P Error_resetCounter...
      P                 B                   export
-      *
-     D Error_resetCounter...
      D                 PI
       * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       /FREE
 
          g_state.errCount = 0;
 
-         return;
-
       /END-FREE
-      *
-     P Error_resetCounter...
      P                 E
       *
       *====================================================================
@@ -1961,19 +1803,13 @@
       *====================================================================
      P Error_incrementCounter...
      P                 B                   export
-      *
-     D Error_incrementCounter...
      D                 PI
       * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       /FREE
 
          g_state.errCount = g_state.errCount + 1;
 
-         return;
-
       /END-FREE
-      *
-     P Error_incrementCounter...
      P                 E
       *
       *====================================================================
@@ -1985,8 +1821,6 @@
       *====================================================================
      P Error_getCounterAsString...
      P                 B                   export
-      *
-     D Error_getCounterAsString...
      D                 PI            10A
       * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       /FREE
@@ -1994,8 +1828,6 @@
          return %char(g_state.errCount);
 
       /END-FREE
-      *
-     P Error_getCounterAsString...
      P                 E
       *
       *====================================================================
@@ -2008,8 +1840,6 @@
       *====================================================================
      P Message_sendStatusMsg...
      P                 B                   export
-      *
-     D Message_sendStatusMsg...
      D                 PI
      D  i_ID                               const  like(msg_t.ID   )
      D  i_data                             const  like(msg_t.data )
@@ -2031,11 +1861,7 @@
 
          f_sndPgmMsg(msg: cMsg_Ext);
 
-         return;
-
       /END-FREE
-      *
-     P Message_sendStatusMsg...
      P                 E
       *
       *====================================================================
@@ -2048,8 +1874,6 @@
       *====================================================================
      P Message_sendDiagMsg...
      P                 B                   export
-      *
-     D Message_sendDiagMsg...
      D                 PI
      D  i_msg                              value  likeds(msg_t    )
       * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -2058,11 +1882,7 @@
          i_msg.type = cMsg_Diag;
          f_sndPgmMsg(i_msg: cMsg_Prv: cMsg_ToCtlBdy);
 
-         return;
-
       /END-FREE
-      *
-     P Message_sendDiagMsg...
      P                 E
       *
       *====================================================================
@@ -2075,8 +1895,6 @@
       *====================================================================
      P Message_sendEscapeMsg...
      P                 B                   export
-      *
-     D Message_sendEscapeMsg...
      D                 PI
      D  i_msg                              value  likeds(msg_t    )
       * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -2085,11 +1903,7 @@
          i_msg.type = cMsg_Escape;
          f_sndPgmMsg(i_msg: cMsg_Prv: cMsg_ToCtlBdy);
 
-         return;
-
       /END-FREE
-      *
-     P Message_sendEscapeMsg...
      P                 E
       *
       *====================================================================
@@ -2101,8 +1915,6 @@
       *====================================================================
      P System_getCurrentRelease...
      P                 B                   export
-      *
-     D System_getCurrentRelease...
      D                 PI             6A
       *
       *  QSZRTVPR API
@@ -2139,8 +1951,6 @@
          return prdr0100.releaseLvl;
 
       /END-FREE
-      *
-     P System_getCurrentRelease...
      P                 E
       *
       *====================================================================
@@ -2152,8 +1962,6 @@
       *====================================================================
      P Application_getLibrary...
      P                 B                   export
-      *
-     D Application_getLibrary...
      D                 PI            10A
       * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       /FREE
@@ -2161,7 +1969,5 @@
          return sds.pgmLib;
 
       /END-FREE
-      *
-     P Application_getLibrary...
      P                 E
       *

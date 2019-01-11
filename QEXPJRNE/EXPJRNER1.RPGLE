@@ -74,8 +74,6 @@
       *
      P main...
      P                 B
-      *
-     D main...
      D                 PI
      D  i_cmd                              const like(gi_cmd      )
      D  o_string                                 like(go_string   )
@@ -91,10 +89,6 @@
                     '??FROMTIME(000000) ' +
                     '??TOTIME(235959)';
 
-         return;
-
       /END-FREE
-      *
-     P main...
      P                 E
       *

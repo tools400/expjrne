@@ -154,8 +154,6 @@
       *
      P f_crtOutfile_SQL...
      P                 B                   export
-      *
-     D f_crtOutfile_SQL...
      D                 PI              N
      D  i_tplFile                    10A   const
      D  i_tplLib                     10A   const
@@ -281,10 +279,10 @@
                endsl;
 
                // ... CCSID
- B03           // if (fldAttr.sqlType = cSQL_TYPE_CHARACTER or
- B03           //     fldAttr.sqlType = cSQL_TYPE_VARCHAR  );
+               // if (fldAttr.sqlType = cSQL_TYPE_CHARACTER or
+               //     fldAttr.sqlType = cSQL_TYPE_VARCHAR  );
                //    sqlStrFld = sqlStrFld + ' FOR SBCS DATA';
- E03           // endif;
+               // endif;
                if (hasCcsidClause(fldAttr.flda0320.type
                                   : fldAttr.flda0320.ccsid));
                   sqlStrFld = sqlStrFld +
@@ -410,8 +408,6 @@
          return isOK;
 
       /END-FREE
-      *
-     P f_crtOutfile_SQL...
      P                 E
       *
       *=====================================================================*
@@ -420,8 +416,6 @@
       *
      P p_abnEndProc...
      P                 B
-      *
-     D p_abnEndProc...
      D                 PI
      D  i_pRtxToken                    *   const
       *
@@ -437,10 +431,6 @@
          SQLCLI_shutdown();
          rtxToken.hSqlCli = SQLCLI_null();
 
-         return;
-
       /END-FREE
-      *
-     P p_abnEndProc...
      P                 E
       *

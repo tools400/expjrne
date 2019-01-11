@@ -228,8 +228,6 @@
       *==================================================================*
      P SQLCLI_initialize...
      P                 B                   export
-      *
-     D SQLCLI_initialize...
      D                 PI                         like(SQLRETCODE_t )
      D  o_hSqlCli                                 likeds(hSqlCli_t  )
       *
@@ -313,8 +311,6 @@
          return rc;
 
       /END-FREE
-      *
-     P SQLCLI_initialize...
      P                 E
       *
       *==================================================================*
@@ -322,8 +318,6 @@
       *==================================================================*
      P SQLCLI_executeDirect...
      P                 B                   export
-      *
-     D SQLCLI_executeDirect...
      D                 PI                         like(SQLRETCODE_t )
      D  i_hSqlCli                          value  likeds(hSqlCli_t  )
      D  i_sqlStr                       *   value  options(*string)
@@ -379,8 +373,6 @@
          return rc;
 
       /END-FREE
-      *
-     P SQLCLI_executeDirect...
      P                 E
       *
       *==================================================================*
@@ -388,8 +380,6 @@
       *==================================================================*
      P SQLCLI_terminate...
      P                 B                   export
-      *
-     D SQLCLI_terminate...
      D                 PI                         like(SQLRETCODE_t )
      D  io_hSqlCli                                likeds(hSqlCli_t  )
       *
@@ -431,8 +421,6 @@
          return rc;
 
       /END-FREE
-      *
-     P SQLCLI_terminate...
      P                 E
       *
       *==================================================================*
@@ -441,8 +429,6 @@
       *==================================================================*
      P SQLCLI_shutdown...
      P                 B                   export
-      *
-     D SQLCLI_shutdown...
      D                 PI
       *
       *  Helper fields
@@ -455,8 +441,6 @@
 
          // reset reference counter
          g_count = 0;
-
-         return;
 
       /END-FREE
       *
@@ -482,8 +466,6 @@
          return hSqlCli;
 
       /END-FREE
-      *
-     P SQLCLI_null...
      P                 E
       *
       *==================================================================*
@@ -491,8 +473,6 @@
       *==================================================================*
      P SQLCLI_isNull...
      P                 B                   export
-      *
-     D SQLCLI_isNull...
      D                 PI              N
      D  i_hSqlCli                          const  likeds(hSqlCli_t  )
       *
@@ -532,8 +512,6 @@
          return hColumns;
 
       /END-FREE
-      *
-     P SQLCLI_Columns_null...
      P                 E
       *
       *==================================================================*
@@ -541,8 +519,6 @@
       *==================================================================*
      P SQLCLI_Columns_isNull...
      P                 B                   export
-      *
-     D SQLCLI_Columns_isNull...
      D                 PI              N
      D  i_hColumns                         const  likeds(hColumns_t )
       *
@@ -556,8 +532,6 @@
          endif;
 
       /END-FREE
-      *
-     P SQLCLI_Columns_isNull...
      P                 E
       *
       *==================================================================*
@@ -565,8 +539,6 @@
       *==================================================================*
      P SQLCLI_Columns_open...
      P                 B                   export
-      *
-     D SQLCLI_Columns_open...
      D                 PI                         like(SQLRETCODE_t )
      D  o_hColumns                                likeds(hColumns_t )
      D  i_file                             const  likeds(qObj_t     )
@@ -657,8 +629,6 @@
          return rc;
 
       /END-FREE
-      *
-     P SQLCLI_Columns_open...
      P                 E
       *
       *==================================================================*
@@ -666,8 +636,6 @@
       *==================================================================*
      P SQLCLI_Columns_get...
      P                 B                   export
-      *
-     D SQLCLI_Columns_get...
      D                 PI                         like(SQLRETCODE_t )
      D  io_hColumns                               likeds(hColumns_t )
      D  o_fldAttr                                 likeds(fldAttr_t  )
@@ -792,8 +760,6 @@
          return rc;
 
       /END-FREE
-      *
-     P SQLCLI_Columns_get...
      P                 E
       *
       *==================================================================*
@@ -801,8 +767,6 @@
       *==================================================================*
      P SQLCLI_Columns_numE...
      P                 B                   export
-      *
-     D SQLCLI_Columns_numE...
      D                 PI            10I 0
      D  i_hColumns                         const  likeds(hColumns_t )
       * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -811,8 +775,6 @@
          return i_hColumns.numE;
 
       /END-FREE
-      *
-     P SQLCLI_Columns_numE...
      P                 E
       *
       *==================================================================*
@@ -820,8 +782,6 @@
       *==================================================================*
      P SQLCLI_Columns_close...
      P                 B                   export
-      *
-     D SQLCLI_Columns_close...
      D                 PI                         like(SQLRETCODE_t )
      D  io_hColumns                               likeds(hColumns_t )
       *
@@ -870,8 +830,6 @@
          return rc;
 
       /END-FREE
-      *
-     P SQLCLI_Columns_close...
      P                 E
       *
       *==================================================================*
@@ -879,8 +837,6 @@
       *==================================================================*
      P SQLCLI_Error_clear...
      P                 B
-      *
-     D SQLCLI_Error_clear...
      D                 PI
       *
       *  Local fields
@@ -889,11 +845,7 @@
 
          clear g_sqlError;
 
-         return;
-
       /END-FREE
-      *
-     P SQLCLI_Error_clear...
      P                 E
       *
       *==================================================================*
@@ -901,8 +853,6 @@
       *==================================================================*
      P SQLCLI_Error_set...
      P                 B
-      *
-     D SQLCLI_Error_set...
      D                 PI
      D  i_hSqlCli                          value  likeds(hSqlCli_t  )
      D  i_hstmt                            value  like(HSTMT_t      )
@@ -923,11 +873,7 @@
          g_sqlError.code  = code;
          g_sqlError.msg   = %str(%addr(msg));
 
-         return;
-
       /END-FREE
-      *
-     P SQLCLI_Error_set...
      P                 E
       *
       *==================================================================*
@@ -935,8 +881,6 @@
       *==================================================================*
      P SQLCLI_Error_get...
      P                 B                   export
-      *
-     D SQLCLI_Error_get...
      D                 PI                         like(msg_t )
       *
       *  Return value
@@ -956,8 +900,6 @@
          return msg;
 
       /END-FREE
-      *
-     P SQLCLI_Error_get...
      P                 E
       *
       *==================================================================*
@@ -965,8 +907,6 @@
       *==================================================================*
      P SQLCLI_Error_getState...
      P                 B                   export
-      *
-     D SQLCLI_Error_getState...
      D                 PI             5A
       * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       /FREE
@@ -974,8 +914,6 @@
          return g_sqlError.state;
 
       /END-FREE
-      *
-     P SQLCLI_Error_getState...
      P                 E
       *
       *==================================================================*
@@ -984,8 +922,6 @@
       *==================================================================*
      P terminateSqlCli...
      P                 B
-      *
-     D terminateSqlCli...
      D                 PI                         like(SQLRETCODE_t )
      D  io_hSqlCli                                likeds(hSqlCli_t  )
       *
@@ -1035,7 +971,5 @@
          return rc;
 
       /END-FREE
-      *
-     P terminateSqlCli...
      P                 E
       *

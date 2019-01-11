@@ -96,8 +96,6 @@
       *
      P main...
      P                 B
-      *
-     D main...
      D                 PI
      D  i_parm1                            const  like(gi_parm1  )
      D  io_parm2                                  like(gio_parm2 )
@@ -123,10 +121,6 @@
             endif;
          endsl;
 
-         return;
-
       /END-FREE
-      *
-     P main...
      P                 E
       *

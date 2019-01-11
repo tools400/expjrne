@@ -51,7 +51,7 @@
       appblddate CDATA #REQUIRED
      >
      ]>
-<upload  appname="EXPJRNE"  appauthor="Thomas Raddatz"  appblddate="12/20/2018">
+<upload  appname="EXPJRNE"  appauthor="Thomas Raddatz"  appblddate=" 1/11/2019">
 <install_instructions><![CDATA[
      *----------------------------------------------------------------      ------
      *  1. Upload entire XML to your AS/400 to a source file 112 long, into any mbr
@@ -1366,7 +1366,10 @@ srccssid=  "00273">
              DLTPGM    PGM(&TOLIB/EXPJRNECR)
              MONMSG     MSGID(CPF2105)
 
-             DLTPGM    PGM(&TOLIB/EXPJRNECU)
+             DLTPGM    PGM(&TOLIB/EXPJRNEV)
+             MONMSG     MSGID(CPF2105)
+
+             DLTSRVPGM SRVPGM(&TOLIB/EXPJRNECU)
              MONMSG     MSGID(CPF2105)
 
              DLTMOD    MODULE(&TOLIB/EXPJRNEC1)
@@ -1577,12 +1580,12 @@ srccssid=  "00273">
      /* -------------------------------- */
      /*  Create commands                 */
      /* -------------------------------- */
-             CRTCMD     CMD(&TOLIB/EXPJRNE) +
-                          PGM(&TOLIB/EXPJRNEC) +
-                          SRCFILE(&SRCLIB/&SRCFILE) +
-                          SRCMBR(&CMD) +
+             CRTCMD     CMD(&TOLIB/EXPJRNE)           +
+                          PGM(&TOLIB/EXPJRNEC)        +
+                          SRCFILE(&SRCLIB/&SRCFILE)   +
+                          SRCMBR(&CMD)                +
                           PMTOVRPGM(&TOLIB/EXPJRNECP) +
-                          HLPPNLGRP(&TOLIB/EXPJRNEP) +
+                          HLPPNLGRP(&TOLIB/EXPJRNEP)  +
                           HLPID(EXPJRNE)
              DLTSPLF    FILE(&CMD      ) JOB(*) SPLNBR(*LAST)
              MONMSG     MSGID(CPF0000)
@@ -4001,6 +4004,7 @@ srccssid=  "00273">
      /*   >>IMPORTANT<<                                                     */
      /*     >>PARM<< DBGVIEW(*LIST);                                        */
      /*     >>PARM<< TGTRLS(V6R1M0);                                        */
+     /*     >>PARM<< OPTION(*EVENTF);                                       */
      /*   >>END-IMPORTANT<<                                                 */
      /*                                                                     */
      /*   >>EXECUTE<<                                                       */
@@ -4022,8 +4026,7 @@ srccssid=  "00273">
                              &I_JRN           +
                              &I_RCVRNG        +
                              &I_SIZE          +
-                             &I_LVLCHK        +
-                             &I_MSGF          )
+                             &I_LVLCHK        )
 
              DCL        VAR(&I_OBJ     ) TYPE(*CHAR) LEN(20)
              DCL        VAR(&I_FROMDATE) TYPE(*CHAR) LEN( 7)
@@ -4041,7 +4044,6 @@ srccssid=  "00273">
              DCL        VAR(&I_RCVRNG  ) TYPE(*CHAR) LEN(42)
              DCL        VAR(&I_SIZE    ) TYPE(*CHAR) LEN(10)
              DCL        VAR(&I_LVLCHK  ) TYPE(*CHAR) LEN( 1)
-             DCL        VAR(&I_MSGF    ) TYPE(*CHAR) LEN(10)
 
              DCL        VAR(&OBJ       ) TYPE(*CHAR) LEN(10)
              DCL        VAR(&LIB       ) TYPE(*CHAR) LEN(10)
@@ -4101,6 +4103,9 @@ srccssid=  "00273">
              DCL        VAR(&NOMAX     ) TYPE(*DEC ) LEN( 1 0) VALUE( 0)
              DCL        VAR(&TMPCHAR   ) TYPE(*CHAR) LEN( 10)
 
+             DCL        VAR(&APP_MSG_F ) TYPE(*CHAR) LEN(10) VALUE('EXPJRNE')
+             DCL        VAR(&PRDLIB    ) TYPE(*CHAR) LEN(10)
+
 /* Error handling       */
              DCL        VAR(&ERROR)      TYPE(*LGL) +
                           VALUE('0')
@@ -4128,7 +4133,11 @@ srccssid=  "00273">
   /* ------------------------------------------------------------------------ */
   /* Set application message file.                                            */
   /* ------------------------------------------------------------------------ */
-               CALLPRC    PRC('BASICS1R1_p_setAppMsgFile') PARM(&I_MSGF)
+               CALLPRC    PRC('EXPJRNER7_Application_getLibrary') RTNVAL(&PRDLIB)
+
+
+               CALLPRC    PRC('BASICS1R1_p_setAppMsgFile') PARM((&APP_MSG_F *BYREF) +
+                                                                (&PRDLIB    *BYREF))
 
   /* ------------------------------------------------------------------------ */
   /* Break input variables into pieces.                                       */
@@ -4266,7 +4275,7 @@ srccssid=  "00273">
              IF         COND(&RELEASE *LT 'V5R4M0' *AND +
                              &OBJTYPE *NE '*FILE') THEN(DO)
                /* Parameter OBJTYPE contains an invalid value. */
-               SNDPGMMSG  MSGID(USR0028) MSGF(*LIBL/&I_MSGF) +
+               SNDPGMMSG  MSGID(USR0028) MSGF(&PRDLIB/&APP_MSG_F) +
                           MSGDTA(&OBJTYPE *CAT &RELEASE) +
                           TOPGMQ(*PRV (*PGMBDY)) +
                           MSGTYPE(*ESCAPE)
@@ -4275,24 +4284,24 @@ srccssid=  "00273">
              IF         COND(&OUTFILE *EQ '*DFT' +
                         *AND %SST(&OBJ 9 2) *NE ' '    ) THEN(DO)
                /* Outfile default name can not be generated. */
-               SNDPGMMSG  MSGID(USR0005) MSGF(*LIBL/&I_MSGF) +
+               SNDPGMMSG  MSGID(USR0005) MSGF(&PRDLIB/&APP_MSG_F) +
                           TOPGMQ(*PRV (*PGMBDY)) +
                           MSGTYPE(*ESCAPE)
              ENDDO
 
-    /*       IF         COND(&MBROPT  *EQ '*ADD'  +               */
-    /*                  *AND &CRTFILE *NE 'N'   ) THEN(DO)        */
-    /*         SNDPGMMSG  MSGID(USR0006) MSGF(*LIBL/&I_MSGF) +    */
-    /*                    TOPGMQ(*PRV (*PGMBDY)) +                */
-    /*                    MSGTYPE(*ESCAPE)                        */
-    /*       ENDDO                                                */
+    /*       IF         COND(&MBROPT  *EQ '*ADD'  +                  */
+    /*                  *AND &CRTFILE *NE 'N'   ) THEN(DO)           */
+    /*         SNDPGMMSG  MSGID(USR0006) MSGF(&PRDLIB/&APP_MSG_F) +  */
+    /*                    TOPGMQ(*PRV (*PGMBDY)) +                   */
+    /*                    MSGTYPE(*ESCAPE)                           */
+    /*       ENDDO                                                   */
 
   /* ------------------------------------------------------------------------ */
   /* Retrieve journal information.                                            */
   /* ------------------------------------------------------------------------ */
 
              /* Retrieving journal information ... */
-             SNDPGMMSG  MSGID(USR0007) MSGF(*LIBL/&I_MSGF) +
+             SNDPGMMSG  MSGID(USR0007) MSGF(&PRDLIB/&APP_MSG_F) +
                           TOPGMQ(*EXT) MSGTYPE(*STATUS)
 
              CALLPRC    PRC('EXPJRNER7_rtvJrnInf') +
@@ -4311,7 +4320,7 @@ srccssid=  "00273">
 
              IF         COND(&ACTIVE *EQ '0') THEN(DO)
                /* Specified object is not journaled. */
-               SNDPGMMSG  MSGID(USR0008) MSGF(*LIBL/&I_MSGF) +
+               SNDPGMMSG  MSGID(USR0008) MSGF(&PRDLIB/&APP_MSG_F) +
                           TOPGMQ(*PRV (*PGMBDY)) +
                           MSGTYPE(*ESCAPE)
              ENDDO
@@ -4365,7 +4374,7 @@ CHK_CURLIB:
                         *AND &LIB     *EQ &OUTLIB  +
                         *AND &OBJTYPE *EQ '*FILE') THEN(DO)
                /* Output file must be different from the input file. */
-               SNDPGMMSG  MSGID(USR0029) MSGF(*LIBL/&I_MSGF) +
+               SNDPGMMSG  MSGID(USR0029) MSGF(&PRDLIB/&APP_MSG_F) +
                           TOPGMQ(*PRV (*PGMBDY)) +
                           MSGTYPE(*ESCAPE)
              ENDDO
@@ -4417,7 +4426,7 @@ CRTOUTFILE:
                CHGVAR     VAR(&RC) VALUE(%SST(&RC2 1 1))
                IF         COND(&RC *EQ '0') THEN(DO)
                  /* Outfile could not be created. */
-                 SNDPGMMSG  MSGID(USR0010) MSGF(*LIBL/&I_MSGF) +
+                 SNDPGMMSG  MSGID(USR0010) MSGF(&PRDLIB/&APP_MSG_F) +
                             TOPGMQ(*PRV (*PGMBDY)) +
                             MSGTYPE(*ESCAPE)
                ENDDO
@@ -4495,7 +4504,7 @@ CHGOUTFILE:
   /* ------------------------------------------------------------------------ */
 
              /* Exporting journal entries ... */
-             SNDPGMMSG  MSGID(USR0011) MSGF(*LIBL/&I_MSGF) +
+             SNDPGMMSG  MSGID(USR0011) MSGF(&PRDLIB/&APP_MSG_F) +
                           TOPGMQ(*EXT) MSGTYPE(*STATUS)
 
              RMVMSG     PGMQ(*SAME (*)) CLEAR(*ALL)
@@ -4536,7 +4545,7 @@ LVLCHK:
                DLTF       FILE(QTEMP/&QADSPJRN)
                IF         COND(&RC *EQ '1') THEN(DO)
                  /* Command ended in error - See joblog. */
-                 SNDPGMMSG  MSGID(USR0016) MSGF(*LIBL/&I_MSGF) +
+                 SNDPGMMSG  MSGID(USR0016) MSGF(&PRDLIB/&APP_MSG_F) +
                             TOPGMQ(*PRV (*PGMBDY)) +
                             MSGTYPE(*ESCAPE)
                ENDDO
@@ -4588,7 +4597,7 @@ LVLCHK:
                                                      *TCAT ')'         +
                                *BCAT     'ENTTYP('   *TCAT &ENTTYP     +
                                                      *TCAT ')'         +
-                               *BCAT     'EXITPGM(*LIBL/EXPJRNECR)')
+                               *BCAT     'EXITPGM(' *CAT &PRDLIB *TCAT '/EXPJRNECR)')
 
          /* -------------------------------------------- */
          /*  ... add parameter JRNENTFMT ...             */
@@ -4661,7 +4670,7 @@ LVLCHK:
   /* ------------------------------------------------------------------------ */
              IF         COND(&NUM_ERRORS *NE '0') THEN(DO)
                /* Skipped &1 journal entries due to errors. */
-               SNDPGMMSG  MSGID(USR0018) MSGF(*LIBL/&I_MSGF) +
+               SNDPGMMSG  MSGID(USR0018) MSGF(&PRDLIB/&APP_MSG_F) +
                           MSGDTA(&NUM_ERRORS) +
                           TOPGMQ(*PRV (*PGMBDY)) +
                           MSGTYPE(*DIAG)
@@ -4683,14 +4692,14 @@ RMV_0:
                ENDDO
 
                /* &3 Journal entries exported to outfile &2/&1. */
-               SNDPGMMSG  MSGID(USR0014) MSGF(*LIBL/&I_MSGF) +
+               SNDPGMMSG  MSGID(USR0014) MSGF(&PRDLIB/&APP_MSG_F) +
                           MSGDTA(&OUTFILE *CAT &OUTLIB *CAT &NUMRCD) +
                           TOPGMQ(*PRV (*PGMBDY)) +
                           MSGTYPE(*INFO)
              ENDDO
              ELSE       CMD(DO)
                /* No journal entries available for file &2/&1. */
-               SNDPGMMSG  MSGID(USR0015) MSGF(*LIBL/&I_MSGF) +
+               SNDPGMMSG  MSGID(USR0015) MSGF(&PRDLIB/&APP_MSG_F) +
                           MSGDTA(&OBJ *CAT &LIB) +
                           TOPGMQ(*PRV (*PGMBDY)) +
                           MSGTYPE(*INFO)
@@ -4708,7 +4717,7 @@ ENDE:
 
              IF         COND(&ERROR) THEN(DO)
                /* Command ended in error - See joblog. */
-               SNDPGMMSG  MSGID(USR0016) MSGF(*LIBL/&I_MSGF) +
+               SNDPGMMSG  MSGID(USR0016) MSGF(&PRDLIB/&APP_MSG_F) +
                           TOPGMQ(*PRV (*PGMBDY)) +
                           MSGTYPE(*ESCAPE)
                MONMSG     MSGID(CPF0000)
@@ -4922,10 +4931,6 @@ srccssid=  "00273">
                           SPCVAL((*YES 'Y')              +
                                  (*NO  'N'))             +
                           PROMPT('Record format level check' 14)
-
-             PARM       KWD(MSGF      ) TYPE(*CHAR)        +
-                          LEN(10)                          +
-                          CONSTANT(EXPJRNE  )
 
 /* ----------------------------------------------------------------- */
 
@@ -5215,10 +5220,6 @@ srccssid=  "00273">
                           SPCVAL((*YES 'Y')              +
                                  (*NO  'N'))             +
                           PROMPT('Satzformat-Aktualitätsprüfung' 14)
-
-             PARM       KWD(MSGF      ) TYPE(*CHAR)        +
-                          LEN(10)                          +
-                          CONSTANT(EXPJRNE  )
 
 /* ----------------------------------------------------------------- */
 
@@ -6996,8 +6997,6 @@ srccssid=  "00273">
       *
      P main...
      P                 B
-      *
-     D main...
      D                 PI
      D  i_cmd                              const like(gi_cmd      )
      D  o_string                                 like(go_string   )
@@ -7013,11 +7012,7 @@ srccssid=  "00273">
                     '??FROMTIME(000000) ' +
                     '??TOTIME(235959)';
 
-         return;
-
       /END-FREE
-      *
-     P main...
      P                 E
       *
 ]]>  </copysrc>
@@ -7133,8 +7128,6 @@ srccssid=  "00273">
       *
      P main...
      P                 B
-      *
-     D main...
      D                 PI
      D  i_parm1                            const  like(gi_parm1  )
      D  io_parm2                                  like(gio_parm2 )
@@ -7160,11 +7153,7 @@ srccssid=  "00273">
             endif;
          endsl;
 
-         return;
-
       /END-FREE
-      *
-     P main...
      P                 E
       *
 ]]>  </copysrc>
@@ -7564,7 +7553,7 @@ srccssid=  "00273">
       /COPY QEXPJRNE,JRNETYPES
       *
       /DEFINE EXPJRNE_PROTOTYPE
-      /COPY QEXPJRNE,EXPJRNER7
+      /COPY QEXPJRNE,EXPJRNER7                    Tool: EXPJRNE Utilities
       /UNDEFINE EXPJRNE_PROTOTYPE
       *
      D QWCCVTDT        PR                  ExtPgm('QWCCVTDT')
@@ -9767,8 +9756,6 @@ srccssid=  "00273">
       *
      P f_crtOutfile_SQL...
      P                 B                   export
-      *
-     D f_crtOutfile_SQL...
      D                 PI              N
      D  i_tplFile                    10A   const
      D  i_tplLib                     10A   const
@@ -9894,10 +9881,10 @@ srccssid=  "00273">
                endsl;
 
                // ... CCSID
- B03           // if (fldAttr.sqlType = cSQL_TYPE_CHARACTER or
- B03           //     fldAttr.sqlType = cSQL_TYPE_VARCHAR  );
+               // if (fldAttr.sqlType = cSQL_TYPE_CHARACTER or
+               //     fldAttr.sqlType = cSQL_TYPE_VARCHAR  );
                //    sqlStrFld = sqlStrFld + ' FOR SBCS DATA';
- E03           // endif;
+               // endif;
                if (hasCcsidClause(fldAttr.flda0320.type
                                   : fldAttr.flda0320.ccsid));
                   sqlStrFld = sqlStrFld +
@@ -10023,8 +10010,6 @@ srccssid=  "00273">
          return isOK;
 
       /END-FREE
-      *
-     P f_crtOutfile_SQL...
      P                 E
       *
       *=====================================================================*
@@ -10033,8 +10018,6 @@ srccssid=  "00273">
       *
      P p_abnEndProc...
      P                 B
-      *
-     D p_abnEndProc...
      D                 PI
      D  i_pRtxToken                    *   const
       *
@@ -10050,11 +10033,7 @@ srccssid=  "00273">
          SQLCLI_shutdown();
          rtxToken.hSqlCli = SQLCLI_null();
 
-         return;
-
       /END-FREE
-      *
-     P p_abnEndProc...
      P                 E
       *
 ]]>  </copysrc>
@@ -10252,8 +10231,6 @@ srccssid=  "00273">
       *
      P f_crtOutfile_DDS...
      P                 B                   export
-      *
-     D f_crtOutfile_DDS...
      D                 PI              N
      D  i_tplFile                    10A   const
      D  i_tplLib                     10A   const
@@ -10380,8 +10357,6 @@ srccssid=  "00273">
          return isOK;
 
       /END-FREE
-      *
-     P f_crtOutfile_DDS...
      P                 E
       *
       *=====================================================================*
@@ -10389,8 +10364,6 @@ srccssid=  "00273">
       *=====================================================================*
      P addRecordFormat...
      P                 B
-      *
-     D addRecordFormat...
      D                 PI              N
      D  i_format                     10A   const
      D  i_fileCcsid                  10U 0 const
@@ -10418,8 +10391,6 @@ srccssid=  "00273">
          return cTrue;
 
       /END-FREE
-      *
-     P addRecordFormat...
      P                 E
       *
       *=====================================================================*
@@ -10427,8 +10398,6 @@ srccssid=  "00273">
       *=====================================================================*
      P addFields...
      P                 B
-      *
-     D addFields...
      D                 PI              N
      D  i_hList                            const  like(BasicList_handle_t )
      D  i_fileCcsid                  10U 0 const
@@ -10530,8 +10499,6 @@ srccssid=  "00273">
          return cTrue;
 
       /END-FREE
-      *
-     P addFields...
      P                 E
       *
       *=====================================================================*
@@ -10539,8 +10506,6 @@ srccssid=  "00273">
       *=====================================================================*
      P addKeyword...
      P                 B
-      *
-     D addKeyword...
      D                 PI              N
      D  i_kwd                       256A   value  varying
       *
@@ -10571,8 +10536,6 @@ srccssid=  "00273">
          return cTrue;
 
       /END-FREE
-      *
-     P addKeyword...
      P                 E
       *
       *=====================================================================*
@@ -10581,8 +10544,6 @@ srccssid=  "00273">
       *=====================================================================*
      P getFileCcsid...
      P                 B
-      *
-     D getFileCcsid...
      D                 PI            10U 0
      D  i_hList                            const  like(BasicList_handle_t )
       *
@@ -10609,8 +10570,6 @@ srccssid=  "00273">
          return ccsid;
 
       /END-FREE
-      *
-     P getFileCcsid...
      P                 E
       *
       *=====================================================================*
@@ -10618,8 +10577,6 @@ srccssid=  "00273">
       *=====================================================================*
      P crtSrcFile...
      P                 B
-      *
-     D crtSrcFile...
      D                 PI              N
      D  i_file                       10A   const
      D  i_lib                        10A   const
@@ -10671,8 +10628,6 @@ srccssid=  "00273">
          return isOK;
 
       /END-FREE
-      *
-     P crtSrcFile...
      P                 E
       *
       *=====================================================================*
@@ -10680,8 +10635,6 @@ srccssid=  "00273">
       *=====================================================================*
      P dltFile...
      P                 B
-      *
-     D dltFile...
      D                 PI              N
      D  i_file                       10A   const
      D  i_lib                        10A   const
@@ -10703,8 +10656,6 @@ srccssid=  "00273">
          return cTrue;
 
       /END-FREE
-      *
-     P dltFile...
      P                 E
       *
       *=====================================================================*
@@ -10713,8 +10664,6 @@ srccssid=  "00273">
       *
      P p_abnEndProc...
      P                 B
-      *
-     D p_abnEndProc...
      D                 PI
      D  i_pRtxToken                    *   const
       *
@@ -10733,11 +10682,7 @@ srccssid=  "00273">
 
          dltFile(rtxToken.srcFile.name: rtxToken.srcFile.lib);
 
-         return;
-
       /END-FREE
-      *
-     P p_abnEndProc...
      P                 E
       *
 ]]>  </copysrc>
@@ -10985,8 +10930,6 @@ srccssid=  "00273">
       *==================================================================*
      P SQLCLI_initialize...
      P                 B                   export
-      *
-     D SQLCLI_initialize...
      D                 PI                         like(SQLRETCODE_t )
      D  o_hSqlCli                                 likeds(hSqlCli_t  )
       *
@@ -11070,8 +11013,6 @@ srccssid=  "00273">
          return rc;
 
       /END-FREE
-      *
-     P SQLCLI_initialize...
      P                 E
       *
       *==================================================================*
@@ -11079,8 +11020,6 @@ srccssid=  "00273">
       *==================================================================*
      P SQLCLI_executeDirect...
      P                 B                   export
-      *
-     D SQLCLI_executeDirect...
      D                 PI                         like(SQLRETCODE_t )
      D  i_hSqlCli                          value  likeds(hSqlCli_t  )
      D  i_sqlStr                       *   value  options(*string)
@@ -11136,8 +11075,6 @@ srccssid=  "00273">
          return rc;
 
       /END-FREE
-      *
-     P SQLCLI_executeDirect...
      P                 E
       *
       *==================================================================*
@@ -11145,8 +11082,6 @@ srccssid=  "00273">
       *==================================================================*
      P SQLCLI_terminate...
      P                 B                   export
-      *
-     D SQLCLI_terminate...
      D                 PI                         like(SQLRETCODE_t )
      D  io_hSqlCli                                likeds(hSqlCli_t  )
       *
@@ -11188,8 +11123,6 @@ srccssid=  "00273">
          return rc;
 
       /END-FREE
-      *
-     P SQLCLI_terminate...
      P                 E
       *
       *==================================================================*
@@ -11198,8 +11131,6 @@ srccssid=  "00273">
       *==================================================================*
      P SQLCLI_shutdown...
      P                 B                   export
-      *
-     D SQLCLI_shutdown...
      D                 PI
       *
       *  Helper fields
@@ -11212,8 +11143,6 @@ srccssid=  "00273">
 
          // reset reference counter
          g_count = 0;
-
-         return;
 
       /END-FREE
       *
@@ -11239,8 +11168,6 @@ srccssid=  "00273">
          return hSqlCli;
 
       /END-FREE
-      *
-     P SQLCLI_null...
      P                 E
       *
       *==================================================================*
@@ -11248,8 +11175,6 @@ srccssid=  "00273">
       *==================================================================*
      P SQLCLI_isNull...
      P                 B                   export
-      *
-     D SQLCLI_isNull...
      D                 PI              N
      D  i_hSqlCli                          const  likeds(hSqlCli_t  )
       *
@@ -11289,8 +11214,6 @@ srccssid=  "00273">
          return hColumns;
 
       /END-FREE
-      *
-     P SQLCLI_Columns_null...
      P                 E
       *
       *==================================================================*
@@ -11298,8 +11221,6 @@ srccssid=  "00273">
       *==================================================================*
      P SQLCLI_Columns_isNull...
      P                 B                   export
-      *
-     D SQLCLI_Columns_isNull...
      D                 PI              N
      D  i_hColumns                         const  likeds(hColumns_t )
       *
@@ -11313,8 +11234,6 @@ srccssid=  "00273">
          endif;
 
       /END-FREE
-      *
-     P SQLCLI_Columns_isNull...
      P                 E
       *
       *==================================================================*
@@ -11322,8 +11241,6 @@ srccssid=  "00273">
       *==================================================================*
      P SQLCLI_Columns_open...
      P                 B                   export
-      *
-     D SQLCLI_Columns_open...
      D                 PI                         like(SQLRETCODE_t )
      D  o_hColumns                                likeds(hColumns_t )
      D  i_file                             const  likeds(qObj_t     )
@@ -11414,8 +11331,6 @@ srccssid=  "00273">
          return rc;
 
       /END-FREE
-      *
-     P SQLCLI_Columns_open...
      P                 E
       *
       *==================================================================*
@@ -11423,8 +11338,6 @@ srccssid=  "00273">
       *==================================================================*
      P SQLCLI_Columns_get...
      P                 B                   export
-      *
-     D SQLCLI_Columns_get...
      D                 PI                         like(SQLRETCODE_t )
      D  io_hColumns                               likeds(hColumns_t )
      D  o_fldAttr                                 likeds(fldAttr_t  )
@@ -11549,8 +11462,6 @@ srccssid=  "00273">
          return rc;
 
       /END-FREE
-      *
-     P SQLCLI_Columns_get...
      P                 E
       *
       *==================================================================*
@@ -11558,8 +11469,6 @@ srccssid=  "00273">
       *==================================================================*
      P SQLCLI_Columns_numE...
      P                 B                   export
-      *
-     D SQLCLI_Columns_numE...
      D                 PI            10I 0
      D  i_hColumns                         const  likeds(hColumns_t )
       * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -11568,8 +11477,6 @@ srccssid=  "00273">
          return i_hColumns.numE;
 
       /END-FREE
-      *
-     P SQLCLI_Columns_numE...
      P                 E
       *
       *==================================================================*
@@ -11577,8 +11484,6 @@ srccssid=  "00273">
       *==================================================================*
      P SQLCLI_Columns_close...
      P                 B                   export
-      *
-     D SQLCLI_Columns_close...
      D                 PI                         like(SQLRETCODE_t )
      D  io_hColumns                               likeds(hColumns_t )
       *
@@ -11627,8 +11532,6 @@ srccssid=  "00273">
          return rc;
 
       /END-FREE
-      *
-     P SQLCLI_Columns_close...
      P                 E
       *
       *==================================================================*
@@ -11636,8 +11539,6 @@ srccssid=  "00273">
       *==================================================================*
      P SQLCLI_Error_clear...
      P                 B
-      *
-     D SQLCLI_Error_clear...
      D                 PI
       *
       *  Local fields
@@ -11646,11 +11547,7 @@ srccssid=  "00273">
 
          clear g_sqlError;
 
-         return;
-
       /END-FREE
-      *
-     P SQLCLI_Error_clear...
      P                 E
       *
       *==================================================================*
@@ -11658,8 +11555,6 @@ srccssid=  "00273">
       *==================================================================*
      P SQLCLI_Error_set...
      P                 B
-      *
-     D SQLCLI_Error_set...
      D                 PI
      D  i_hSqlCli                          value  likeds(hSqlCli_t  )
      D  i_hstmt                            value  like(HSTMT_t      )
@@ -11680,11 +11575,7 @@ srccssid=  "00273">
          g_sqlError.code  = code;
          g_sqlError.msg   = %str(%addr(msg));
 
-         return;
-
       /END-FREE
-      *
-     P SQLCLI_Error_set...
      P                 E
       *
       *==================================================================*
@@ -11692,8 +11583,6 @@ srccssid=  "00273">
       *==================================================================*
      P SQLCLI_Error_get...
      P                 B                   export
-      *
-     D SQLCLI_Error_get...
      D                 PI                         like(msg_t )
       *
       *  Return value
@@ -11713,8 +11602,6 @@ srccssid=  "00273">
          return msg;
 
       /END-FREE
-      *
-     P SQLCLI_Error_get...
      P                 E
       *
       *==================================================================*
@@ -11722,8 +11609,6 @@ srccssid=  "00273">
       *==================================================================*
      P SQLCLI_Error_getState...
      P                 B                   export
-      *
-     D SQLCLI_Error_getState...
      D                 PI             5A
       * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       /FREE
@@ -11731,8 +11616,6 @@ srccssid=  "00273">
          return g_sqlError.state;
 
       /END-FREE
-      *
-     P SQLCLI_Error_getState...
      P                 E
       *
       *==================================================================*
@@ -11741,8 +11624,6 @@ srccssid=  "00273">
       *==================================================================*
      P terminateSqlCli...
      P                 B
-      *
-     D terminateSqlCli...
      D                 PI                         like(SQLRETCODE_t )
      D  io_hSqlCli                                likeds(hSqlCli_t  )
       *
@@ -11792,8 +11673,6 @@ srccssid=  "00273">
          return rc;
 
       /END-FREE
-      *
-     P terminateSqlCli...
      P                 E
       *
 ]]>  </copysrc>
@@ -12272,8 +12151,6 @@ srccssid=  "00273">
       *==================================================================*
      P rtvJobDateFmt...
      P                 B                   export
-      *
-     D rtvJobDateFmt...
      D                 PI            10A          varying
       *
       *  Return value
@@ -12296,8 +12173,6 @@ srccssid=  "00273">
          return dateFmt;
 
       /END-FREE
-      *
-     P rtvJobDateFmt...
      P                 E
       *
       *====================================================================
@@ -12328,8 +12203,6 @@ srccssid=  "00273">
       *====================================================================
      P rtvJrnInf...
      P                 B                   export
-      *
-     D rtvJrnInf...
      D                 PI              N
      D  i_obj                        10A   const
      D  i_lib                        10A   const
@@ -12404,8 +12277,6 @@ srccssid=  "00273">
          return cTrue;
 
       /END-FREE
-      *
-     P rtvJrnInf...
      P                 E
       *
       *====================================================================
@@ -12419,8 +12290,6 @@ srccssid=  "00273">
       *====================================================================
      P sqlTypeToString...
      P                 B                   export
-      *
-     D sqlTypeToString...
      D                 PI            32A          varying
      D  i_sqltype                    10I 0 const
       *
@@ -12476,8 +12345,6 @@ srccssid=  "00273">
          return dataType;
 
       /END-FREE
-      *
-     P sqlTypeToString...
      P                 E
       *
       *====================================================================
@@ -12491,8 +12358,6 @@ srccssid=  "00273">
       *====================================================================
      P rpgTypeToSqlString...
      P                 B                   export
-      *
-     D rpgTypeToSqlString...
      D                 PI            32A          varying
      D  i_rpgType                     1A   const
      D  i_length                     10I 0 const  options(*nopass)
@@ -12577,8 +12442,6 @@ srccssid=  "00273">
          return dataType;
 
       /END-FREE
-      *
-     P rpgTypeToSqlString...
      P                 E
       *
       *====================================================================
@@ -12590,8 +12453,6 @@ srccssid=  "00273">
       *====================================================================
      P xlate...
      P                 B                   export
-      *
-     D xlate...
      D                 PI           512A          varying
      D  i_string                    512A   const  varying
       *
@@ -12619,8 +12480,6 @@ srccssid=  "00273">
          return string;
 
       /END-FREE
-      *
-     P xlate...
      P                 E
       *
       *====================================================================
@@ -12634,8 +12493,6 @@ srccssid=  "00273">
       *====================================================================
      P getOutputFileColumns...
      P                 B                   export
-      *
-     D getOutputFileColumns...
      D                 PI
      D  i_hList                            const  like(BasicList_handle_t )
      D  i_outFilFmt                  10A   const
@@ -12698,11 +12555,7 @@ srccssid=  "00273">
             addColumns(i_hList: i_tplFile);
          endsl;
 
-         return;
-
       /END-FREE
-      *
-     P getOutputFileColumns...
      P                 E
       *
       *====================================================================
@@ -12714,8 +12567,6 @@ srccssid=  "00273">
       *====================================================================
      P hasCcsidClause...
      P                 B                   export
-      *
-     D hasCcsidClause...
      D                 PI              N
      D  i_type                        1A   const
      D  i_ccsid                      10U 0 const
@@ -12737,8 +12588,6 @@ srccssid=  "00273">
          return hasCcsid;
 
       /END-FREE
-      *
-     P hasCcsidClause...
      P                 E
       *
       *====================================================================
@@ -12753,8 +12602,6 @@ srccssid=  "00273">
       *====================================================================
      P addColumns...
      P                 B
-      *
-     D addColumns...
      D                 PI                         like(SQLRETCODE_t )
      D  i_hList                            const  like(BasicList_handle_t )
      D  i_file                             const  likeds(qObj_t     )
@@ -12811,8 +12658,6 @@ srccssid=  "00273">
          return rc;
 
       /END-FREE
-      *
-     P addColumns...
      P                 E
       *
       *====================================================================
@@ -12825,8 +12670,6 @@ srccssid=  "00273">
       *====================================================================
      P addDataAreaVarLenFields...
      P                 B
-      *
-     D addDataAreaVarLenFields...
      D                 PI                         like(SQLRETCODE_t )
      D  i_hList                            const  like(BasicList_handle_t )
       *
@@ -12868,8 +12711,6 @@ srccssid=  "00273">
          return rc;
 
       /END-FREE
-      *
-     P addDataAreaVarLenFields...
      P                 E
       *
       *====================================================================
@@ -12882,8 +12723,6 @@ srccssid=  "00273">
       *====================================================================
      P addDataQueueVarLenFields...
      P                 B
-      *
-     D addDataQueueVarLenFields...
      D                 PI                         like(SQLRETCODE_t )
      D  i_hList                            const  like(BasicList_handle_t )
       *
@@ -12935,8 +12774,6 @@ srccssid=  "00273">
          return rc;
 
       /END-FREE
-      *
-     P addDataQueueVarLenFields...
      P                 E
       *
       *====================================================================
@@ -12954,8 +12791,6 @@ srccssid=  "00273">
       *====================================================================
      P produceFldAttr...
      P                 B
-      *
-     D produceFldAttr...
      D                 PI                         likeds(fldAttr_t  )
      D  i_name                       10A   const
      D  i_type                        1A   const
@@ -13026,8 +12861,6 @@ srccssid=  "00273">
          return fldAttr;
 
       /END-FREE
-      *
-     P produceFldAttr...
      P                 E
       *
       *====================================================================
@@ -13041,8 +12874,6 @@ srccssid=  "00273">
       *====================================================================
      P getDataAreaType...
      P                 B
-      *
-     D getDataAreaType...
      D                 PI                         likeds(fldAttr_t  )
      D  i_dtaAra                     10A   const
      D  i_lib                        10A   const
@@ -13093,8 +12924,6 @@ srccssid=  "00273">
          return fldAttr;
 
       /END-FREE
-      *
-     P getDataAreaType...
      P                 E
       *
       *====================================================================
@@ -13108,8 +12937,6 @@ srccssid=  "00273">
       *====================================================================
      P getDataQueueType...
      P                 B
-      *
-     D getDataQueueType...
      D                 PI                         likeds(fldAttr_t  )
      D  i_dtaQ                       10A   const
      D  i_lib                        10A   const
@@ -13136,8 +12963,6 @@ srccssid=  "00273">
          return fldAttr;
 
       /END-FREE
-      *
-     P getDataQueueType...
      P                 E
       *
       *====================================================================
@@ -13151,8 +12976,6 @@ srccssid=  "00273">
       *====================================================================
      P getDataQueueKey...
      P                 B
-      *
-     D getDataQueueKey...
      D                 PI                         likeds(fldAttr_t  )
      D  i_dtaQ                       10A   const
      D  i_lib                        10A   const
@@ -13183,8 +13006,6 @@ srccssid=  "00273">
          return fldAttr;
 
       /END-FREE
-      *
-     P getDataQueueKey...
      P                 E
       *
       *====================================================================
@@ -13196,8 +13017,6 @@ srccssid=  "00273">
       *====================================================================
      P OutputFile_setName...
      P                 B                   export
-      *
-     D OutputFile_setName...
      D                 PI
      D  i_file                       10A   const
       * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -13205,11 +13024,7 @@ srccssid=  "00273">
 
          g_state.qOutFile.name = i_file;
 
-         return;
-
       /END-FREE
-      *
-     P OutputFile_setName...
      P                 E
       *
       *====================================================================
@@ -13222,8 +13037,6 @@ srccssid=  "00273">
       *====================================================================
      P OutputFile_setLibrary...
      P                 B                   export
-      *
-     D OutputFile_setLibrary...
      D                 PI
      D  i_lib                        10A   const
       * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -13231,11 +13044,7 @@ srccssid=  "00273">
 
          g_state.qOutFile.lib = i_lib;
 
-         return;
-
       /END-FREE
-      *
-     P OutputFile_setLibrary...
      P                 E
       *
       *====================================================================
@@ -13249,8 +13058,6 @@ srccssid=  "00273">
       *====================================================================
      P OutputFile_setMember...
      P                 B                   export
-      *
-     D OutputFile_setMember...
      D                 PI
      D  i_mbr                        10A   const
       * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -13258,11 +13065,7 @@ srccssid=  "00273">
 
          g_state.outMbr = i_mbr;
 
-         return;
-
       /END-FREE
-      *
-     P OutputFile_setMember...
      P                 E
       *
       *====================================================================
@@ -13274,8 +13077,6 @@ srccssid=  "00273">
       *====================================================================
      P OutputFile_setOutputFileFormat...
      P                 B                   export
-      *
-     D OutputFile_setOutputFileFormat...
      D                 PI
      D  i_outFilFmt                  10A   const
       * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -13283,11 +13084,7 @@ srccssid=  "00273">
 
          g_state.outFilFmt = i_outFilFmt;
 
-         return;
-
       /END-FREE
-      *
-     P OutputFile_setOutputFileFormat...
      P                 E
       *
       *====================================================================
@@ -13299,8 +13096,6 @@ srccssid=  "00273">
       *====================================================================
      P TemplateFile_setName...
      P                 B                   export
-      *
-     D TemplateFile_setName...
      D                 PI
      D  i_file                       10A   const
       * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -13308,11 +13103,7 @@ srccssid=  "00273">
 
          g_state.qTplFile.name = i_file;
 
-         return;
-
       /END-FREE
-      *
-     P TemplateFile_setName...
      P                 E
       *
       *====================================================================
@@ -13325,8 +13116,6 @@ srccssid=  "00273">
       *====================================================================
      P TemplateFile_setLibrary...
      P                 B                   export
-      *
-     D TemplateFile_setLibrary...
      D                 PI
      D  i_lib                        10A   const
       * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -13334,11 +13123,7 @@ srccssid=  "00273">
 
          g_state.qTplFile.lib = i_lib;
 
-         return;
-
       /END-FREE
-      *
-     P TemplateFile_setLibrary...
      P                 E
       *
       *====================================================================
@@ -13350,8 +13135,6 @@ srccssid=  "00273">
       *====================================================================
      P TemplateFile_getName...
      P                 B                   export
-      *
-     D TemplateFile_getName...
      D                 PI            10A
       * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       /FREE
@@ -13359,8 +13142,6 @@ srccssid=  "00273">
          return g_state.qTplFile.name;
 
       /END-FREE
-      *
-     P TemplateFile_getName...
      P                 E
       *
       *====================================================================
@@ -13373,8 +13154,6 @@ srccssid=  "00273">
       *====================================================================
      P TemplateFile_getLibrary...
      P                 B                   export
-      *
-     D TemplateFile_getLibrary...
      D                 PI            10A
       * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       /FREE
@@ -13382,8 +13161,6 @@ srccssid=  "00273">
          return g_state.qTplFile.lib;
 
       /END-FREE
-      *
-     P TemplateFile_getLibrary...
      P                 E
       *
       *====================================================================
@@ -13395,8 +13172,6 @@ srccssid=  "00273">
       *====================================================================
      P OutputFile_getName...
      P                 B                   export
-      *
-     D OutputFile_getName...
      D                 PI            10A
       * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       /FREE
@@ -13404,8 +13179,6 @@ srccssid=  "00273">
          return g_state.qOutFile.name;
 
       /END-FREE
-      *
-     P OutputFile_getName...
      P                 E
       *
       *====================================================================
@@ -13418,8 +13191,6 @@ srccssid=  "00273">
       *====================================================================
      P OutputFile_getLibrary...
      P                 B                   export
-      *
-     D OutputFile_getLibrary...
      D                 PI            10A
       * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       /FREE
@@ -13427,8 +13198,6 @@ srccssid=  "00273">
          return g_state.qOutFile.lib;
 
       /END-FREE
-      *
-     P OutputFile_getLibrary...
      P                 E
       *
       *====================================================================
@@ -13442,8 +13211,6 @@ srccssid=  "00273">
       *====================================================================
      P OutputFile_getMember...
      P                 B                   export
-      *
-     D OutputFile_getMember...
      D                 PI            10A
       * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       /FREE
@@ -13451,8 +13218,6 @@ srccssid=  "00273">
          return g_state.outMbr;
 
       /END-FREE
-      *
-     P OutputFile_getMember...
      P                 E
       *
       *====================================================================
@@ -13464,8 +13229,6 @@ srccssid=  "00273">
       *====================================================================
      P OutputFile_getOutputFileFormat...
      P                 B                   export
-      *
-     D OutputFile_getOutputFileFormat...
      D                 PI            10A
       * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       /FREE
@@ -13473,8 +13236,6 @@ srccssid=  "00273">
          return g_state.outFilFmt;
 
       /END-FREE
-      *
-     P OutputFile_getOutputFileFormat...
      P                 E
       *
       *====================================================================
@@ -13487,8 +13248,6 @@ srccssid=  "00273">
       *====================================================================
      P OutputFile_isLevelCheck...
      P                 B                   export
-      *
-     D OutputFile_isLevelCheck...
      D                 PI              N
      D  o_msg                                     likeds(msg_t )
      D                                            options(*nopass)
@@ -13588,8 +13347,6 @@ srccssid=  "00273">
          return isLevelCheck;
 
       /END-FREE
-      *
-     P OutputFile_isLevelCheck...
      P                 E
       *
       *====================================================================
@@ -13602,8 +13359,6 @@ srccssid=  "00273">
       *====================================================================
      P Object_setName...
      P                 B                   export
-      *
-     D Object_setName...
      D                 PI
      D  i_obj                        10A   const
       * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -13611,11 +13366,7 @@ srccssid=  "00273">
 
          g_state.qObj.name = i_obj;
 
-         return;
-
       /END-FREE
-      *
-     P Object_setName...
      P                 E
       *
       *====================================================================
@@ -13629,8 +13380,6 @@ srccssid=  "00273">
       *====================================================================
      P Object_setLibrary...
      P                 B                   export
-      *
-     D Object_setLibrary...
      D                 PI
      D  i_lib                        10A   const
       * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -13638,11 +13387,7 @@ srccssid=  "00273">
 
          g_state.qObj.lib = i_lib;
 
-         return;
-
       /END-FREE
-      *
-     P Object_setLibrary...
      P                 E
       *
       *====================================================================
@@ -13655,8 +13400,6 @@ srccssid=  "00273">
       *====================================================================
      P Object_setType...
      P                 B                   export
-      *
-     D Object_setType...
      D                 PI
      D  i_type                       10A   const
       * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -13664,11 +13407,7 @@ srccssid=  "00273">
 
          g_state.objType = i_type;
 
-         return;
-
       /END-FREE
-      *
-     P Object_setType...
      P                 E
       *
       *====================================================================
@@ -13681,8 +13420,6 @@ srccssid=  "00273">
       *====================================================================
      P Object_getName...
      P                 B                   export
-      *
-     D Object_getName...
      D                 PI            10A
       * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       /FREE
@@ -13690,8 +13427,6 @@ srccssid=  "00273">
          return g_state.qObj.name;
 
       /END-FREE
-      *
-     P Object_getName...
      P                 E
       *
       *====================================================================
@@ -13705,8 +13440,6 @@ srccssid=  "00273">
       *====================================================================
      P Object_getLibrary...
      P                 B                   export
-      *
-     D Object_getLibrary...
      D                 PI            10A
       * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       /FREE
@@ -13714,8 +13447,6 @@ srccssid=  "00273">
          return g_state.qObj.lib;
 
       /END-FREE
-      *
-     P Object_getLibrary...
      P                 E
       *
       *====================================================================
@@ -13728,8 +13459,6 @@ srccssid=  "00273">
       *====================================================================
      P Object_getType...
      P                 B                   export
-      *
-     D Object_getType...
      D                 PI            10A
       * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       /FREE
@@ -13737,8 +13466,6 @@ srccssid=  "00273">
          return g_state.objType;
 
       /END-FREE
-      *
-     P Object_getType...
      P                 E
       *
       *====================================================================
@@ -13750,19 +13477,13 @@ srccssid=  "00273">
       *====================================================================
      P Error_resetCounter...
      P                 B                   export
-      *
-     D Error_resetCounter...
      D                 PI
       * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       /FREE
 
          g_state.errCount = 0;
 
-         return;
-
       /END-FREE
-      *
-     P Error_resetCounter...
      P                 E
       *
       *====================================================================
@@ -13774,19 +13495,13 @@ srccssid=  "00273">
       *====================================================================
      P Error_incrementCounter...
      P                 B                   export
-      *
-     D Error_incrementCounter...
      D                 PI
       * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       /FREE
 
          g_state.errCount = g_state.errCount + 1;
 
-         return;
-
       /END-FREE
-      *
-     P Error_incrementCounter...
      P                 E
       *
       *====================================================================
@@ -13798,8 +13513,6 @@ srccssid=  "00273">
       *====================================================================
      P Error_getCounterAsString...
      P                 B                   export
-      *
-     D Error_getCounterAsString...
      D                 PI            10A
       * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       /FREE
@@ -13807,8 +13520,6 @@ srccssid=  "00273">
          return %char(g_state.errCount);
 
       /END-FREE
-      *
-     P Error_getCounterAsString...
      P                 E
       *
       *====================================================================
@@ -13821,8 +13532,6 @@ srccssid=  "00273">
       *====================================================================
      P Message_sendStatusMsg...
      P                 B                   export
-      *
-     D Message_sendStatusMsg...
      D                 PI
      D  i_ID                               const  like(msg_t.ID   )
      D  i_data                             const  like(msg_t.data )
@@ -13844,11 +13553,7 @@ srccssid=  "00273">
 
          f_sndPgmMsg(msg: cMsg_Ext);
 
-         return;
-
       /END-FREE
-      *
-     P Message_sendStatusMsg...
      P                 E
       *
       *====================================================================
@@ -13861,8 +13566,6 @@ srccssid=  "00273">
       *====================================================================
      P Message_sendDiagMsg...
      P                 B                   export
-      *
-     D Message_sendDiagMsg...
      D                 PI
      D  i_msg                              value  likeds(msg_t    )
       * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -13871,11 +13574,7 @@ srccssid=  "00273">
          i_msg.type = cMsg_Diag;
          f_sndPgmMsg(i_msg: cMsg_Prv: cMsg_ToCtlBdy);
 
-         return;
-
       /END-FREE
-      *
-     P Message_sendDiagMsg...
      P                 E
       *
       *====================================================================
@@ -13888,8 +13587,6 @@ srccssid=  "00273">
       *====================================================================
      P Message_sendEscapeMsg...
      P                 B                   export
-      *
-     D Message_sendEscapeMsg...
      D                 PI
      D  i_msg                              value  likeds(msg_t    )
       * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -13898,11 +13595,7 @@ srccssid=  "00273">
          i_msg.type = cMsg_Escape;
          f_sndPgmMsg(i_msg: cMsg_Prv: cMsg_ToCtlBdy);
 
-         return;
-
       /END-FREE
-      *
-     P Message_sendEscapeMsg...
      P                 E
       *
       *====================================================================
@@ -13914,8 +13607,6 @@ srccssid=  "00273">
       *====================================================================
      P System_getCurrentRelease...
      P                 B                   export
-      *
-     D System_getCurrentRelease...
      D                 PI             6A
       *
       *  QSZRTVPR API
@@ -13952,8 +13643,6 @@ srccssid=  "00273">
          return prdr0100.releaseLvl;
 
       /END-FREE
-      *
-     P System_getCurrentRelease...
      P                 E
       *
       *====================================================================
@@ -13965,8 +13654,6 @@ srccssid=  "00273">
       *====================================================================
      P Application_getLibrary...
      P                 B                   export
-      *
-     D Application_getLibrary...
      D                 PI            10A
       * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       /FREE
@@ -13974,8 +13661,6 @@ srccssid=  "00273">
          return sds.pgmLib;
 
       /END-FREE
-      *
-     P Application_getLibrary...
      P                 E
       *
 ]]>  </copysrc>

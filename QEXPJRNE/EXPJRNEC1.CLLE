@@ -102,6 +102,7 @@
      /*   >>IMPORTANT<<                                                     */
      /*     >>PARM<< DBGVIEW(*LIST);                                        */
      /*     >>PARM<< TGTRLS(V6R1M0);                                        */
+     /*     >>PARM<< OPTION(*EVENTF);                                       */
      /*   >>END-IMPORTANT<<                                                 */
      /*                                                                     */
      /*   >>EXECUTE<<                                                       */
@@ -123,8 +124,7 @@
                              &I_JRN           +
                              &I_RCVRNG        +
                              &I_SIZE          +
-                             &I_LVLCHK        +
-                             &I_MSGF          )
+                             &I_LVLCHK        )
 
              DCL        VAR(&I_OBJ     ) TYPE(*CHAR) LEN(20)
              DCL        VAR(&I_FROMDATE) TYPE(*CHAR) LEN( 7)
@@ -142,7 +142,6 @@
              DCL        VAR(&I_RCVRNG  ) TYPE(*CHAR) LEN(42)
              DCL        VAR(&I_SIZE    ) TYPE(*CHAR) LEN(10)
              DCL        VAR(&I_LVLCHK  ) TYPE(*CHAR) LEN( 1)
-             DCL        VAR(&I_MSGF    ) TYPE(*CHAR) LEN(10)
 
              DCL        VAR(&OBJ       ) TYPE(*CHAR) LEN(10)
              DCL        VAR(&LIB       ) TYPE(*CHAR) LEN(10)
@@ -202,6 +201,9 @@
              DCL        VAR(&NOMAX     ) TYPE(*DEC ) LEN( 1 0) VALUE( 0)
              DCL        VAR(&TMPCHAR   ) TYPE(*CHAR) LEN( 10)
 
+             DCL        VAR(&APP_MSG_F ) TYPE(*CHAR) LEN(10) VALUE('EXPJRNE')
+             DCL        VAR(&PRDLIB    ) TYPE(*CHAR) LEN(10)
+
 /* Error handling       */
              DCL        VAR(&ERROR)      TYPE(*LGL) +
                           VALUE('0')
@@ -229,7 +231,11 @@
   /* ------------------------------------------------------------------------ */
   /* Set application message file.                                            */
   /* ------------------------------------------------------------------------ */
-               CALLPRC    PRC('BASICS1R1_p_setAppMsgFile') PARM(&I_MSGF)
+               CALLPRC    PRC('EXPJRNER7_Application_getLibrary') RTNVAL(&PRDLIB)
+
+
+               CALLPRC    PRC('BASICS1R1_p_setAppMsgFile') PARM((&APP_MSG_F *BYREF) +
+                                                                (&PRDLIB    *BYREF))
 
   /* ------------------------------------------------------------------------ */
   /* Break input variables into pieces.                                       */
@@ -367,7 +373,7 @@
              IF         COND(&RELEASE *LT 'V5R4M0' *AND +
                              &OBJTYPE *NE '*FILE') THEN(DO)
                /* Parameter OBJTYPE contains an invalid value. */
-               SNDPGMMSG  MSGID(USR0028) MSGF(*LIBL/&I_MSGF) +
+               SNDPGMMSG  MSGID(USR0028) MSGF(&PRDLIB/&APP_MSG_F) +
                           MSGDTA(&OBJTYPE *CAT &RELEASE) +
                           TOPGMQ(*PRV (*PGMBDY)) +
                           MSGTYPE(*ESCAPE)
@@ -376,24 +382,24 @@
              IF         COND(&OUTFILE *EQ '*DFT' +
                         *AND %SST(&OBJ 9 2) *NE ' '    ) THEN(DO)
                /* Outfile default name can not be generated. */
-               SNDPGMMSG  MSGID(USR0005) MSGF(*LIBL/&I_MSGF) +
+               SNDPGMMSG  MSGID(USR0005) MSGF(&PRDLIB/&APP_MSG_F) +
                           TOPGMQ(*PRV (*PGMBDY)) +
                           MSGTYPE(*ESCAPE)
              ENDDO
 
-    /*       IF         COND(&MBROPT  *EQ '*ADD'  +               */
-    /*                  *AND &CRTFILE *NE 'N'   ) THEN(DO)        */
-    /*         SNDPGMMSG  MSGID(USR0006) MSGF(*LIBL/&I_MSGF) +    */
-    /*                    TOPGMQ(*PRV (*PGMBDY)) +                */
-    /*                    MSGTYPE(*ESCAPE)                        */
-    /*       ENDDO                                                */
+    /*       IF         COND(&MBROPT  *EQ '*ADD'  +                  */
+    /*                  *AND &CRTFILE *NE 'N'   ) THEN(DO)           */
+    /*         SNDPGMMSG  MSGID(USR0006) MSGF(&PRDLIB/&APP_MSG_F) +  */
+    /*                    TOPGMQ(*PRV (*PGMBDY)) +                   */
+    /*                    MSGTYPE(*ESCAPE)                           */
+    /*       ENDDO                                                   */
 
   /* ------------------------------------------------------------------------ */
   /* Retrieve journal information.                                            */
   /* ------------------------------------------------------------------------ */
 
              /* Retrieving journal information ... */
-             SNDPGMMSG  MSGID(USR0007) MSGF(*LIBL/&I_MSGF) +
+             SNDPGMMSG  MSGID(USR0007) MSGF(&PRDLIB/&APP_MSG_F) +
                           TOPGMQ(*EXT) MSGTYPE(*STATUS)
 
              CALLPRC    PRC('EXPJRNER7_rtvJrnInf') +
@@ -412,7 +418,7 @@
 
              IF         COND(&ACTIVE *EQ '0') THEN(DO)
                /* Specified object is not journaled. */
-               SNDPGMMSG  MSGID(USR0008) MSGF(*LIBL/&I_MSGF) +
+               SNDPGMMSG  MSGID(USR0008) MSGF(&PRDLIB/&APP_MSG_F) +
                           TOPGMQ(*PRV (*PGMBDY)) +
                           MSGTYPE(*ESCAPE)
              ENDDO
@@ -466,7 +472,7 @@ CHK_CURLIB:
                         *AND &LIB     *EQ &OUTLIB  +
                         *AND &OBJTYPE *EQ '*FILE') THEN(DO)
                /* Output file must be different from the input file. */
-               SNDPGMMSG  MSGID(USR0029) MSGF(*LIBL/&I_MSGF) +
+               SNDPGMMSG  MSGID(USR0029) MSGF(&PRDLIB/&APP_MSG_F) +
                           TOPGMQ(*PRV (*PGMBDY)) +
                           MSGTYPE(*ESCAPE)
              ENDDO
@@ -518,7 +524,7 @@ CRTOUTFILE:
                CHGVAR     VAR(&RC) VALUE(%SST(&RC2 1 1))
                IF         COND(&RC *EQ '0') THEN(DO)
                  /* Outfile could not be created. */
-                 SNDPGMMSG  MSGID(USR0010) MSGF(*LIBL/&I_MSGF) +
+                 SNDPGMMSG  MSGID(USR0010) MSGF(&PRDLIB/&APP_MSG_F) +
                             TOPGMQ(*PRV (*PGMBDY)) +
                             MSGTYPE(*ESCAPE)
                ENDDO
@@ -596,7 +602,7 @@ CHGOUTFILE:
   /* ------------------------------------------------------------------------ */
 
              /* Exporting journal entries ... */
-             SNDPGMMSG  MSGID(USR0011) MSGF(*LIBL/&I_MSGF) +
+             SNDPGMMSG  MSGID(USR0011) MSGF(&PRDLIB/&APP_MSG_F) +
                           TOPGMQ(*EXT) MSGTYPE(*STATUS)
 
              RMVMSG     PGMQ(*SAME (*)) CLEAR(*ALL)
@@ -637,7 +643,7 @@ LVLCHK:
                DLTF       FILE(QTEMP/&QADSPJRN)
                IF         COND(&RC *EQ '1') THEN(DO)
                  /* Command ended in error - See joblog. */
-                 SNDPGMMSG  MSGID(USR0016) MSGF(*LIBL/&I_MSGF) +
+                 SNDPGMMSG  MSGID(USR0016) MSGF(&PRDLIB/&APP_MSG_F) +
                             TOPGMQ(*PRV (*PGMBDY)) +
                             MSGTYPE(*ESCAPE)
                ENDDO
@@ -689,7 +695,7 @@ LVLCHK:
                                                      *TCAT ')'         +
                                *BCAT     'ENTTYP('   *TCAT &ENTTYP     +
                                                      *TCAT ')'         +
-                               *BCAT     'EXITPGM(*LIBL/EXPJRNECR)')
+                               *BCAT     'EXITPGM(' *CAT &PRDLIB *TCAT '/EXPJRNECR)')
 
          /* -------------------------------------------- */
          /*  ... add parameter JRNENTFMT ...             */
@@ -762,7 +768,7 @@ LVLCHK:
   /* ------------------------------------------------------------------------ */
              IF         COND(&NUM_ERRORS *NE '0') THEN(DO)
                /* Skipped &1 journal entries due to errors. */
-               SNDPGMMSG  MSGID(USR0018) MSGF(*LIBL/&I_MSGF) +
+               SNDPGMMSG  MSGID(USR0018) MSGF(&PRDLIB/&APP_MSG_F) +
                           MSGDTA(&NUM_ERRORS) +
                           TOPGMQ(*PRV (*PGMBDY)) +
                           MSGTYPE(*DIAG)
@@ -784,14 +790,14 @@ RMV_0:
                ENDDO
 
                /* &3 Journal entries exported to outfile &2/&1. */
-               SNDPGMMSG  MSGID(USR0014) MSGF(*LIBL/&I_MSGF) +
+               SNDPGMMSG  MSGID(USR0014) MSGF(&PRDLIB/&APP_MSG_F) +
                           MSGDTA(&OUTFILE *CAT &OUTLIB *CAT &NUMRCD) +
                           TOPGMQ(*PRV (*PGMBDY)) +
                           MSGTYPE(*INFO)
              ENDDO
              ELSE       CMD(DO)
                /* No journal entries available for file &2/&1. */
-               SNDPGMMSG  MSGID(USR0015) MSGF(*LIBL/&I_MSGF) +
+               SNDPGMMSG  MSGID(USR0015) MSGF(&PRDLIB/&APP_MSG_F) +
                           MSGDTA(&OBJ *CAT &LIB) +
                           TOPGMQ(*PRV (*PGMBDY)) +
                           MSGTYPE(*INFO)
@@ -809,7 +815,7 @@ ENDE:
 
              IF         COND(&ERROR) THEN(DO)
                /* Command ended in error - See joblog. */
-               SNDPGMMSG  MSGID(USR0016) MSGF(*LIBL/&I_MSGF) +
+               SNDPGMMSG  MSGID(USR0016) MSGF(&PRDLIB/&APP_MSG_F) +
                           TOPGMQ(*PRV (*PGMBDY)) +
                           MSGTYPE(*ESCAPE)
                MONMSG     MSGID(CPF0000)

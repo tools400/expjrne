@@ -178,8 +178,6 @@
       *
      P f_crtOutfile_DDS...
      P                 B                   export
-      *
-     D f_crtOutfile_DDS...
      D                 PI              N
      D  i_tplFile                    10A   const
      D  i_tplLib                     10A   const
@@ -306,8 +304,6 @@
          return isOK;
 
       /END-FREE
-      *
-     P f_crtOutfile_DDS...
      P                 E
       *
       *=====================================================================*
@@ -315,8 +311,6 @@
       *=====================================================================*
      P addRecordFormat...
      P                 B
-      *
-     D addRecordFormat...
      D                 PI              N
      D  i_format                     10A   const
      D  i_fileCcsid                  10U 0 const
@@ -344,8 +338,6 @@
          return cTrue;
 
       /END-FREE
-      *
-     P addRecordFormat...
      P                 E
       *
       *=====================================================================*
@@ -353,8 +345,6 @@
       *=====================================================================*
      P addFields...
      P                 B
-      *
-     D addFields...
      D                 PI              N
      D  i_hList                            const  like(BasicList_handle_t )
      D  i_fileCcsid                  10U 0 const
@@ -456,8 +446,6 @@
          return cTrue;
 
       /END-FREE
-      *
-     P addFields...
      P                 E
       *
       *=====================================================================*
@@ -465,8 +453,6 @@
       *=====================================================================*
      P addKeyword...
      P                 B
-      *
-     D addKeyword...
      D                 PI              N
      D  i_kwd                       256A   value  varying
       *
@@ -497,8 +483,6 @@
          return cTrue;
 
       /END-FREE
-      *
-     P addKeyword...
      P                 E
       *
       *=====================================================================*
@@ -507,8 +491,6 @@
       *=====================================================================*
      P getFileCcsid...
      P                 B
-      *
-     D getFileCcsid...
      D                 PI            10U 0
      D  i_hList                            const  like(BasicList_handle_t )
       *
@@ -535,8 +517,6 @@
          return ccsid;
 
       /END-FREE
-      *
-     P getFileCcsid...
      P                 E
       *
       *=====================================================================*
@@ -544,8 +524,6 @@
       *=====================================================================*
      P crtSrcFile...
      P                 B
-      *
-     D crtSrcFile...
      D                 PI              N
      D  i_file                       10A   const
      D  i_lib                        10A   const
@@ -597,8 +575,6 @@
          return isOK;
 
       /END-FREE
-      *
-     P crtSrcFile...
      P                 E
       *
       *=====================================================================*
@@ -606,8 +582,6 @@
       *=====================================================================*
      P dltFile...
      P                 B
-      *
-     D dltFile...
      D                 PI              N
      D  i_file                       10A   const
      D  i_lib                        10A   const
@@ -629,8 +603,6 @@
          return cTrue;
 
       /END-FREE
-      *
-     P dltFile...
      P                 E
       *
       *=====================================================================*
@@ -639,8 +611,6 @@
       *
      P p_abnEndProc...
      P                 B
-      *
-     D p_abnEndProc...
      D                 PI
      D  i_pRtxToken                    *   const
       *
@@ -659,10 +629,6 @@
 
          dltFile(rtxToken.srcFile.name: rtxToken.srcFile.lib);
 
-         return;
-
       /END-FREE
-      *
-     P p_abnEndProc...
      P                 E
       *
