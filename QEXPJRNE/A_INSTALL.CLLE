@@ -38,13 +38,12 @@
      /*     >>CMD<<       DLTPGM PGM(QTEMP/A_INSTALL);                      */
      /*   >>END-PRE-COMPILER<<                                              */
      /* =================================================================== */
-             PGM        PARM(&TGTRLS &SRCFILE &TOLIB &LNG &TAGSREQ)
+             PGM        PARM(&TGTRLS &SRCFILE &TOLIB &LNG)
 
              DCL        VAR(&TGTRLS   ) TYPE(*CHAR) LEN(10)
              DCL        VAR(&SRCFILE  ) TYPE(*CHAR) LEN(10)
              DCL        VAR(&TOLIB    ) TYPE(*CHAR) LEN(10)
              DCL        VAR(&LNG      ) TYPE(*CHAR) LEN( 3)
-             DCL        VAR(&TAGSREQ  ) TYPE(*CHAR) LEN(10)
 
              DCL        VAR(&SRCLIB   ) TYPE(*CHAR) LEN(10)
 
