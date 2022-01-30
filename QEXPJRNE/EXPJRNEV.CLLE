@@ -57,6 +57,8 @@
      /*                           SRCMBR(*MODULE);                          */
      /*   >>IMPORTANT<<                                                     */
      /*     >>PARM<< DBGVIEW(*LIST);                                        */
+     /*     >>PARM<< OPTION(*EVENTF);                                       */
+     /*     >>PARM<< TGTRLS(V7R1M0);                                        */
      /*   >>END-IMPORTANT<<                                                 */
      /*   >>EXECUTE<<                                                       */
      /*   >>CMD<<    CRTPGM       PGM(&LI/&OB) +                            */
