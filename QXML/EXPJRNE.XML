@@ -51,7 +51,7 @@
       appblddate CDATA #REQUIRED
      >
      ]>
-<upload  appname="EXPJRNE"  appauthor="Thomas Raddatz"  appblddate=" 1/11/2019">
+<upload  appname="EXPJRNE"  appauthor="Thomas Raddatz"  appblddate=" 1/30/2022">
 <install_instructions><![CDATA[
      *----------------------------------------------------------------      ------
      *  1. Upload entire XML to your AS/400 to a source file 112 long, into any mbr
@@ -1289,7 +1289,7 @@ mbrtext =  "EXPJRNE - Installer                               "
 srcfile =  "QEXPJRNE  "
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "00273">
+srccssid=  "01141">
 <copysrc><![CDATA[
      /* =================================================================== */
      /*                                                                     */
@@ -1331,13 +1331,12 @@ srccssid=  "00273">
      /*     >>CMD<<       DLTPGM PGM(QTEMP/A_INSTALL);                      */
      /*   >>END-PRE-COMPILER<<                                              */
      /* =================================================================== */
-             PGM        PARM(&TGTRLS &SRCFILE &TOLIB &LNG &TAGSREQ)
+             PGM        PARM(&TGTRLS &SRCFILE &TOLIB &LNG)
 
              DCL        VAR(&TGTRLS   ) TYPE(*CHAR) LEN(10)
              DCL        VAR(&SRCFILE  ) TYPE(*CHAR) LEN(10)
              DCL        VAR(&TOLIB    ) TYPE(*CHAR) LEN(10)
              DCL        VAR(&LNG      ) TYPE(*CHAR) LEN( 3)
-             DCL        VAR(&TAGSREQ  ) TYPE(*CHAR) LEN(10)
 
              DCL        VAR(&SRCLIB   ) TYPE(*CHAR) LEN(10)
 
@@ -1616,7 +1615,7 @@ mbrtext =  "MSG: TXT0001 - USR0201                            "
 srcfile =  "QEXPJRNE  "
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "00273">
+srccssid=  "01141">
 <copysrc><![CDATA[
      /*-----------------------------------------------------------------------*/
      /* STRPREPRC Compile Options:                                            */
@@ -2329,7 +2328,7 @@ mbrtext =  "MSG: TXT0001 - USR0201                            "
 srcfile =  "QEXPJRNE  "
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "00273">
+srccssid=  "01141">
 <copysrc><![CDATA[
      /*-----------------------------------------------------------------------*/
      /* STRPREPRC Compile Options:                                            */
@@ -3046,7 +3045,7 @@ mbrtext =  "EXPJRNE Readme                                    "
 srcfile =  "QEXPJRNE  "
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "00273">
+srccssid=  "01141">
 <copysrc><![CDATA[
 EXPJRNE - A Tools/400 Service Program
 -------------------------------------
@@ -3081,7 +3080,7 @@ mbrtext =  "Prototypes of CEE APIs                   (include)"
 srcfile =  "QEXPJRNE  "
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "00273">
+srccssid=  "01141">
 <copysrc><![CDATA[
       /if not defined(CEELIB)
       /define CEELIB
@@ -3226,7 +3225,7 @@ mbrtext =  "Prototypes of C-Library   Record IO      (include)"
 srcfile =  "QEXPJRNE  "
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "00273">
+srccssid=  "01141">
 <copysrc><![CDATA[
       /if not defined(CLIB2)
       /define CLIB2
@@ -3427,16 +3426,16 @@ mbrtext =  "Copyright information                             "
 srcfile =  "QEXPJRNE  "
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "00273">
+srccssid=  "01141">
 <copysrc><![CDATA[
       /if not defined(COPYRIGHT_DSPEC)
-     h copyright('V5.1 - 20.12.2018 - mailto: thomas.raddatz@tools400.de')
+     h copyright('V5.2 - 30.01.2022 - mailto: thomas.raddatz@tools400.de')
       /eof
       /endif
      D EXPJRNE_VERSION...
-     D                 C                   '5.1'
+     D                 C                   '5.2'
      D EXPJRNE_DATE...
-     D                 C                   '20.12.2018'
+     D                 C                   '30.01.2022'
 ]]>  </copysrc>
 </mbr>
 <sendmsg  sendmsgid="CPF9897" sendmsgtype = "*STATUS   "><![CDATA[
@@ -3450,7 +3449,7 @@ mbrtext =  "                                                  "
 srcfile =  "QEXPJRNE  "
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "00273">
+srccssid=  "01141">
 <copysrc><![CDATA[
       * ======================================================================== *
       *      >>PRE-COMPILER<<                                                    *
@@ -3495,7 +3494,7 @@ mbrtext =  "                                                  "
 srcfile =  "QEXPJRNE  "
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "00273">
+srccssid=  "01141">
 <copysrc><![CDATA[
 -- ======================================================================== */
 --      >>PRE-COMPILER<<                                                    */
@@ -3542,7 +3541,7 @@ mbrtext =  "Export Journal Entries                            "
 srcfile =  "QEXPJRNE  "
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "00273">
+srccssid=  "01141">
 <copysrc><![CDATA[
      /* =================================================================== */
      /*                                                                     */
@@ -3590,7 +3589,7 @@ srccssid=  "00273">
      /*     >>PARM<< DETAIL(*BASIC);                                        */
      /*     >>PARM<< ALWUPD(*YES);                                          */
      /*     >>PARM<< ALWLIBUPD(*YES);                                       */
-     /*     >>PARM<< TGTRLS(V6R1M0);                                        */
+     /*     >>PARM<< TGTRLS(V7R1M0);                                        */
      /*   >>END-IMPORTANT<<                                                 */
      /*   >>EXECUTE<<                                                       */
      /* >>END-PRE-COMPILER<<                                                */
@@ -3608,7 +3607,7 @@ mbrtext =  "Export Journal Entries - CHOICE                   "
 srcfile =  "QEXPJRNE  "
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "00273">
+srccssid=  "01141">
 <copysrc><![CDATA[
      /* =================================================================== */
      /*                                                                     */
@@ -3648,7 +3647,7 @@ srccssid=  "00273">
      /*     >>PARM<< DETAIL(*BASIC);                                        */
      /*     >>PARM<< ALWUPD(*YES);                                          */
      /*     >>PARM<< ALWLIBUPD(*YES);                                       */
-     /*     >>PARM<< TGTRLS(V6R1M0);                                        */
+     /*     >>PARM<< TGTRLS(V7R1M0);                                        */
      /*   >>END-IMPORTANT<<                                                 */
      /*   >>EXECUTE<<                                                       */
      /* >>END-PRE-COMPILER<<                                                */
@@ -3666,7 +3665,7 @@ mbrtext =  "Export Journal Entries - POP                      "
 srcfile =  "QEXPJRNE  "
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "00273">
+srccssid=  "01141">
 <copysrc><![CDATA[
      /* =================================================================== */
      /*                                                                     */
@@ -3702,7 +3701,7 @@ srccssid=  "00273">
      /*     >>PARM<< ACTGRP(*CALLER   );                                    */
      /*     >>PARM<< USRPRF(*USER);                                         */
      /*     >>PARM<< DETAIL(*BASIC);                                        */
-     /*     >>PARM<< TGTRLS(V6R1M0);                                        */
+     /*     >>PARM<< TGTRLS(V7R1M0);                                        */
      /*   >>END-IMPORTANT<<                                                 */
      /*   >>EXECUTE<<                                                       */
      /* >>END-PRE-COMPILER<<                                                */
@@ -3720,7 +3719,7 @@ mbrtext =  "Export Journal Entries - RCVJRN                   "
 srcfile =  "QEXPJRNE  "
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "00273">
+srccssid=  "01141">
 <copysrc><![CDATA[
      /* =================================================================== */
      /*                                                                     */
@@ -3762,7 +3761,7 @@ srccssid=  "00273">
      /*     >>PARM<< DETAIL(*BASIC);                                        */
      /*     >>PARM<< ALWUPD(*YES);                                          */
      /*     >>PARM<< ALWLIBUPD(*YES);                                       */
-     /*     >>PARM<< TGTRLS(V6R1M0);                                        */
+     /*     >>PARM<< TGTRLS(V7R1M0);                                        */
      /*   >>END-IMPORTANT<<                                                 */
      /*   >>EXECUTE<<                                                       */
      /* >>END-PRE-COMPILER<<                                                */
@@ -3780,7 +3779,7 @@ mbrtext =  "Export Journal Entries - UTIL                     "
 srcfile =  "QEXPJRNE  "
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "00273">
+srccssid=  "01141">
 <copysrc><![CDATA[
      /* =================================================================== */
      /*                                                                     */
@@ -3824,7 +3823,7 @@ srccssid=  "00273">
      /*     >>PARM<< DETAIL(*BASIC);                                        */
      /*     >>PARM<< ALWUPD(*YES);                                          */
      /*     >>PARM<< ALWLIBUPD(*YES);                                       */
-     /*     >>PARM<< TGTRLS(V6R1M0);                                        */
+     /*     >>PARM<< TGTRLS(V7R1M0);                                        */
      /*     >>PARM<< TEXT(+                                                 */
      /*              'Tool: EXPJRNE    (Export Journal Entries  ) UTIL');   */
      /*   >>END-IMPORTANT<<                                                 */
@@ -3898,7 +3897,7 @@ mbrtext =  "Export Journal Entries - CPP                      "
 srcfile =  "QEXPJRNE  "
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "00273">
+srccssid=  "01141">
 <copysrc><![CDATA[
      /* =================================================================== */
      /*                                                                     */
@@ -4003,7 +4002,7 @@ srccssid=  "00273">
      /*                                                                     */
      /*   >>IMPORTANT<<                                                     */
      /*     >>PARM<< DBGVIEW(*LIST);                                        */
-     /*     >>PARM<< TGTRLS(V6R1M0);                                        */
+     /*     >>PARM<< TGTRLS(V7R1M0);                                        */
      /*     >>PARM<< OPTION(*EVENTF);                                       */
      /*   >>END-IMPORTANT<<                                                 */
      /*                                                                     */
@@ -4018,6 +4017,7 @@ srccssid=  "00273">
                              &I_TOTIME        +
                              &I_OBJTYPE       +
                              &I_MBR           +
+                             &I_OBJJID        +
                              &I_OUTFILE       +
                              &I_MBROPT        +
                              &I_CRTFILE       +
@@ -4035,6 +4035,7 @@ srccssid=  "00273">
              DCL        VAR(&I_TOTIME  ) TYPE(*CHAR) LEN( 6)
              DCL        VAR(&I_OBJTYPE ) TYPE(*CHAR) LEN(10)
              DCL        VAR(&I_MBR     ) TYPE(*CHAR) LEN(10)
+             DCL        VAR(&I_OBJJID  ) TYPE(*CHAR) LEN(20)
              DCL        VAR(&I_OUTFILE ) TYPE(*CHAR) LEN(20)
              DCL        VAR(&I_MBROPT  ) TYPE(*CHAR) LEN(22)
              DCL        VAR(&I_CRTFILE ) TYPE(*CHAR) LEN( 1)
@@ -4053,6 +4054,7 @@ srccssid=  "00273">
              DCL        VAR(&TOTIME    ) TYPE(*CHAR) LEN( 6)
              DCL        VAR(&OBJTYPE   ) TYPE(*CHAR) LEN(10)
              DCL        VAR(&MBR       ) TYPE(*CHAR) LEN(10)
+             DCL        VAR(&OBJJID    ) TYPE(*CHAR) LEN(20)
              DCL        VAR(&OUTFILE   ) TYPE(*CHAR) LEN(10)
              DCL        VAR(&OUTLIB    ) TYPE(*CHAR) LEN(10)
              DCL        VAR(&MBROPT    ) TYPE(*CHAR) LEN(10)
@@ -4147,6 +4149,7 @@ srccssid=  "00273">
              CHGVAR     VAR(&LIB    )   VALUE(%SST(&I_OBJ  11 10))
              CHGVAR     VAR(&OBJTYPE)   VALUE(&I_OBJTYPE)
              CHGVAR     VAR(&MBR    )   VALUE(&I_MBR)
+             CHGVAR     VAR(&OBJJID )   VALUE(&I_OBJJID)
 
              CVTDAT     DATE(&I_FROMDATE) TOVAR(&FROMDATE) +
                           FROMFMT(*CYMD) TOFMT(*JOB) TOSEP(*JOB)
@@ -4560,22 +4563,29 @@ LVLCHK:
                                                      *CAT  &JRN        +
                                                      *TCAT ')')
 
-             IF         COND(&RELEASE *GE 'V5R4M0') THEN(DO)
-                CHGVAR     VAR(&CMD) VALUE(&CMD +
-                               *BCAT     'OBJ(('     *CAT  &LIB        +
-                                                     *TCAT '/'         +
-                                                     *CAT  &OBJ        +
-                                                     *BCAT &OBJTYPE    +
-                                                     *BCAT &MBR        +
-                                                     *TCAT '))')
+             IF         COND(&OBJJID *NE ' ') THEN(DO)
+                  CHGVAR     VAR(&CMD) VALUE(&CMD +
+                                 *BCAT     'OBJJID('   *CAT  &OBJJID     +
+                                                       *TCAT ')')
              ENDDO
              ELSE       CMD(DO)
-                CHGVAR     VAR(&CMD) VALUE(&CMD +
-                               *BCAT     'FILE(('    *CAT  &LIB        +
-                                                     *TCAT '/'         +
-                                                     *CAT  &OBJ        +
-                                                     *BCAT &MBR        +
-                                                     *TCAT '))')
+               IF         COND(&RELEASE *GE 'V5R4M0') THEN(DO)
+                  CHGVAR     VAR(&CMD) VALUE(&CMD +
+                                 *BCAT     'OBJ(('     *CAT  &LIB        +
+                                                       *TCAT '/'         +
+                                                       *CAT  &OBJ        +
+                                                       *BCAT &OBJTYPE    +
+                                                       *BCAT &MBR        +
+                                                       *TCAT '))')
+               ENDDO
+               ELSE       CMD(DO)
+                  CHGVAR     VAR(&CMD) VALUE(&CMD +
+                                 *BCAT     'FILE(('    *CAT  &LIB        +
+                                                       *TCAT '/'         +
+                                                       *CAT  &OBJ        +
+                                                       *BCAT &MBR        +
+                                                       *TCAT '))')
+               ENDDO
              ENDDO
 
              CHGVAR     VAR(&CMD) VALUE(&CMD +
@@ -4748,7 +4758,7 @@ mbrtext =  "Export Journal Entries - Eng                      "
 srcfile =  "QEXPJRNE  "
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "00273">
+srccssid=  "01141">
 <copysrc><![CDATA[
 /* =================================================================== */
 /*                                                                     */
@@ -4795,6 +4805,8 @@ srccssid=  "00273">
 /*                                                                     */
 /*  04.10.2018  Th.Raddatz    Added outfile types *TYPE4 and *TYPE5.   */
 /*                                                                     */
+/*  30.01.2022  Th.Raddatz    Added parameter OBJJID.                  */
+/*                                                                     */
 /* =================================================================== */
 /* >>PRE-COMPILER<<                                                    */
 /*   >>CRTCMD<< CRTCMD       CMD(&LI/EXPJRNE) +                        */
@@ -4812,7 +4824,7 @@ srccssid=  "00273">
            CMD      PROMPT('Export Journal Entries')
 
              PARM       KWD(OBJ)                         +
-                          TYPE(QUAL1)                    +
+                          TYPE(OBJ)                      +
                           MIN(1)                         +
                           PROMPT('Object' 1)
 
@@ -4821,26 +4833,26 @@ srccssid=  "00273">
                           MIN(1)                         +
                           CHOICE(*PGM)                   +
                           CHOICEPGM(*LIBL/EXPJRNECC)     +
-                          PROMPT('Starting date' 4)
+                          PROMPT('Starting date' 5)
 
              PARM       KWD(FROMTIME)                    +
                           TYPE(*TIME)                    +
                           MIN(1)                         +
                           CHOICE('Time (hh:mm:ss)')      +
-                          PROMPT('Starting time' 5)
+                          PROMPT('Starting time' 6)
 
              PARM       KWD(TODATE)                      +
                           TYPE(*DATE)                    +
                           MIN(1)                         +
                           CHOICE(*PGM)                   +
                           CHOICEPGM(*LIBL/EXPJRNECC)     +
-                          PROMPT('Ending date' 6)
+                          PROMPT('Ending date' 7)
 
              PARM       KWD(TOTIME)                      +
                           TYPE(*TIME)                    +
                           MIN(1)                         +
                           CHOICE('Time (hh:mm:ss)')      +
-                          PROMPT('Ending time' 7)
+                          PROMPT('Ending time' 8)
 
              PARM       KWD(OBJTYPE)                     +
                           TYPE(*CHAR)                    +
@@ -4861,16 +4873,22 @@ srccssid=  "00273">
                                  (*ALL  ))               +
                           PROMPT('Member' 3)
 
+             PARM       KWD(OBJJID)                      +
+                          TYPE(*CHAR)                    +
+                          LEN(20)                        +
+                          MIN(0)                         +
+                          PROMPT('Object journal identifier' 4)
+
              PARM       KWD(OUTFILE)                     +
                           TYPE(QUAL2)                    +
                           MIN(0)                         +
                           CHOICE(*NONE)                  +
-                          PROMPT('File to receive output' 9)
+                          PROMPT('File to receive output' 10)
 
              PARM       KWD(OUTMBR)                      +
                           MIN(0)                         +
                           TYPE(ELEM1)                    +
-                          PROMPT('Output member options' 10)
+                          PROMPT('Output member options' 11)
 
              PARM       KWD(CRTFILE)                     +
                           TYPE(*CHAR)                    +
@@ -4882,14 +4900,14 @@ srccssid=  "00273">
                                  (*NO  'N')              +
                                  (*SQL 'Y')              +
                                  (*DDS 'D'))             +
-                          PROMPT('Create outfile' 11)
+                          PROMPT('Create outfile' 12)
 
              PARM       KWD(TPLFILE)                     +
                           TYPE(QUAL4)                    +
                           MIN(0)                         +
                           DFT(*OBJECT)                   +
                           SNGVAL(*OBJECT)                +
-                          PROMPT('Template file' 12)
+                          PROMPT('Template file' 13)
 
              PARM       KWD(OUTFILFMT)                   +
                           TYPE(*CHAR)                    +
@@ -4902,25 +4920,25 @@ srccssid=  "00273">
                                  *TYPE3                  +
                                  *TYPE4                  +
                                  *TYPE5)                 +
-                          PROMPT('Outfile format'  8)
+                          PROMPT('Outfile format'  9)
 
              PARM       KWD(JRN)                         +
                           TYPE(JRN)                      +
                           DFT(*OBJ)                      +
                           SNGVAL(*OBJ)                   +
-                          PROMPT('Journal' 15)
+                          PROMPT('Journal' 16)
 
              PARM       KWD(RCVRNG)                      +
                           TYPE(RCVRNG)                   +
                           DFT(*CURCHAIN)                 +
                           SNGVAL((*CURCHAIN)             +
                                  (*CURRENT ))            +
-                          PROMPT('Range of journal receivers' 16)
+                          PROMPT('Range of journal receivers' 17)
 
              PARM       KWD(SIZE)                        +
                           TYPE(SIZE)                     +
                           SNGVAL((*NOMAX 0))             +
-                          PROMPT('Member size' 13)
+                          PROMPT('Member size' 14)
 
              PARM       KWD(LVLCHK)                      +
                           TYPE(*CHAR)                    +
@@ -4930,18 +4948,18 @@ srccssid=  "00273">
                           RSTD(*YES)                     +
                           SPCVAL((*YES 'Y')              +
                                  (*NO  'N'))             +
-                          PROMPT('Record format level check' 14)
+                          PROMPT('Record format level check' 15)
 
 /* ----------------------------------------------------------------- */
 
- QUAL1:      QUAL       TYPE(*NAME)                      +
+ OBJ:        QUAL       TYPE(*NAME)                      +
                           LEN(10)                        +
                           MIN(1)
              QUAL       TYPE(*NAME)                      +
                           LEN(10)                        +
                           DFT(*LIBL)                     +
                           SPCVAL((*LIBL  )               +
-                                 (*CURLIB))             +
+                                 (*CURLIB))              +
                           PROMPT('Library')
 
 QUAL2:       QUAL       TYPE(*NAME)                      +
@@ -5037,7 +5055,7 @@ mbrtext =  "Export Journal Entries - Ger                      "
 srcfile =  "QEXPJRNE  "
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "00273">
+srccssid=  "01141">
 <copysrc><![CDATA[
 /* =================================================================== */
 /*                                                                     */
@@ -5084,6 +5102,8 @@ srccssid=  "00273">
 /*                                                                     */
 /*  04.10.2018  Th.Raddatz    Added outfile types *TYPE4 and *TYPE5.   */
 /*                                                                     */
+/*  30.01.2022  Th.Raddatz    Added parameter OBJJID.                  */
+/*                                                                     */
 /* =================================================================== */
 /* >>PRE-COMPILER<<                                                    */
 /*   >>CRTCMD<< CRTCMD       CMD(&LI/EXPJRNE) +                        */
@@ -5101,8 +5121,9 @@ srccssid=  "00273">
            CMD      PROMPT('Journaleinträge exportieren')
 
              PARM       KWD(OBJ)                         +
-                          TYPE(QUAL1)                    +
+                          TYPE(OBJ)                      +
                           MIN(1)                         +
+                          SNGVAL((*OBJJID))              +
                           PROMPT('Objekt' 1)
 
              PARM       KWD(FROMDATE)                    +
@@ -5110,26 +5131,26 @@ srccssid=  "00273">
                           MIN(1)                         +
                           CHOICE(*PGM)                   +
                           CHOICEPGM(*LIBL/EXPJRNECC)     +
-                          PROMPT('Startdatum' 4)
+                          PROMPT('Startdatum' 5)
 
              PARM       KWD(FROMTIME)                    +
                           TYPE(*TIME)                    +
                           MIN(1)                         +
                           CHOICE('Time (hh:mm:ss)')      +
-                          PROMPT('Startzeit' 5)
+                          PROMPT('Startzeit' 6)
 
              PARM       KWD(TODATE)                      +
                           TYPE(*DATE)                    +
                           MIN(1)                         +
                           CHOICE(*PGM)                   +
                           CHOICEPGM(*LIBL/EXPJRNECC)     +
-                          PROMPT('Enddatum' 6)
+                          PROMPT('Enddatum' 7)
 
              PARM       KWD(TOTIME)                      +
                           TYPE(*TIME)                    +
                           MIN(1)                         +
                           CHOICE('Time (hh:mm:ss)')      +
-                          PROMPT('Endzeit' 7)
+                          PROMPT('Endzeit' 8)
 
              PARM       KWD(OBJTYPE)                     +
                           TYPE(*CHAR)                    +
@@ -5150,16 +5171,22 @@ srccssid=  "00273">
                                  (*ALL  ))               +
                           PROMPT('Teildatei' 3)
 
+             PARM       KWD(OBJJID)                      +
+                          TYPE(*CHAR)                    +
+                          LEN(20)                        +
+                          MIN(0)                         +
+                          PROMPT('Objektjournal-ID' 4)
+
              PARM       KWD(OUTFILE)                     +
                           TYPE(QUAL2)                    +
                           MIN(0)                         +
                           CHOICE(*NONE)                  +
-                          PROMPT('Datei für Ausgabe' 9)
+                          PROMPT('Datei für Ausgabe' 10)
 
              PARM       KWD(OUTMBR)                      +
                           MIN(0)                         +
                           TYPE(ELEM1)                    +
-                          PROMPT('Auswahl für Ausgabeteildatei' 10)
+                          PROMPT('Auswahl für Ausgabeteildatei' 11)
 
              PARM       KWD(CRTFILE)                     +
                           TYPE(*CHAR)                    +
@@ -5171,14 +5198,14 @@ srccssid=  "00273">
                                  (*NO  'N')              +
                                  (*SQL 'Y')              +
                                  (*DDS 'D'))             +
-                          PROMPT('Ausgabedatei neu erstellen' 11)
+                          PROMPT('Ausgabedatei neu erstellen' 12)
 
              PARM       KWD(TPLFILE)                     +
                           TYPE(QUAL4)                    +
                           MIN(0)                         +
                           DFT(*OBJECT)                   +
                           SNGVAL(*OBJECT)                +
-                          PROMPT('Vorlage für Ausgabedatei' 12)
+                          PROMPT('Vorlage für Ausgabedatei' 13)
 
              PARM       KWD(OUTFILFMT)                   +
                           TYPE(*CHAR)                    +
@@ -5191,25 +5218,25 @@ srccssid=  "00273">
                                  *TYPE3                  +
                                  *TYPE4                  +
                                  *TYPE5)                 +
-                          PROMPT('Format der Ausgabedatei'  8)
+                          PROMPT('Format der Ausgabedatei'  9)
 
              PARM       KWD(JRN)                         +
                           TYPE(JRN)                      +
                           DFT(*OBJ)                      +
                           SNGVAL(*OBJ)                   +
-                          PROMPT('Journal' 15)
+                          PROMPT('Journal' 16)
 
              PARM       KWD(RCVRNG)                      +
                           TYPE(RCVRNG)                   +
                           DFT(*CURCHAIN)                 +
                           SNGVAL((*CURCHAIN)             +
                                  (*CURRENT ))            +
-                          PROMPT('Bereich der Journalempfänger' 16)
+                          PROMPT('Bereich der Journalempfänger' 17)
 
              PARM       KWD(SIZE)                        +
                           TYPE(SIZE)                     +
                           SNGVAL((*NOMAX 0))             +
-                          PROMPT('Größe der Teildatei' 13)
+                          PROMPT('Größe der Teildatei' 14)
 
              PARM       KWD(LVLCHK)                      +
                           TYPE(*CHAR)                    +
@@ -5219,11 +5246,11 @@ srccssid=  "00273">
                           RSTD(*YES)                     +
                           SPCVAL((*YES 'Y')              +
                                  (*NO  'N'))             +
-                          PROMPT('Satzformat-Aktualitätsprüfung' 14)
+                          PROMPT('Satzformat-Aktualitätsprüfung' 15)
 
 /* ----------------------------------------------------------------- */
 
- QUAL1:      QUAL       TYPE(*NAME)                      +
+ OBJ:        QUAL       TYPE(*NAME)                      +
                           LEN(10)                        +
                           MIN(1)
              QUAL       TYPE(*NAME)                      +
@@ -5326,7 +5353,7 @@ mbrtext =  "Export Journal Entries - Eng                      "
 srcfile =  "QEXPJRNE  "
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "00273">
+srccssid=  "01141">
 <copysrc><![CDATA[
 .*=====================================================================*
 .*                                                                     *
@@ -5374,6 +5401,8 @@ srccssid=  "00273">
 .*  24.01.2015  Th.Raddatz    Added option *USER to parameter OUTFILE. *
 .*                                                                     *
 .*  04.10.2018  Th.Raddatz    Added outfile types *TYPE4 and *TYPE5.   *
+.*                                                                     *
+.*  30.01.2022  Th.Raddatz    Added parameter OBJJID.                  *
 .*                                                                     *
 .*=====================================================================*
 .* >>PRE-COMPILER<<                                                    *
@@ -5526,6 +5555,32 @@ currently in the journal receiver are exported.
 :PT.:PV.member-name:EPV.
 :PD.Specify the name of the file members whose entries are
 exported to the output file.
+:EPARML.
+.*
+:EHELP.
+.*
+.*--------------------------------------------------------------------
+.* Hilfetext für Schlüsselwort OBJJID
+.*--------------------------------------------------------------------
+:HELP name='EXPJRNE/OBJJID    '.
+Object journal identifier - Help
+:XH3.Object journal identifier (OBJJID)
+:P.
+Specifies the journal identifier for which journal entries are
+exported to the output file.  This field is input in hexadecimal
+format.
+:p.
+The value must be entered without the hex format identifier (x'..').
+:p.
+If the OBJJID parameter is specified, the OBJ parameter is ignored
+for the export of the journal entries and used only for the creation
+of the output file.
+:IMHELP name='COM/OPTPARM'.
+:P.
+:PARML.
+:PT.:PV.journal-identifier:EPV.
+:PD.Entries for objects associated with the specified
+journal identifier are exported tot he output file.
 :EPARML.
 .*
 :EHELP.
@@ -6117,7 +6172,7 @@ mbrtext =  "Export Journal Entries - Ger                      "
 srcfile =  "QEXPJRNE  "
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "00273">
+srccssid=  "01141">
 <copysrc><![CDATA[
 .*=====================================================================*
 .*                                                                     *
@@ -6165,6 +6220,8 @@ srccssid=  "00273">
 .*  24.01.2015  Th.Raddatz    Added option *USER to parameter OUTFILE. *
 .*                                                                     *
 .*  04.10.2018  Th.Raddatz    Added outfile types *TYPE4 and *TYPE5.   *
+.*                                                                     *
+.*  30.01.2022  Th.Raddatz    Added parameter OBJJID.                  *
 .*                                                                     *
 .*=====================================================================*
 .* >>PRE-COMPILER<<                                                    *
@@ -6315,6 +6372,33 @@ exportiert.
 :PT.:PV.Teildateiname:EPV.
 :PD.Den Namen der Teildatei angeben, deren Journaleinträge
 exportiert werden sollen.
+:EPARML.
+.*
+:EHELP.
+.*
+.*--------------------------------------------------------------------
+.* Hilfetext für Schlüsselwort OBJJID
+.*--------------------------------------------------------------------
+:HELP name='EXPJRNE/OBJJID    '.
+Objektjournal-ID - Hilfe
+:XH3.Objektjournal-ID (OBJJID)
+:P.
+Gibt die Journal-ID an, für die Journaleinträge
+in die Ausgabe exportiert werden. Dieses Eingabefeld hat
+hexadezimales Format.
+:p.
+Die Eingabe erfolgt ohne Angabe des hexadezimalen Formats (x'..').
+:p.
+Wenn der OBJJID Parameter angegeben ist, wird der OBJ Parameter für
+den Export der Journaleinträge ignoriert und lediglich für die
+Erstellung der Ausgabedatei verwendet.
+:IMHELP name='COM/OPTPARM'.
+:P.
+:PARML.
+:PT.:PV.journal-identifier:EPV.
+:PD.Einträge des Objekts, die der angegebenen
+Journalidentifikationsnummer zugeordnet sind, werden
+in die Ausgabedatei exportiert.
 :EPARML.
 .*
 :EHELP.
@@ -6919,7 +7003,7 @@ mbrtext =  "Export Journal Entries - POP                      "
 srcfile =  "QEXPJRNE  "
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "00273">
+srccssid=  "01141">
 <copysrc><![CDATA[
       *=====================================================================*
       *                                                                     *
@@ -6955,7 +7039,8 @@ srccssid=  "00273">
       *   >>IMPORTANT<<                                                     *
       *     >>PARM<< TRUNCNBR(*NO);                                         *
       *     >>PARM<< DBGVIEW(*LIST);                                        *
-      *     >>PARM<< TGTRLS(V6R1M0);                                        *
+      *     >>PARM<< OPTION(*EVENTF);                                       *
+      *     >>PARM<< TGTRLS(V7R1M0);                                        *
       *   >>END-IMPORTANT<<                                                 *
       *   >>EXECUTE<<                                                       *
       * >>END-PRE-COMPILER<<                                                *
@@ -7028,7 +7113,7 @@ mbrtext =  "Export Journal Entries - CHOICE                   "
 srcfile =  "QEXPJRNE  "
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "00273">
+srccssid=  "01141">
 <copysrc><![CDATA[
       *=====================================================================*
       *                                                                     *
@@ -7067,7 +7152,8 @@ srccssid=  "00273">
       *   >>IMPORTANT<<                                                     *
       *     >>PARM<< TRUNCNBR(*NO);                                         *
       *     >>PARM<< DBGVIEW(*LIST);                                        *
-      *     >>PARM<< TGTRLS(V6R1M0);                                        *
+      *     >>PARM<< OPTION(*EVENTF);                                       *
+      *     >>PARM<< TGTRLS(V7R1M0);                                        *
       *   >>END-IMPORTANT<<                                                 *
       *   >>EXECUTE<<                                                       *
       * >>END-PRE-COMPILER<<                                                *
@@ -7169,7 +7255,7 @@ mbrtext =  "Export Journal Entries - RCVJRN                   "
 srcfile =  "QEXPJRNE  "
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "00273">
+srccssid=  "01141">
 <copysrc><![CDATA[
       *=====================================================================*
       *                                                                     *
@@ -7227,8 +7313,8 @@ srccssid=  "00273">
       *   >>IMPORTANT<<                                                     *
       *     >>PARM<< TRUNCNBR(*NO);                                         *
       *     >>PARM<< DBGVIEW(*LIST);                                        *
-      *     >>PARM<< TGTRLS(V6R1M0);                                        *
       *     >>PARM<< OPTION(*EVENTF);                                       *
+      *     >>PARM<< TGTRLS(V7R1M0);                                        *
       *   >>END-IMPORTANT<<                                                 *
       *   >>EXECUTE<<                                                       *
       * >>END-PRE-COMPILER<<                                                *
@@ -9598,7 +9684,7 @@ mbrtext =  "Export Journal Entries - SQL                      "
 srcfile =  "QEXPJRNE  "
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "00273">
+srccssid=  "01141">
 <copysrc><![CDATA[
       /IF NOT DEFINED(EXPJRNE_PROTOTYPE)
       *=====================================================================*
@@ -9696,7 +9782,8 @@ srccssid=  "00273">
       *   >>IMPORTANT<<                                                     *
       *     >>PARM<< TRUNCNBR(*NO);                                         *
       *     >>PARM<< DBGVIEW(*LIST);                                        *
-      *     >>PARM<< TGTRLS(V6R1M0);                                        *
+      *     >>PARM<< OPTION(*EVENTF);                                       *
+      *     >>PARM<< TGTRLS(V7R1M0);                                        *
       *   >>END-IMPORTANT<<                                                 *
       *   >>EXECUTE<<                                                       *
       * >>END-PRE-COMPILER<<                                                *
@@ -10049,7 +10136,7 @@ mbrtext =  "Export Journal Entries - DDS                      "
 srcfile =  "QEXPJRNE  "
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "00273">
+srccssid=  "01141">
 <copysrc><![CDATA[
       /IF NOT DEFINED(EXPJRNE_PROTOTYPE)
       *=====================================================================*
@@ -10108,7 +10195,8 @@ srccssid=  "00273">
       *   >>IMPORTANT<<                                                     *
       *     >>PARM<< TRUNCNBR(*NO);                                         *
       *     >>PARM<< DBGVIEW(*LIST);                                        *
-      *     >>PARM<< TGTRLS(V6R1M0);                                        *
+      *     >>PARM<< OPTION(*EVENTF);                                       *
+      *     >>PARM<< TGTRLS(V7R1M0);                                        *
       *   >>END-IMPORTANT<<                                                 *
       *   >>EXECUTE<<                                                       *
       * >>END-PRE-COMPILER<<                                                *
@@ -10698,7 +10786,7 @@ mbrtext =  "Export Journal Entries - SQLCLI                   "
 srcfile =  "QEXPJRNE  "
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "00273">
+srccssid=  "01141">
 <copysrc><![CDATA[
       /IF NOT DEFINED(EXPJRNE_PROTOTYPE)
       *=====================================================================*
@@ -10742,7 +10830,8 @@ srccssid=  "00273">
       *   >>IMPORTANT<<                                                     *
       *     >>PARM<< TRUNCNBR(*NO);                                         *
       *     >>PARM<< DBGVIEW(*LIST);                                        *
-      *     >>PARM<< TGTRLS(V6R1M0);                                        *
+      *     >>PARM<< OPTION(*EVENTF);                                       *
+      *     >>PARM<< TGTRLS(V7R1M0);                                        *
       *   >>END-IMPORTANT<<                                                 *
       *   >>EXECUTE<<                                                       *
       * >>END-PRE-COMPILER<<                                                *
@@ -11688,7 +11777,7 @@ mbrtext =  "Export Journal Entries - UTIL                     "
 srcfile =  "QEXPJRNE  "
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "00273">
+srccssid=  "01141">
 <copysrc><![CDATA[
       /IF NOT DEFINED(EXPJRNE_PROTOTYPE)
       *=====================================================================*
@@ -11738,7 +11827,8 @@ srccssid=  "00273">
       *   >>IMPORTANT<<                                                     *
       *     >>PARM<< TRUNCNBR(*NO);                                         *
       *     >>PARM<< DBGVIEW(*LIST);                                        *
-      *     >>PARM<< TGTRLS(V6R1M0);                                        *
+      *     >>PARM<< OPTION(*EVENTF);                                       *
+      *     >>PARM<< TGTRLS(V7R1M0);                                        *
       *   >>END-IMPORTANT<<                                                 *
       *   >>EXECUTE<<                                                       *
       * >>END-PRE-COMPILER<<                                                *
@@ -13676,7 +13766,7 @@ mbrtext =  "EXPJRNE - Validity Checker Example                "
 srcfile =  "QEXPJRNE  "
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "00273">
+srccssid=  "01141">
 <copysrc><![CDATA[
      /* =================================================================== */
      /*                                                                     */
@@ -13737,6 +13827,7 @@ srccssid=  "00273">
      /*                           SRCMBR(*MODULE);                          */
      /*   >>IMPORTANT<<                                                     */
      /*     >>PARM<< DBGVIEW(*LIST);                                        */
+     /*     >>PARM<< OPTION(*EVENTF);                                       */
      /*   >>END-IMPORTANT<<                                                 */
      /*   >>EXECUTE<<                                                       */
      /*   >>CMD<<    CRTPGM       PGM(&LI/&OB) +                            */
@@ -13903,7 +13994,7 @@ mbrtext =  "cpybk   : File information data structure         "
 srcfile =  "QEXPJRNE  "
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "00273">
+srccssid=  "01141">
 <copysrc><![CDATA[
       /if not defined(fileInfDS_t)
       /define fileInfDS_t
@@ -14150,7 +14241,7 @@ mbrtext =  "cpybk   : QUSROBJD API - OBJD0400                 "
 srcfile =  "QEXPJRNE  "
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "00273">
+srccssid=  "01141">
 <copysrc><![CDATA[
       /if not defined(objd0400_t)
       /define objd0400_t
@@ -14255,7 +14346,7 @@ mbrtext =  "cpybk   : Qualified job name                      "
 srcfile =  "QEXPJRNE  "
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "00273">
+srccssid=  "01141">
 <copysrc><![CDATA[
       /if not defined(qJob_t    )
       /define qJob_t
@@ -14282,7 +14373,7 @@ mbrtext =  "H-Specifications                                  "
 srcfile =  "QEXPJRNE  "
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "00273">
+srccssid=  "01141">
 <copysrc><![CDATA[
      h debug
      h option(*SRCSTMT : *NODEBUGIO)
@@ -14308,7 +14399,7 @@ mbrtext =  "Layouts for var.-length portion of journal entries"
 srcfile =  "QEXPJRNE  "
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "00273">
+srccssid=  "01141">
 <copysrc><![CDATA[
       /if not defined(JRNETYPES)
       /define JRNETYPES
@@ -14455,7 +14546,7 @@ mbrtext =  "Retrieve Data Queue Description (QMHQRDQD) API    "
 srcfile =  "QEXPJRNE  "
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "00273">
+srccssid=  "01141">
 <copysrc><![CDATA[
       /if not defined(QMHQRDQD)
       /define QMHQRDQD
@@ -14518,7 +14609,7 @@ mbrtext =  "Retrieve Job Information (QUSRJOBI) API           "
 srcfile =  "QEXPJRNE  "
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "00273">
+srccssid=  "01141">
 <copysrc><![CDATA[
       /if not defined(QUSRJOBI)
       /define QUSRJOBI
@@ -14715,7 +14806,7 @@ mbrtext =  "Retrieve Object Description (QUSROBJD) API        "
 srcfile =  "QEXPJRNE  "
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "00273">
+srccssid=  "01141">
 <copysrc><![CDATA[
       /if not defined(QUSROBJD)
       /define QUSROBJD
@@ -14752,7 +14843,7 @@ mbrtext =  "Retrieve Data Area (QWCRDTAA) API                 "
 srcfile =  "QEXPJRNE  "
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "00273">
+srccssid=  "01141">
 <copysrc><![CDATA[
       /if not defined(QWCRDTAA)
       /define QWCRDTAA
@@ -14802,7 +14893,7 @@ mbrtext =  "Programm Status Datenstruktur                     "
 srcfile =  "QEXPJRNE  "
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "00273">
+srccssid=  "01141">
 <copysrc><![CDATA[
       /if not defined(SDS)
       /define SDS
@@ -14858,7 +14949,7 @@ mbrtext =  "Embedded SQL type definitions and constants       "
 srcfile =  "QEXPJRNE  "
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "00273">
+srccssid=  "01141">
 <copysrc><![CDATA[
       /if not defined(SQL)
       /define SQL
@@ -15010,7 +15101,7 @@ mbrtext =  "SQL-Call Level Interface      SQLCLI.h            "
 srcfile =  "QEXPJRNE  "
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "00273">
+srccssid=  "01141">
 <copysrc><![CDATA[
       *** START HEADER FILE SPECIFICATIONS *****************************/
       *                                                                */
@@ -16787,7 +16878,7 @@ mbrtext =  "MSG: EXPJRNE - Exportierte Journaleinträge        "
 srcfile =  "QEXPJRNE  "
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "00273">
+srccssid=  "01141">
 <copysrc><![CDATA[
       // ---------------------------------------------------------------
       //  Data structure for message ID: TXT0001
@@ -16811,7 +16902,7 @@ mbrtext =  "MSG: Export der Journaleinträge läuft ( 1) ...    "
 srcfile =  "QEXPJRNE  "
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "00273">
+srccssid=  "01141">
 <copysrc><![CDATA[
       // ---------------------------------------------------------------
       //  Data structure for message ID: USR0012
@@ -16834,7 +16925,7 @@ mbrtext =  "MSG:  1 Journaleinträge aufgrund von Fehlern überg"
 srcfile =  "QEXPJRNE  "
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "00273">
+srccssid=  "01141">
 <copysrc><![CDATA[
       // ---------------------------------------------------------------
       //  Data structure for message ID: USR0018
@@ -16857,7 +16948,7 @@ mbrtext =  "MSG: Feld oder Datzformat  1 umbenannt nach  2.   "
 srcfile =  "QEXPJRNE  "
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "00273">
+srccssid=  "01141">
 <copysrc><![CDATA[
       // ---------------------------------------------------------------
       //  Data structure for message ID: USR0019
@@ -16881,7 +16972,7 @@ mbrtext =  "MSG: Unerlaubter Speicherzugriff. Programm beendet"
 srcfile =  "QEXPJRNE  "
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "00273">
+srccssid=  "01141">
 <copysrc><![CDATA[
       // ---------------------------------------------------------------
       //  Data structure for message ID: USR0020
@@ -16904,7 +16995,7 @@ mbrtext =  "MSG: Aktualitätsprüfung für Datei  1 in Bibliothek"
 srcfile =  "QEXPJRNE  "
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "00273">
+srccssid=  "01141">
 <copysrc><![CDATA[
       // ---------------------------------------------------------------
       //  Data structure for message ID: USR0021
@@ -16928,7 +17019,7 @@ mbrtext =  "MSG: Aktualitätsprüfung für Feld  3 in Datei  1 in"
 srcfile =  "QEXPJRNE  "
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "00273">
+srccssid=  "01141">
 <copysrc><![CDATA[
       // ---------------------------------------------------------------
       //  Data structure for message ID: USR0022
@@ -16953,7 +17044,7 @@ mbrtext =  "MSG:  1:  2                                       "
 srcfile =  "QEXPJRNE  "
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "00273">
+srccssid=  "01141">
 <copysrc><![CDATA[
       // ---------------------------------------------------------------
       //  Data structure for message ID: USR0023
@@ -16977,7 +17068,7 @@ mbrtext =  "MSG: Ausführung der SQL Anweisung zum Erstellen de"
 srcfile =  "QEXPJRNE  "
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "00273">
+srccssid=  "01141">
 <copysrc><![CDATA[
       // ---------------------------------------------------------------
       //  Data structure for message ID: USR0024
@@ -17000,7 +17091,7 @@ mbrtext =  "MSG: Ausführung der SQL Anweisung zum Setzen der F"
 srcfile =  "QEXPJRNE  "
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "00273">
+srccssid=  "01141">
 <copysrc><![CDATA[
       // ---------------------------------------------------------------
       //  Data structure for message ID: USR0025
@@ -17023,7 +17114,7 @@ mbrtext =  "MSG: Ausführung der ASL Anweisung zum setzen der S"
 srcfile =  "QEXPJRNE  "
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "00273">
+srccssid=  "01141">
 <copysrc><![CDATA[
       // ---------------------------------------------------------------
       //  Data structure for message ID: USR0026
@@ -17046,7 +17137,7 @@ mbrtext =  "MSG: Ausführung der SQL Anweisung zum Setzen der T"
 srcfile =  "QEXPJRNE  "
 srclib  =  "selected  "
 srclen  =  "00112"
-srccssid=  "00273">
+srccssid=  "01141">
 <copysrc><![CDATA[
       // ---------------------------------------------------------------
       //  Data structure for message ID: USR0027

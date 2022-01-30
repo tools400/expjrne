@@ -43,6 +43,8 @@
 /*                                                                     */
 /*  04.10.2018  Th.Raddatz    Added outfile types *TYPE4 and *TYPE5.   */
 /*                                                                     */
+/*  30.01.2022  Th.Raddatz    Added parameter OBJJID.                  */
+/*                                                                     */
 /* =================================================================== */
 /* >>PRE-COMPILER<<                                                    */
 /*   >>CRTCMD<< CRTCMD       CMD(&LI/EXPJRNE) +                        */
@@ -60,7 +62,7 @@
            CMD      PROMPT('Export Journal Entries')
 
              PARM       KWD(OBJ)                         +
-                          TYPE(QUAL1)                    +
+                          TYPE(OBJ)                      +
                           MIN(1)                         +
                           PROMPT('Object' 1)
 
@@ -69,26 +71,26 @@
                           MIN(1)                         +
                           CHOICE(*PGM)                   +
                           CHOICEPGM(*LIBL/EXPJRNECC)     +
-                          PROMPT('Starting date' 4)
+                          PROMPT('Starting date' 5)
 
              PARM       KWD(FROMTIME)                    +
                           TYPE(*TIME)                    +
                           MIN(1)                         +
                           CHOICE('Time (hh:mm:ss)')      +
-                          PROMPT('Starting time' 5)
+                          PROMPT('Starting time' 6)
 
              PARM       KWD(TODATE)                      +
                           TYPE(*DATE)                    +
                           MIN(1)                         +
                           CHOICE(*PGM)                   +
                           CHOICEPGM(*LIBL/EXPJRNECC)     +
-                          PROMPT('Ending date' 6)
+                          PROMPT('Ending date' 7)
 
              PARM       KWD(TOTIME)                      +
                           TYPE(*TIME)                    +
                           MIN(1)                         +
                           CHOICE('Time (hh:mm:ss)')      +
-                          PROMPT('Ending time' 7)
+                          PROMPT('Ending time' 8)
 
              PARM       KWD(OBJTYPE)                     +
                           TYPE(*CHAR)                    +
@@ -109,16 +111,22 @@
                                  (*ALL  ))               +
                           PROMPT('Member' 3)
 
+             PARM       KWD(OBJJID)                      +
+                          TYPE(*CHAR)                    +
+                          LEN(20)                        +
+                          MIN(0)                         +
+                          PROMPT('Object journal identifier' 4)
+
              PARM       KWD(OUTFILE)                     +
                           TYPE(QUAL2)                    +
                           MIN(0)                         +
                           CHOICE(*NONE)                  +
-                          PROMPT('File to receive output' 9)
+                          PROMPT('File to receive output' 10)
 
              PARM       KWD(OUTMBR)                      +
                           MIN(0)                         +
                           TYPE(ELEM1)                    +
-                          PROMPT('Output member options' 10)
+                          PROMPT('Output member options' 11)
 
              PARM       KWD(CRTFILE)                     +
                           TYPE(*CHAR)                    +
@@ -130,14 +138,14 @@
                                  (*NO  'N')              +
                                  (*SQL 'Y')              +
                                  (*DDS 'D'))             +
-                          PROMPT('Create outfile' 11)
+                          PROMPT('Create outfile' 12)
 
              PARM       KWD(TPLFILE)                     +
                           TYPE(QUAL4)                    +
                           MIN(0)                         +
                           DFT(*OBJECT)                   +
                           SNGVAL(*OBJECT)                +
-                          PROMPT('Template file' 12)
+                          PROMPT('Template file' 13)
 
              PARM       KWD(OUTFILFMT)                   +
                           TYPE(*CHAR)                    +
@@ -150,25 +158,25 @@
                                  *TYPE3                  +
                                  *TYPE4                  +
                                  *TYPE5)                 +
-                          PROMPT('Outfile format'  8)
+                          PROMPT('Outfile format'  9)
 
              PARM       KWD(JRN)                         +
                           TYPE(JRN)                      +
                           DFT(*OBJ)                      +
                           SNGVAL(*OBJ)                   +
-                          PROMPT('Journal' 15)
+                          PROMPT('Journal' 16)
 
              PARM       KWD(RCVRNG)                      +
                           TYPE(RCVRNG)                   +
                           DFT(*CURCHAIN)                 +
                           SNGVAL((*CURCHAIN)             +
                                  (*CURRENT ))            +
-                          PROMPT('Range of journal receivers' 16)
+                          PROMPT('Range of journal receivers' 17)
 
              PARM       KWD(SIZE)                        +
                           TYPE(SIZE)                     +
                           SNGVAL((*NOMAX 0))             +
-                          PROMPT('Member size' 13)
+                          PROMPT('Member size' 14)
 
              PARM       KWD(LVLCHK)                      +
                           TYPE(*CHAR)                    +
@@ -178,18 +186,18 @@
                           RSTD(*YES)                     +
                           SPCVAL((*YES 'Y')              +
                                  (*NO  'N'))             +
-                          PROMPT('Record format level check' 14)
+                          PROMPT('Record format level check' 15)
 
 /* ----------------------------------------------------------------- */
 
- QUAL1:      QUAL       TYPE(*NAME)                      +
+ OBJ:        QUAL       TYPE(*NAME)                      +
                           LEN(10)                        +
                           MIN(1)
              QUAL       TYPE(*NAME)                      +
                           LEN(10)                        +
                           DFT(*LIBL)                     +
                           SPCVAL((*LIBL  )               +
-                                 (*CURLIB))             +
+                                 (*CURLIB))              +
                           PROMPT('Library')
 
 QUAL2:       QUAL       TYPE(*NAME)                      +

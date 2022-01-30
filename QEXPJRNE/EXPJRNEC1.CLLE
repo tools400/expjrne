@@ -92,6 +92,8 @@
      /*                                                                     */
      /*  04.10.2018  Th.Raddatz    Fixed external procedure name (typo).    */
      /*                                                                     */
+     /*  30.01.2022  Th.Raddatz    Added parameter OBJJID.                  */
+     /*                                                                     */
      /* =================================================================== */
      /* >>PRE-COMPILER<<                                                    */
      /*                                                                     */
@@ -101,7 +103,7 @@
      /*                                                                     */
      /*   >>IMPORTANT<<                                                     */
      /*     >>PARM<< DBGVIEW(*LIST);                                        */
-     /*     >>PARM<< TGTRLS(V6R1M0);                                        */
+     /*     >>PARM<< TGTRLS(V7R1M0);                                        */
      /*     >>PARM<< OPTION(*EVENTF);                                       */
      /*   >>END-IMPORTANT<<                                                 */
      /*                                                                     */
@@ -116,6 +118,7 @@
                              &I_TOTIME        +
                              &I_OBJTYPE       +
                              &I_MBR           +
+                             &I_OBJJID        +
                              &I_OUTFILE       +
                              &I_MBROPT        +
                              &I_CRTFILE       +
@@ -133,6 +136,7 @@
              DCL        VAR(&I_TOTIME  ) TYPE(*CHAR) LEN( 6)
              DCL        VAR(&I_OBJTYPE ) TYPE(*CHAR) LEN(10)
              DCL        VAR(&I_MBR     ) TYPE(*CHAR) LEN(10)
+             DCL        VAR(&I_OBJJID  ) TYPE(*CHAR) LEN(20)
              DCL        VAR(&I_OUTFILE ) TYPE(*CHAR) LEN(20)
              DCL        VAR(&I_MBROPT  ) TYPE(*CHAR) LEN(22)
              DCL        VAR(&I_CRTFILE ) TYPE(*CHAR) LEN( 1)
@@ -151,6 +155,7 @@
              DCL        VAR(&TOTIME    ) TYPE(*CHAR) LEN( 6)
              DCL        VAR(&OBJTYPE   ) TYPE(*CHAR) LEN(10)
              DCL        VAR(&MBR       ) TYPE(*CHAR) LEN(10)
+             DCL        VAR(&OBJJID    ) TYPE(*CHAR) LEN(20)
              DCL        VAR(&OUTFILE   ) TYPE(*CHAR) LEN(10)
              DCL        VAR(&OUTLIB    ) TYPE(*CHAR) LEN(10)
              DCL        VAR(&MBROPT    ) TYPE(*CHAR) LEN(10)
@@ -245,6 +250,7 @@
              CHGVAR     VAR(&LIB    )   VALUE(%SST(&I_OBJ  11 10))
              CHGVAR     VAR(&OBJTYPE)   VALUE(&I_OBJTYPE)
              CHGVAR     VAR(&MBR    )   VALUE(&I_MBR)
+             CHGVAR     VAR(&OBJJID )   VALUE(&I_OBJJID)
 
              CVTDAT     DATE(&I_FROMDATE) TOVAR(&FROMDATE) +
                           FROMFMT(*CYMD) TOFMT(*JOB) TOSEP(*JOB)
@@ -658,22 +664,29 @@ LVLCHK:
                                                      *CAT  &JRN        +
                                                      *TCAT ')')
 
-             IF         COND(&RELEASE *GE 'V5R4M0') THEN(DO)
-                CHGVAR     VAR(&CMD) VALUE(&CMD +
-                               *BCAT     'OBJ(('     *CAT  &LIB        +
-                                                     *TCAT '/'         +
-                                                     *CAT  &OBJ        +
-                                                     *BCAT &OBJTYPE    +
-                                                     *BCAT &MBR        +
-                                                     *TCAT '))')
+             IF         COND(&OBJJID *NE ' ') THEN(DO)
+                  CHGVAR     VAR(&CMD) VALUE(&CMD +
+                                 *BCAT     'OBJJID('   *CAT  &OBJJID     +
+                                                       *TCAT ')')
              ENDDO
              ELSE       CMD(DO)
-                CHGVAR     VAR(&CMD) VALUE(&CMD +
-                               *BCAT     'FILE(('    *CAT  &LIB        +
-                                                     *TCAT '/'         +
-                                                     *CAT  &OBJ        +
-                                                     *BCAT &MBR        +
-                                                     *TCAT '))')
+               IF         COND(&RELEASE *GE 'V5R4M0') THEN(DO)
+                  CHGVAR     VAR(&CMD) VALUE(&CMD +
+                                 *BCAT     'OBJ(('     *CAT  &LIB        +
+                                                       *TCAT '/'         +
+                                                       *CAT  &OBJ        +
+                                                       *BCAT &OBJTYPE    +
+                                                       *BCAT &MBR        +
+                                                       *TCAT '))')
+               ENDDO
+               ELSE       CMD(DO)
+                  CHGVAR     VAR(&CMD) VALUE(&CMD +
+                                 *BCAT     'FILE(('    *CAT  &LIB        +
+                                                       *TCAT '/'         +
+                                                       *CAT  &OBJ        +
+                                                       *BCAT &MBR        +
+                                                       *TCAT '))')
+               ENDDO
              ENDDO
 
              CHGVAR     VAR(&CMD) VALUE(&CMD +

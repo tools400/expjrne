@@ -45,6 +45,8 @@
 .*                                                                     *
 .*  04.10.2018  Th.Raddatz    Added outfile types *TYPE4 and *TYPE5.   *
 .*                                                                     *
+.*  30.01.2022  Th.Raddatz    Added parameter OBJJID.                  *
+.*                                                                     *
 .*=====================================================================*
 .* >>PRE-COMPILER<<                                                    *
 .*   >>CRTCMD<< CRTPNLGRP    PNLGRP(&LI/EXPJRNEP) +                    *
@@ -194,6 +196,33 @@ exportiert.
 :PT.:PV.Teildateiname:EPV.
 :PD.Den Namen der Teildatei angeben, deren Journaleinträge
 exportiert werden sollen.
+:EPARML.
+.*
+:EHELP.
+.*
+.*--------------------------------------------------------------------
+.* Hilfetext für Schlüsselwort OBJJID
+.*--------------------------------------------------------------------
+:HELP name='EXPJRNE/OBJJID    '.
+Objektjournal-ID - Hilfe
+:XH3.Objektjournal-ID (OBJJID)
+:P.
+Gibt die Journal-ID an, für die Journaleinträge
+in die Ausgabe exportiert werden. Dieses Eingabefeld hat
+hexadezimales Format.
+:p.
+Die Eingabe erfolgt ohne Angabe des hexadezimalen Formats (x'..').
+:p.
+Wenn der OBJJID Parameter angegeben ist, wird der OBJ Parameter für
+den Export der Journaleinträge ignoriert und lediglich für die
+Erstellung der Ausgabedatei verwendet.
+:IMHELP name='COM/OPTPARM'.
+:P.
+:PARML.
+:PT.:PV.journal-identifier:EPV.
+:PD.Einträge des Objekts, die der angegebenen
+Journalidentifikationsnummer zugeordnet sind, werden
+in die Ausgabedatei exportiert.
 :EPARML.
 .*
 :EHELP.
