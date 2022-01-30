@@ -3993,6 +3993,8 @@ srccssid=  "01141">
      /*                                                                     */
      /*  04.10.2018  Th.Raddatz    Fixed external procedure name (typo).    */
      /*                                                                     */
+     /*  30.01.2022  Th.Raddatz    Added parameter OBJJID.                  */
+     /*                                                                     */
      /* =================================================================== */
      /* >>PRE-COMPILER<<                                                    */
      /*                                                                     */
@@ -13828,6 +13830,7 @@ srccssid=  "01141">
      /*   >>IMPORTANT<<                                                     */
      /*     >>PARM<< DBGVIEW(*LIST);                                        */
      /*     >>PARM<< OPTION(*EVENTF);                                       */
+     /*     >>PARM<< TGTRLS(V7R1M0);                                        */
      /*   >>END-IMPORTANT<<                                                 */
      /*   >>EXECUTE<<                                                       */
      /*   >>CMD<<    CRTPGM       PGM(&LI/&OB) +                            */
