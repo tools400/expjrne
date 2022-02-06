@@ -46,6 +46,9 @@
       *                                                                     *
       *  04.10.2018  Th.Raddatz    Added outfile types *TYPE4 and *TYPE5.   *
       *                                                                     *
+      *  06.02.2022  Th.Raddatz    Prepared EXPJRNE for being converted to  *
+      *                            **free format.                           *
+      *                                                                     *
       *=====================================================================*
       * >>PRE-COMPILER<<                                                    *
       *   >>CRTCMD<< CRTRPGMOD    MODULE(&LI/&OB) +                         *
@@ -547,10 +550,10 @@
      D rIOFB           DS                  likeds(RIOFB_t)
      D                                     based(pRIOFB)
       *
-      *  I-Buffer
-     D dsQADSPJRN    E DS         32766    extname(QADSPJRN) based(pdsQADSPJRN)
+      *  I-Buffer (prepared for **free)
+     D dsQADSPJRN    E DS                  extname(QADSPJRN) based(pdsQADSPJRN)
      D                                     qualified
-     D dsQADSPJR2    E DS         32766    extname(QADSPJR2) based(pdsQADSPJR2)
+     D dsQADSPJR2    E DS                  extname(QADSPJR2) based(pdsQADSPJR2)
      D                                     qualified
       *
       * dsQADSPJR3:
@@ -598,16 +601,18 @@
      D clearTransactionId...
      D                 DS                  likeds(xid_t)          inz
       *
-      *  O-Buffer
-     D dsQADSPJRN_O  E DS         32766    extname(QADSPJRN) inz
+      *  O-Buffer (prepared for **free)
+     D dsBuffer_O      S          32766A
+     D pBuffer         S               *   inz(%addr(dsBuffer_O))
+     D dsQADSPJRN_O  E DS                  extname(QADSPJRN) based(pBuffer)
      D                                     qualified
-     D dsQADSPJR2_O  E DS         32766    extname(QADSPJR2) inz
+     D dsQADSPJR2_O  E DS                  extname(QADSPJR2) based(pBuffer)
      D                                     qualified
-     D dsQADSPJR3_O  E DS         32766    extname(QADSPJR3) inz
+     D dsQADSPJR3_O  E DS                  extname(QADSPJR3) based(pBuffer)
      D                                     qualified
-     D dsQADSPJR4_O  E DS         32766    extname(QADSPJR4) inz
+     D dsQADSPJR4_O  E DS                  extname(QADSPJR4) based(pBuffer)
      D                                     qualified
-     D dsQADSPJR5_O  E DS         32766    extname(QADSPJR5) inz
+     D dsQADSPJR5_O  E DS                  extname(QADSPJR5) based(pBuffer)
      D                                     qualified
       *
       *  Messages
@@ -678,18 +683,24 @@
             select;
             when outFile.outFilFmt = '*TYPE1';
 
+               // Clear output buffer
+               dsBuffer_O = *all'x00';
                clear dsQADSPJRN_O;
+
+               // Set output data
                fixLength  = %addr(dsQADSPJRN.JOESD) - %addr(dsQADSPJRN);
                dataLength = dsQADSPJRN.JOENTL - fixLength;
-               dsQADSPJRN_O = %subst(dsQADSPJRN: 1: dsQADSPJRN.JOENTL);
+               // dsQADSPJRN_O = %subst(dsQADSPJRN: 1: dsQADSPJRN.JOENTL);
+               memcpy(
+                %addr(dsBuffer_O): %addr(dsQADSPJRN): dsQADSPJRN.JOENTL);
                if (dataLength > 0);
                   cvtLargeObjectFieldData(
-                     outFile.name: outFile.lib: 'JORES': dsQADSPJRN_O);
-                  maxDataLength = %size(dsQADSPJRN_O) - dataLength;
+                     outFile.name: outFile.lib: 'JORES': dsBuffer_O);
+                  maxDataLength = %size(dsBuffer_O) - dataLength;
                   mapJrnE(dsQADSPJRN_O.JOCODE: dsQADSPJRN_O.JOENTT
                           : %addr(dsQADSPJRN_O.JOESD): maxDataLength);
                else;
-                  %subst(dsQADSPJRN_O: fixLength + 1) =
+                  %subst(dsBuffer_O: fixLength + 1) =
                      crtEntryDataInitialized(outFile.name: outFile.lib:'JORES');
                endif;
                pRIOFB = Rwrite(g_file.pRFile
@@ -697,18 +708,24 @@
 
             when outFile.outFilFmt = '*TYPE2';
 
+               // Clear output buffer
+               dsBuffer_O = *all'x00';
                clear dsQADSPJR2_O;
+
+               // Set output data
                fixLength  = %addr(dsQADSPJR2.JOESD) - %addr(dsQADSPJR2);
                dataLength = dsQADSPJR2.JOENTL - fixLength;
-               dsQADSPJR2_O = %subst(dsQADSPJR2: 1: dsQADSPJR2.JOENTL);
+               // dsQADSPJR2_O = %subst(dsQADSPJR2: 1: dsQADSPJR2.JOENTL);
+               memcpy(
+                %addr(dsBuffer_O): %addr(dsQADSPJR2): dsQADSPJR2.JOENTL);
                if (dataLength > 0);
                   cvtLargeObjectFieldData(
-                     outFile.name: outFile.lib: 'JORES': dsQADSPJR2_O);
-                  maxDataLength = %size(dsQADSPJR2_O) - dataLength;
+                     outFile.name: outFile.lib: 'JORES': dsBuffer_O);
+                  maxDataLength = %size(dsBuffer_O) - dataLength;
                   mapJrnE(dsQADSPJR2_O.JOCODE: dsQADSPJR2_O.JOENTT
                           : %addr(dsQADSPJR2_O.JOESD): maxDataLength);
                else;
-                  %subst(dsQADSPJR2_O: fixLength + 1) =
+                  %subst(dsBuffer_O: fixLength + 1) =
                      crtEntryDataInitialized(outFile.name: outFile.lib:'JORES');
                endif;
                pRIOFB = Rwrite(g_file.pRFile
@@ -727,6 +744,7 @@
                endif;
 
                // Clear output buffer
+               dsBuffer_O = *all'x00';
                clear dsQADSPJR3_O;
 
                // Set output data
@@ -763,10 +781,10 @@
 
                // Set entry data
                if entryData.length = 0;
-                  %subst(dsQADSPJR3_O: offsJOESD+1) =
+                  %subst(dsBuffer_O: offsJOESD+1) =
                      crtEntryDataInitialized(outFile.name:outFile.lib:'JONVI');
                else;
-                  %subst(dsQADSPJR3_O: offsJOESD+1) =
+                  %subst(dsBuffer_O: offsJOESD+1) =
                      %subst(entryData.value: 1: entryData.length);
                endif;
 
@@ -777,8 +795,8 @@
                   dataLength = entryData.length;
                   if (dataLength > 0);
                      cvtLargeObjectFieldData(
-                        outFile.name: outFile.lib: 'JORES': dsQADSPJR3_O);
-                     maxDataLength = %size(dsQADSPJR3_O) - dataLength;
+                        outFile.name: outFile.lib: 'JORES': dsBuffer_O);
+                     maxDataLength = %size(dsBuffer_O) - dataLength;
                      mapJrnE(dsQADSPJR3_O.JOCODE: dsQADSPJR3_O.JOENTT
                              : %addr(dsQADSPJR3_O.JOESD): maxDataLength);
                   endif;
@@ -799,6 +817,7 @@
                endif;
 
                // Clear output buffer
+               dsBuffer_O = *all'x00';
                clear dsQADSPJR4_O;
 
                // Set output data
@@ -840,10 +859,10 @@
 
                // Set entry data
                if entryData.length = 0;
-                  %subst(dsQADSPJR4_O: offsJOESD+1) =
+                  %subst(dsBuffer_O: offsJOESD+1) =
                      crtEntryDataInitialized(outFile.name:outFile.lib:'JONVI');
                else;
-                  %subst(dsQADSPJR4_O: offsJOESD+1) =
+                  %subst(dsBuffer_O: offsJOESD+1) =
                      %subst(entryData.value: 1: entryData.length);
                endif;
 
@@ -854,8 +873,8 @@
                   dataLength = entryData.length;
                   if (dataLength > 0);
                      cvtLargeObjectFieldData(
-                        outFile.name: outFile.lib: 'JORES': dsQADSPJR4_O);
-                     maxDataLength = %size(dsQADSPJR4_O) - dataLength;
+                        outFile.name: outFile.lib: 'JORES': dsBuffer_O);
+                     maxDataLength = %size(dsBuffer_O) - dataLength;
                      mapJrnE(dsQADSPJR4_O.JOCODE: dsQADSPJR4_O.JOENTT
                              : %addr(dsQADSPJR4_O.JOESD): maxDataLength);
                   endif;
@@ -876,6 +895,7 @@
                endif;
 
                // Clear output buffer
+               dsBuffer_O = *all'x00';
                clear dsQADSPJR5_O;
 
                // Set output data
@@ -985,10 +1005,10 @@
 
                // Set entry data
                if entryData.length = 0;
-                  %subst(dsQADSPJR5_O: offsJOESD+1) =
+                  %subst(dsBuffer_O: offsJOESD+1) =
                      crtEntryDataInitialized(outFile.name:outFile.lib:'JONVI');
                else;
-                  %subst(dsQADSPJR5_O: offsJOESD+1) =
+                  %subst(dsBuffer_O: offsJOESD+1) =
                      %subst(entryData.value: 1: entryData.length);
                endif;
 
@@ -999,8 +1019,8 @@
                   dataLength = entryData.length;
                   if (dataLength > 0);
                      cvtLargeObjectFieldData(
-                        outFile.name: outFile.lib: 'JORES': dsQADSPJR5_O);
-                     maxDataLength = %size(dsQADSPJR5_O) - dataLength;
+                        outFile.name: outFile.lib: 'JORES': dsBuffer_O);
+                     maxDataLength = %size(dsBuffer_O) - dataLength;
                      mapJrnE(dsQADSPJR5_O.JOCODE: dsQADSPJR5_O.JOENTT
                              : %addr(dsQADSPJR5_O.JOESD): maxDataLength);
                   endif;
