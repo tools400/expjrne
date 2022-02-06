@@ -704,7 +704,7 @@
                if (dataLength > 0);
                   cvtLargeObjectFieldData(
                      outFile.name: outFile.lib: 'JORES': dsQADSPJR2_O);
-                  maxDataLength = %size(dsQADSPJRN_O) - dataLength;
+                  maxDataLength = %size(dsQADSPJR2_O) - dataLength;
                   mapJrnE(dsQADSPJR2_O.JOCODE: dsQADSPJR2_O.JOENTT
                           : %addr(dsQADSPJR2_O.JOESD): maxDataLength);
                else;
