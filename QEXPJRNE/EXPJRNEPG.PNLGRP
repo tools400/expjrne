@@ -47,6 +47,8 @@
 .*                                                                     *
 .*  30.01.2022  Th.Raddatz    Added parameter OBJJID.                  *
 .*                                                                     *
+.*  25.07.2023  Th.Raddatz    Fixed German umlauts.                    *
+.*                                                                     *
 .*=====================================================================*
 .* >>PRE-COMPILER<<                                                    *
 .*   >>CRTCMD<< CRTPNLGRP    PNLGRP(&LI/EXPJRNEP) +                    *
@@ -111,7 +113,7 @@ Bibliothekswerte qualifiziert werden:
 :PARML.
 :PT.:PK DEF.*LIBL:EPK.
 :PD.Alle Bibliotheken in der Bibliotheksliste des Jobs werden
-durchsucht, bis die erste Ãœbereinstimmung gefunden wird.
+durchsucht, bis die erste Übereinstimmung gefunden wird.
 .*
 :PT.:PV.*CURLIB:EPV.
 :PD.Die aktuelle Jobbibliothek wird durchsucht. Falls keine aktuelle
@@ -133,7 +135,7 @@ Objektart - Hilfe
 :XH3.Objektart (OBJTYPE)
 :P.
 Gibt die Objektart des Objekts an, dessen Journaleinträge exportiert werden. Zur
-Zeit werden folgende Objektarten unterstï¿½tzt:
+Zeit werden folgende Objektarten unterstützt:
 :LINES.
 Objekt                         Codes   Types
 ----------------------------   -----   ---------------------------
@@ -189,7 +191,7 @@ werden sollen.
 .*
 :PT.:PV.*ALL:EPV.
 :PD.Die Journaleinträge aller physischen Dateien der
-angegebenen Bibliothek, deren aufgezeichnete Ã„nderungen
+angegebenen Bibliothek, deren aufgezeichnete Änderungen
 sich derzeit im Journalempfänger befinden, werden
 exportiert.
 .*
@@ -404,7 +406,7 @@ Gültige Bibliothekswerte sind:
 :PARML.
 :PT.:PK DEF.*LIBL:EPK.
 :PD.Alle Bibliotheken in der Bibliotheksliste des Jobs werden
-durchsucht, bis die erste Ãœbereinstimmung gefunden wird.
+durchsucht, bis die erste Übereinstimmung gefunden wird.
 .*
 :PT.:PV.*CURLIB:EPV.
 :PD.Die aktuelle Jobbibliothek wird durchsucht. Falls keine aktuelle
@@ -516,7 +518,7 @@ Bibliothekswerte qualifiziert werden:
 :PARML.
 :PT.:PK DEF.*LIBL:EPK.
 :PD.Alle Bibliotheken in der Bibliotheksliste des Jobs werden
-durchsucht, bis die erste Ãœbereinstimmung gefunden wird.
+durchsucht, bis die erste Übereinstimmung gefunden wird.
 .*
 :PT.:PV.*CURLIB:EPV.
 :PD.Die aktuelle Jobbibliothek wird durchsucht. Falls keine aktuelle
@@ -696,7 +698,7 @@ Journaleinträge umgesetzt.
 :PARML.
 :PT.:PK DEF.*CURCHAIN:EPK.
 :PD.Die Journalempfängerkette, zu der der Journalempfänger gehört, der
-beim Beginn des Umsetzens der Journaleintrï¿½ge angehängt ist, wird
+beim Beginn des Umsetzens der Journaleinträge angehängt ist, wird
 verwendet. Diese Empfängerkette überbrückt keine Unterbrechung der
 Kette. Kommt es zu einer Unterbrechung der Kette, so reicht der
 Empfängerbereich von der letzten Unterbrechung der Kette bis zum dem
@@ -726,7 +728,7 @@ für die Ausgabe umgesetzt werden sollen.
 :PARML.
 :PT.:PK DEF.*LIBL:EPK.
 :PD.Alle Bibliotheken in der Bibliotheksliste des Jobs werden
-durchsucht, bis die erste Ãœbereinstimmung gefunden wird.
+durchsucht, bis die erste Übereinstimmung gefunden wird.
 .*
 :PT.:PV.*CURLIB:EPV.
 :PD.Der Journalempfänger wird in der aktuellen Jobbibliothek
@@ -766,7 +768,7 @@ Fehlernachricht gesendet und Journaleinträge werden nicht abgerufen.
 :PARML.
 :PT.:PK DEF.*LIBL:EPK.
 :PD.Alle Bibliotheken in der Bibliotheksliste des Jobs werden
-durchsucht, bis die erste Ãœbereinstimmung gefunden wird.
+durchsucht, bis die erste Übereinstimmung gefunden wird.
 .*
 :PT.:PV.*CURLIB:EPV.
 :PD.Der Journalempfänger wird in der aktuellen Jobbibliothek
