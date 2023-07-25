@@ -659,7 +659,7 @@ am Parameter :HP2.Objekt (OBJ):EHP2. angegebenen Objekt ermittelt.
 :PT.:PK DEF.*LIBL:EPK.
 :PD.Alle Bibliotheken in der Bibliotheksliste des
 aktuellen Threads werden durchsucht, bis die erste
-Ãœbereinstimmung gefunden wird.
+Übereinstimmung gefunden wird.
 .*
 :PT.:PV.*CURLIB:EPV.
 :PD.Die aktuelle Jobbibliothek wird durchsucht. Ist für
