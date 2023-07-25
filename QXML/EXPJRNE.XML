@@ -51,7 +51,7 @@
       appblddate CDATA #REQUIRED
      >
      ]>
-<upload  appname="EXPJRNE"  appauthor="Thomas Raddatz"  appblddate=" 2/06/2022">
+<upload  appname="EXPJRNE"  appauthor="Thomas Raddatz"  appblddate=" 7/25/2023">
 <install_instructions><![CDATA[
      *----------------------------------------------------------------      ------
      *  1. Upload entire XML to your AS/400 to a source file 112 long, into any mbr
@@ -3429,13 +3429,13 @@ srclen  =  "00112"
 srccssid=  "01141">
 <copysrc><![CDATA[
       /if not defined(COPYRIGHT_DSPEC)
-     h copyright('V5.3 - 06.02.2022 - mailto: thomas.raddatz@tools400.de')
+     h copyright('V5.4 - 27.07.2023 - mailto: thomas.raddatz@tools400.de')
       /eof
       /endif
      D EXPJRNE_VERSION...
-     D                 C                   '5.3'
+     D                 C                   '5.4'
      D EXPJRNE_DATE...
-     D                 C                   '06.02.2022'
+     D                 C                   '27.07.2023'
 ]]>  </copysrc>
 </mbr>
 <sendmsg  sendmsgid="CPF9897" sendmsgtype = "*STATUS   "><![CDATA[
@@ -6225,6 +6225,8 @@ srccssid=  "01141">
 .*                                                                     *
 .*  30.01.2022  Th.Raddatz    Added parameter OBJJID.                  *
 .*                                                                     *
+.*  25.07.2023  Th.Raddatz    Fixed German umlauts.                    *
+.*                                                                     *
 .*=====================================================================*
 .* >>PRE-COMPILER<<                                                    *
 .*   >>CRTCMD<< CRTPNLGRP    PNLGRP(&LI/EXPJRNEP) +                    *
@@ -6289,7 +6291,7 @@ Bibliothekswerte qualifiziert werden:
 :PARML.
 :PT.:PK DEF.*LIBL:EPK.
 :PD.Alle Bibliotheken in der Bibliotheksliste des Jobs werden
-durchsucht, bis die erste Ã bereinstimmung gefunden wird.
+durchsucht, bis die erste Übereinstimmung gefunden wird.
 .*
 :PT.:PV.*CURLIB:EPV.
 :PD.Die aktuelle Jobbibliothek wird durchsucht. Falls keine aktuelle
@@ -6311,7 +6313,7 @@ Objektart - Hilfe
 :XH3.Objektart (OBJTYPE)
 :P.
 Gibt die Objektart des Objekts an, dessen Journaleinträge exportiert werden. Zur
-Zeit werden folgende Objektarten unterstï¿½tzt:
+Zeit werden folgende Objektarten unterstützt:
 :LINES.
 Objekt                         Codes   Types
 ----------------------------   -----   ---------------------------
@@ -6367,7 +6369,7 @@ werden sollen.
 .*
 :PT.:PV.*ALL:EPV.
 :PD.Die Journaleinträge aller physischen Dateien der
-angegebenen Bibliothek, deren aufgezeichnete Ã nderungen
+angegebenen Bibliothek, deren aufgezeichnete Änderungen
 sich derzeit im Journalempfänger befinden, werden
 exportiert.
 .*
@@ -6582,7 +6584,7 @@ Gültige Bibliothekswerte sind:
 :PARML.
 :PT.:PK DEF.*LIBL:EPK.
 :PD.Alle Bibliotheken in der Bibliotheksliste des Jobs werden
-durchsucht, bis die erste Ã bereinstimmung gefunden wird.
+durchsucht, bis die erste Übereinstimmung gefunden wird.
 .*
 :PT.:PV.*CURLIB:EPV.
 :PD.Die aktuelle Jobbibliothek wird durchsucht. Falls keine aktuelle
@@ -6694,7 +6696,7 @@ Bibliothekswerte qualifiziert werden:
 :PARML.
 :PT.:PK DEF.*LIBL:EPK.
 :PD.Alle Bibliotheken in der Bibliotheksliste des Jobs werden
-durchsucht, bis die erste Ã bereinstimmung gefunden wird.
+durchsucht, bis die erste Übereinstimmung gefunden wird.
 .*
 :PT.:PV.*CURLIB:EPV.
 :PD.Die aktuelle Jobbibliothek wird durchsucht. Falls keine aktuelle
@@ -6835,7 +6837,7 @@ am Parameter :HP2.Objekt (OBJ):EHP2. angegebenen Objekt ermittelt.
 :PT.:PK DEF.*LIBL:EPK.
 :PD.Alle Bibliotheken in der Bibliotheksliste des
 aktuellen Threads werden durchsucht, bis die erste
-Ã bereinstimmung gefunden wird.
+Übereinstimmung gefunden wird.
 .*
 :PT.:PV.*CURLIB:EPV.
 :PD.Die aktuelle Jobbibliothek wird durchsucht. Ist für
@@ -6874,7 +6876,7 @@ Journaleinträge umgesetzt.
 :PARML.
 :PT.:PK DEF.*CURCHAIN:EPK.
 :PD.Die Journalempfängerkette, zu der der Journalempfänger gehört, der
-beim Beginn des Umsetzens der Journaleintrï¿½ge angehängt ist, wird
+beim Beginn des Umsetzens der Journaleinträge angehängt ist, wird
 verwendet. Diese Empfängerkette überbrückt keine Unterbrechung der
 Kette. Kommt es zu einer Unterbrechung der Kette, so reicht der
 Empfängerbereich von der letzten Unterbrechung der Kette bis zum dem
@@ -6904,7 +6906,7 @@ für die Ausgabe umgesetzt werden sollen.
 :PARML.
 :PT.:PK DEF.*LIBL:EPK.
 :PD.Alle Bibliotheken in der Bibliotheksliste des Jobs werden
-durchsucht, bis die erste Ã bereinstimmung gefunden wird.
+durchsucht, bis die erste Übereinstimmung gefunden wird.
 .*
 :PT.:PV.*CURLIB:EPV.
 :PD.Der Journalempfänger wird in der aktuellen Jobbibliothek
@@ -6944,7 +6946,7 @@ Fehlernachricht gesendet und Journaleinträge werden nicht abgerufen.
 :PARML.
 :PT.:PK DEF.*LIBL:EPK.
 :PD.Alle Bibliotheken in der Bibliotheksliste des Jobs werden
-durchsucht, bis die erste Ã bereinstimmung gefunden wird.
+durchsucht, bis die erste Übereinstimmung gefunden wird.
 .*
 :PT.:PV.*CURLIB:EPV.
 :PD.Der Journalempfänger wird in der aktuellen Jobbibliothek
@@ -7306,6 +7308,9 @@ srccssid=  "01141">
       *                            flag in order to export BLOB/CLOB data.  *
       *                                                                     *
       *  04.10.2018  Th.Raddatz    Added outfile types *TYPE4 and *TYPE5.   *
+      *                                                                     *
+      *  06.02.2022  Th.Raddatz    Prepared EXPJRNE for being converted to  *
+      *                            **free format.                           *
       *                                                                     *
       *=====================================================================*
       * >>PRE-COMPILER<<                                                    *
