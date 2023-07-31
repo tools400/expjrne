@@ -51,7 +51,7 @@
       appblddate CDATA #REQUIRED
      >
      ]>
-<upload  appname="EXPJRNE"  appauthor="Thomas Raddatz"  appblddate=" 7/25/2023">
+<upload  appname="EXPJRNE"  appauthor="Thomas Raddatz"  appblddate=" 7/31/2023">
 <install_instructions><![CDATA[
      *----------------------------------------------------------------      ------
      *  1. Upload entire XML to your AS/400 to a source file 112 long, into any mbr
@@ -2211,6 +2211,30 @@ for the output file and try your request again.'                      +
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
+     /*   Cmd-ADDMSGD für Message-ID :   USR0030                    */
+     /* Field overflow occurred in field: &1                        */
+     /*-------------------------------------------------------------*/
+
+             ADDMSGD +
+                MSGID(USR0030) +
+                MSGF(&LI/EXPJRNE) +
+                MSG(+
+'Field overflow occurred in field: &1'                                +
+                ) +
+                SECLVL(+
+'&N &N Cause . . . . . :   A value for field &1 has exceeded the maxim-
+um possible value. The error has been caught and the field value was s-
+et to: value - maxValue - 1.                                          +
+                ) +
+                SEV(00) +
+                FMT( +
+                    (*CHAR 0010) +
+                ) +
+                ALROPT(*NO) +
+                CCSID( 65535) +
+                /*  -EOF-  */
+
+     /*-------------------------------------------------------------*/
      /*   Cmd-ADDMSGD für Message-ID :   USR0101                    */
      /* Create temporary source file ...                            */
      /*-------------------------------------------------------------*/
@@ -2928,6 +2952,30 @@ nforderung erneut aus.'                                               +
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
+     /*   Cmd-ADDMSGD für Message-ID :   USR0030                    */
+     /* Field overflow occurred in field: &1                        */
+     /*-------------------------------------------------------------*/
+
+             ADDMSGD +
+                MSGID(USR0030) +
+                MSGF(&LI/EXPJRNE) +
+                MSG(+
+'Feldüberlauf aufgetreten in Feld: &1'                                +
+                ) +
+                SECLVL(+
+'&N &N Ursache . . . . :   Ein Wert für Feld &1 hat den maximal möglic-
+hen Wert überschritten. Der Fehler ist abgefangen worden und der Wert -
+wurde gesetzt auf: wert - maxWert - 1'                                +
+                ) +
+                SEV(00) +
+                FMT( +
+                    (*CHAR 0010) +
+                ) +
+                ALROPT(*NO) +
+                CCSID( 65535) +
+                /*  -EOF-  */
+
+     /*-------------------------------------------------------------*/
      /*   Cmd-ADDMSGD für Message-ID :   USR0101                    */
      /* Erzeugen temporäre Quellendatei ...                         */
      /*-------------------------------------------------------------*/
@@ -3429,13 +3477,13 @@ srclen  =  "00112"
 srccssid=  "01141">
 <copysrc><![CDATA[
       /if not defined(COPYRIGHT_DSPEC)
-     h copyright('V5.4 - 27.07.2023 - mailto: thomas.raddatz@tools400.de')
+     h copyright('V5.4 - 31.07.2023 - mailto: thomas.raddatz@tools400.de')
       /eof
       /endif
      D EXPJRNE_VERSION...
      D                 C                   '5.4'
      D EXPJRNE_DATE...
-     D                 C                   '27.07.2023'
+     D                 C                   '31.07.2023'
 ]]>  </copysrc>
 </mbr>
 <sendmsg  sendmsgid="CPF9897" sendmsgtype = "*STATUS   "><![CDATA[
@@ -5406,6 +5454,9 @@ srccssid=  "01141">
 .*                                                                     *
 .*  30.01.2022  Th.Raddatz    Added parameter OBJJID.                  *
 .*                                                                     *
+.*  31.07.2023  Th.Raddatz    Feldüberlauf für Feld JOSEQN abgefangen. *
+.*                            Nachricht USR0030 eingebaut.             *
+.*                                                                     *
 .*=====================================================================*
 .* >>PRE-COMPILER<<                                                    *
 .*   >>CRTCMD<< CRTPNLGRP    PNLGRP(&LI/EXPJRNEP) +                    *
@@ -5448,6 +5499,13 @@ an outfile. In case of a *FILE object the outfile has the
 original fields of the file plus the journal information. That
 makes it easy to analyse the journal entries with SQL. The name of
 the associated journal is retrieved from the object.
+.*
+The output field JOSEQN is defined by IBM for the formats *TYPE1 to *TYPE4
+as Zoned(10,0). EXPJRNE catches possible field overflow errors, sets the
+field to value :HP2.Value = Value - MaxValue - 1:EHP2. and writes the
+following message to the job log:
+:P.
+Field overflow occurred in field: JOSEQN
 .*
 :EHELP.
 .*
@@ -6227,6 +6285,9 @@ srccssid=  "01141">
 .*                                                                     *
 .*  25.07.2023  Th.Raddatz    Fixed German umlauts.                    *
 .*                                                                     *
+.*  31.07.2023  Th.Raddatz    Feldüberlauf für Feld JOSEQN abgefangen. *
+.*                            Nachricht USR0030 eingebaut.             *
+.*                                                                     *
 .*=====================================================================*
 .* >>PRE-COMPILER<<                                                    *
 .*   >>CRTCMD<< CRTPNLGRP    PNLGRP(&LI/EXPJRNEP) +                    *
@@ -6266,6 +6327,13 @@ Journaleinträge exportieren (EXPJRNE) - Hilfe
 :P.
 Mit dem Befehl EXPJRNE können Journaleinträge aus einem Journal abgerufen
 und in eine durch QUERY oder SQL auswertbare Ausgabedatei gestellt werden.
+.*
+Das Ausgabefeld JOSEQN ist seitens der IBM für die Formate *TYPE1 bis *TYPE4
+als Zoned(10,0) definiert. EXPJRNE fängt mögliche Feldüberlauffehler ab,
+setzt das Feld auf den Wert auf :HP2.Wert = Wert - MaxWert - 1:EHP2. und
+schreibt folgende Nachricht ins Jobprotokoll:
+:P.
+Feldüberlauf aufgetreten in Feld: JOSEQN
 .*
 :EHELP.
 .*
@@ -7312,6 +7380,9 @@ srccssid=  "01141">
       *  06.02.2022  Th.Raddatz    Prepared EXPJRNE for being converted to  *
       *                            **free format.                           *
       *                                                                     *
+      *  31.07.2023  Th.Raddatz    Caught field overflow error for field    *
+      *                            JOSEQN and added message USR0030.        *
+      *                                                                     *
       *=====================================================================*
       * >>PRE-COMPILER<<                                                    *
       *   >>CRTCMD<< CRTRPGMOD    MODULE(&LI/&OB) +                         *
@@ -7445,6 +7516,12 @@ srccssid=  "01141">
      D                 PR                         extproc('p_main')
      D  i_buffer                  65535A          options(*varsize)
      D  io_control                                likeds(control_t)
+      *
+      *  Shrink sequence number to 4-byte Integer.
+     D shrinkSeqNbr...
+     D                 PR            10S 0        extproc('shrinkSeqNbr')
+     D  i_seqNbr                     20u 0 value
+     D  i_fieldName                  10a   value
       *
       *  Converts a 4-byte hex value to an IPv4 address.
      D cvtToIPv4...
@@ -7670,6 +7747,14 @@ srccssid=  "01141">
      D cINFO_MSG_INTERVAL...
      D                 C                   15
       *
+     D g_overflow      DS                  qualified
+     D  status                        5i 0 inz(OVF_INIT)
+     D  fieldName                    10A
+      *
+     D OVF_INIT        C                   0
+     D OVF_NOT_SET     C                   1
+     D OVF_SET         C                   2
+      *
       *=====================================================================*
       *  Program entry point
       *  gio_control:
@@ -7880,6 +7965,7 @@ srccssid=  "01141">
       *
       *  Messages
       /COPY QEXPJRNE,USR0012
+      /COPY QEXPJRNE,USR0030
       * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       /FREE
 
@@ -7890,6 +7976,12 @@ srccssid=  "01141">
             else;
                g_nextInfoMsg = %timestamp() + %seconds(cINFO_MSG_INTERVAL);
             endif;
+         endif;
+
+         // Reset field overflow data structure
+         if (g_overflow.status = OVF_INIT);
+           clear g_overflow;
+           g_overflow.status = OVF_NOT_SET;
          endif;
 
          // Let's look at the buffer
@@ -8014,7 +8106,7 @@ srccssid=  "01141">
                dsQADSPJR3_O.JOENTL   = entryData.length +
                                        (%addr(dsQADSPJR3_O.JOESD) -
                                         %addr(dsQADSPJR3_O));
-               dsQADSPJR3_O.JOSEQN   = RJNE0200.seqNbr;
+               dsQADSPJR3_O.JOSEQN   = shrinkSeqNbr(RJNE0200.seqNbr: 'JOSEQN');
                dsQADSPJR3_O.JOCODE   = RJNE0200.jrnCode;
                dsQADSPJR3_O.JOENTT   = RJNE0200.entryType;
                dsQADSPJR3_O.JOTSTP   = cvtDtsToIso(RJNE0200.timestamp);
@@ -8087,7 +8179,7 @@ srccssid=  "01141">
                dsQADSPJR4_O.JOENTL   = entryData.length +
                                        (%addr(dsQADSPJR4_O.JOESD) -
                                         %addr(dsQADSPJR4_O));
-               dsQADSPJR4_O.JOSEQN   = RJNE0200.seqNbr;
+               dsQADSPJR4_O.JOSEQN   = shrinkSeqNbr(RJNE0200.seqNbr: 'JOSEQN');
                dsQADSPJR4_O.JOCODE   = RJNE0200.jrnCode;
                dsQADSPJR4_O.JOENTT   = RJNE0200.entryType;
                dsQADSPJR4_O.JOTSTP   = cvtDtsToIso(RJNE0200.timestamp);
@@ -8324,8 +8416,48 @@ srccssid=  "01141">
                f_setEnvVar('EXPJRNE_NUM_ERRORS': %char(numErrors));
             endif;
 
+            // Send field overflow warning message
+            if (g_overflow.status = OVF_SET);
+              clear USR0030;
+              USR00301 = g_overflow.fieldName;
+              msg = f_newMsg('USR0030': USR0030: cMsg_Info);
+              f_sndPgmMsg(msg: cMsg_Prv: cMsg_ToPgmBdy);
+            endif;
+
             // Unload program
             *inlr = *on;
+         endif;
+
+      /END-FREE
+     P                 E
+      *
+      *====================================================================
+      *  *** private ***
+      *  Shrink sequence number to 4-byte Integer.
+      *  Useed for avoiding a value overflow error when assigning a
+      *  8-byte unsigned integer value to a zoned(10,0) field.
+      *====================================================================
+     P shrinkSeqNbr...
+     P                 B
+     D                 PI            10S 0
+     D  i_seqNbr                     20u 0 value
+     D  i_fieldName                  10a   value
+      *
+     D MAX_VALUE       C                   9999999999
+      *
+     D newValue        S             10s 0
+      * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+      /FREE
+
+         if (i_seqNbr <= MAX_VALUE);
+           return i_seqNbr;
+         else;
+           if (g_overflow.status = OVF_NOT_SET);
+             g_overflow.status = OVF_SET;
+             g_overflow.fieldName = i_fieldName;
+           endif;
+           newValue = i_seqNbr - MAX_VALUE - 1;
+           return newValue;
          endif;
 
       /END-FREE
@@ -17172,6 +17304,29 @@ srccssid=  "01141">
      d USR0027         ds
      d  USR00271                   0512A   inz(*BLANKS)
      d USR0027_SIZE    s             10I 0 inz(0512)
+]]>  </copysrc>
+</mbr>
+<sendmsg  sendmsgid="CPF9897" sendmsgtype = "*STATUS   "><![CDATA[
+Installing USR0030  type RPGLE - in progress.
+]]>  </sendmsg>
+<!-- START OF MEMBER  -->
+<mbr
+mbrname =  "USR0030   "
+mbrtype =  "RPGLE     "
+mbrtext =  "MSG: Feldüberlauf aufgetreten in Feld:  1         "
+srcfile =  "QEXPJRNE  "
+srclib  =  "selected  "
+srclen  =  "00112"
+srccssid=  "01141">
+<copysrc><![CDATA[
+      // ---------------------------------------------------------------
+      //  Data structure for message ID: USR0030
+
+      //  Feldüberlauf aufgetreten in Feld: &1
+
+     d USR0030         ds
+     d  USR00301                   0010A   inz(*BLANKS)
+     d USR0030_SIZE    s             10I 0 inz(0010)
 ]]>  </copysrc>
 </mbr>
 <qcmdexc condition="*NONE" release="*CURRENT" dltsplf="A_INSTALL"><![CDATA[
