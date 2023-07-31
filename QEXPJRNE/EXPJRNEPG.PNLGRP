@@ -49,6 +49,9 @@
 .*                                                                     *
 .*  25.07.2023  Th.Raddatz    Fixed German umlauts.                    *
 .*                                                                     *
+.*  31.07.2023  Th.Raddatz    Feldüberlauf für Feld JOSEQN abgefangen. *
+.*                            Nachricht USR0030 eingebaut.             *
+.*                                                                     *
 .*=====================================================================*
 .* >>PRE-COMPILER<<                                                    *
 .*   >>CRTCMD<< CRTPNLGRP    PNLGRP(&LI/EXPJRNEP) +                    *
@@ -88,6 +91,13 @@ Journaleinträge exportieren (EXPJRNE) - Hilfe
 :P.
 Mit dem Befehl EXPJRNE können Journaleinträge aus einem Journal abgerufen
 und in eine durch QUERY oder SQL auswertbare Ausgabedatei gestellt werden.
+.*
+Das Ausgabefeld JOSEQN ist seitens der IBM für die Formate *TYPE1 bis *TYPE4
+als Zoned(10,0) definiert. EXPJRNE fängt mögliche Feldüberlauffehler ab,
+setzt das Feld auf den Wert auf :HP2.Wert = Wert - MaxWert - 1:EHP2. und
+schreibt folgende Nachricht ins Jobprotokoll:
+:P.
+Feldüberlauf aufgetreten in Feld: JOSEQN
 .*
 :EHELP.
 .*

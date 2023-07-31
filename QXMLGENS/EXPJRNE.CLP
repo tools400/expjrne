@@ -284,6 +284,11 @@
                           XTOSRCF(QEXPJRNE  ) XOBJTYPE(*FILE  ) +
                           XGENCRT(*NO ) XPARAM(*BLANK)
 
+             XMLGENMBR  XMBR(USR0030   ) XMBRATR(RPGLE ) +
+                          XFROMSRCF(QEXPJRNE  ) XFROMSRCL(TOOLS400) +
+                          XTOSRCF(QEXPJRNE  ) XOBJTYPE(*FILE  ) +
+                          XGENCRT(*NO ) XPARAM(*BLANK)
+
 /* ---------------------------------- */
 /*  Create objects                    */
 /* ---------------------------------- */

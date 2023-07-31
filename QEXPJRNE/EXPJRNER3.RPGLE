@@ -49,6 +49,9 @@
       *  06.02.2022  Th.Raddatz    Prepared EXPJRNE for being converted to  *
       *                            **free format.                           *
       *                                                                     *
+      *  31.07.2023  Th.Raddatz    Caught field overflow error for field    *
+      *                            JOSEQN and added message USR0030.        *
+      *                                                                     *
       *=====================================================================*
       * >>PRE-COMPILER<<                                                    *
       *   >>CRTCMD<< CRTRPGMOD    MODULE(&LI/&OB) +                         *
@@ -182,6 +185,12 @@
      D                 PR                         extproc('p_main')
      D  i_buffer                  65535A          options(*varsize)
      D  io_control                                likeds(control_t)
+      *
+      *  Shrink sequence number to 4-byte Integer.
+     D shrinkSeqNbr...
+     D                 PR            10S 0        extproc('shrinkSeqNbr')
+     D  i_seqNbr                     20u 0 value
+     D  i_fieldName                  10a   value
       *
       *  Converts a 4-byte hex value to an IPv4 address.
      D cvtToIPv4...
@@ -407,6 +416,14 @@
      D cINFO_MSG_INTERVAL...
      D                 C                   15
       *
+     D g_overflow      DS                  qualified
+     D  status                        5i 0 inz(OVF_INIT)
+     D  fieldName                    10A
+      *
+     D OVF_INIT        C                   0
+     D OVF_NOT_SET     C                   1
+     D OVF_SET         C                   2
+      *
       *=====================================================================*
       *  Program entry point
       *  gio_control:
@@ -617,6 +634,7 @@
       *
       *  Messages
       /COPY QEXPJRNE,USR0012
+      /COPY QEXPJRNE,USR0030
       * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       /FREE
 
@@ -627,6 +645,12 @@
             else;
                g_nextInfoMsg = %timestamp() + %seconds(cINFO_MSG_INTERVAL);
             endif;
+         endif;
+
+         // Reset field overflow data structure
+         if (g_overflow.status = OVF_INIT);
+           clear g_overflow;
+           g_overflow.status = OVF_NOT_SET;
          endif;
 
          // Let's look at the buffer
@@ -751,7 +775,7 @@
                dsQADSPJR3_O.JOENTL   = entryData.length +
                                        (%addr(dsQADSPJR3_O.JOESD) -
                                         %addr(dsQADSPJR3_O));
-               dsQADSPJR3_O.JOSEQN   = RJNE0200.seqNbr;
+               dsQADSPJR3_O.JOSEQN   = shrinkSeqNbr(RJNE0200.seqNbr: 'JOSEQN');
                dsQADSPJR3_O.JOCODE   = RJNE0200.jrnCode;
                dsQADSPJR3_O.JOENTT   = RJNE0200.entryType;
                dsQADSPJR3_O.JOTSTP   = cvtDtsToIso(RJNE0200.timestamp);
@@ -824,7 +848,7 @@
                dsQADSPJR4_O.JOENTL   = entryData.length +
                                        (%addr(dsQADSPJR4_O.JOESD) -
                                         %addr(dsQADSPJR4_O));
-               dsQADSPJR4_O.JOSEQN   = RJNE0200.seqNbr;
+               dsQADSPJR4_O.JOSEQN   = shrinkSeqNbr(RJNE0200.seqNbr: 'JOSEQN');
                dsQADSPJR4_O.JOCODE   = RJNE0200.jrnCode;
                dsQADSPJR4_O.JOENTT   = RJNE0200.entryType;
                dsQADSPJR4_O.JOTSTP   = cvtDtsToIso(RJNE0200.timestamp);
@@ -1061,8 +1085,48 @@
                f_setEnvVar('EXPJRNE_NUM_ERRORS': %char(numErrors));
             endif;
 
+            // Send field overflow warning message
+            if (g_overflow.status = OVF_SET);
+              clear USR0030;
+              USR00301 = g_overflow.fieldName;
+              msg = f_newMsg('USR0030': USR0030: cMsg_Info);
+              f_sndPgmMsg(msg: cMsg_Prv: cMsg_ToPgmBdy);
+            endif;
+
             // Unload program
             *inlr = *on;
+         endif;
+
+      /END-FREE
+     P                 E
+      *
+      *====================================================================
+      *  *** private ***
+      *  Shrink sequence number to 4-byte Integer.
+      *  Useed for avoiding a value overflow error when assigning a
+      *  8-byte unsigned integer value to a zoned(10,0) field.
+      *====================================================================
+     P shrinkSeqNbr...
+     P                 B
+     D                 PI            10S 0
+     D  i_seqNbr                     20u 0 value
+     D  i_fieldName                  10a   value
+      *
+     D MAX_VALUE       C                   9999999999
+      *
+     D newValue        S             10s 0
+      * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+      /FREE
+
+         if (i_seqNbr <= MAX_VALUE);
+           return i_seqNbr;
+         else;
+           if (g_overflow.status = OVF_NOT_SET);
+             g_overflow.status = OVF_SET;
+             g_overflow.fieldName = i_fieldName;
+           endif;
+           newValue = i_seqNbr - MAX_VALUE - 1;
+           return newValue;
          endif;
 
       /END-FREE

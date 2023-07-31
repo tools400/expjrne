@@ -47,6 +47,9 @@
 .*                                                                     *
 .*  30.01.2022  Th.Raddatz    Added parameter OBJJID.                  *
 .*                                                                     *
+.*  31.07.2023  Th.Raddatz    Feldüberlauf für Feld JOSEQN abgefangen. *
+.*                            Nachricht USR0030 eingebaut.             *
+.*                                                                     *
 .*=====================================================================*
 .* >>PRE-COMPILER<<                                                    *
 .*   >>CRTCMD<< CRTPNLGRP    PNLGRP(&LI/EXPJRNEP) +                    *
@@ -89,6 +92,13 @@ an outfile. In case of a *FILE object the outfile has the
 original fields of the file plus the journal information. That
 makes it easy to analyse the journal entries with SQL. The name of
 the associated journal is retrieved from the object.
+.*
+The output field JOSEQN is defined by IBM for the formats *TYPE1 to *TYPE4
+as Zoned(10,0). EXPJRNE catches possible field overflow errors, sets the
+field to value :HP2.Value = Value - MaxValue - 1:EHP2. and writes the
+following message to the job log:
+:P.
+Field overflow occurred in field: JOSEQN
 .*
 :EHELP.
 .*

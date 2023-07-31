@@ -592,6 +592,30 @@ for the output file and try your request again.'                      +
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
+     /*   Cmd-ADDMSGD für Message-ID :   USR0030                    */
+     /* Field overflow occurred in field: &1                        */
+     /*-------------------------------------------------------------*/
+
+             ADDMSGD +
+                MSGID(USR0030) +
+                MSGF(&LI/EXPJRNE) +
+                MSG(+
+'Field overflow occurred in field: &1'                                +
+                ) +
+                SECLVL(+
+'&N &N Cause . . . . . :   A value for field &1 has exceeded the maxim-
+um possible value. The error has been caught and the field value was s-
+et to: value - maxValue - 1.                                          +
+                ) +
+                SEV(00) +
+                FMT( +
+                    (*CHAR 0010) +
+                ) +
+                ALROPT(*NO) +
+                CCSID( 65535) +
+                /*  -EOF-  */
+
+     /*-------------------------------------------------------------*/
      /*   Cmd-ADDMSGD für Message-ID :   USR0101                    */
      /* Create temporary source file ...                            */
      /*-------------------------------------------------------------*/
