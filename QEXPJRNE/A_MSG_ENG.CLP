@@ -2,7 +2,8 @@
      /* STRPREPRC Compile Options:                                            */
      /* >>PRE-COMPILER<<                                                      */
      /*  >>CRTCMD<<   CRTBNDCL   PGM(QTEMP/&OB) +                             */
-     /*                          SRCFILE(&SL/&SF) SRCMBR(&SM);                */
+     /*                          SRCFILE(&SL/&SF) SRCMBR(&SM) +               */
+     /*                          OPTION(*EVENTF);                             */
      /*   >>COMPILE<<                                                         */
      /*    >>PARM<<  TEXT('Tool: EXPJRNE    (Export Journal Entries  ) Eng'); */
      /*   >>END-COMPILE<<                                                     */
@@ -605,11 +606,37 @@ for the output file and try your request again.'                      +
                 SECLVL(+
 '&N &N Cause . . . . . :   A value for field &1 has exceeded the maxim-
 um possible value. The error has been caught and the field value was s-
-et to: value - maxValue - 1.                                          +
+et to: value - maxValue - 1'                                          +
                 ) +
                 SEV(00) +
                 FMT( +
                     (*CHAR 0010) +
+                ) +
+                ALROPT(*NO) +
+                CCSID( 65535) +
+                /*  -EOF-  */
+
+     /*-------------------------------------------------------------*/
+     /*   Cmd-ADDMSGD für Message-ID :   USR0031                    */
+     /* Field overflow occurred in field: &1                        */
+     /*-------------------------------------------------------------*/
+
+             ADDMSGD +
+                MSGID(USR0031) +
+                MSGF(&LI/EXPJRNE) +
+                MSG(+
+'Invalid timestamp field: &1.'                                        +
+                ) +
+                SECLVL(+
+'&N &N Cause . . . . . :   The number of fractional-seconds is not sup-
+ported by DDS. Number of fractional-seconds: &2. &N Solution  . . . : -
+  Set parameter CRTFILE to *SQL to use SQL for creating the output fil-
+e.'                                                                   +
+                ) +
+                SEV(00) +
+                FMT( +
+                    (*CHAR 0010) +
+                    (*DEC 2 0) +
                 ) +
                 ALROPT(*NO) +
                 CCSID( 65535) +

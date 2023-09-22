@@ -32,7 +32,7 @@
      /*     >>PARM<< ACTGRP(*CALLER   );                                    */
      /*     >>PARM<< USRPRF(*USER);                                         */
      /*     >>PARM<< DETAIL(*BASIC);                                        */
-     /*     >>PARM<< TGTRLS(V7R1M0);                                        */
+     /*     >>PARM<< TGTRLS(V7R2M0);                                        */
      /*   >>END-IMPORTANT<<                                                 */
      /*   >>EXECUTE<<                                                       */
      /* >>END-PRE-COMPILER<<                                                */

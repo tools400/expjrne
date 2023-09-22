@@ -2,7 +2,8 @@
      /* STRPREPRC Compile Options:                                            */
      /* >>PRE-COMPILER<<                                                      */
      /*  >>CRTCMD<<   CRTBNDCL   PGM(QTEMP/&OB) +                             */
-     /*                          SRCFILE(&SL/&SF) SRCMBR(&SM);                */
+     /*                          SRCFILE(&SL/&SF) SRCMBR(&SM) +               */
+     /*                          OPTION(*EVENTF);                             */
      /*   >>COMPILE<<                                                         */
      /*    >>PARM<<  TEXT('Tool: EXPJRNE    (Export Journal Entries  ) Ger'); */
      /*   >>END-COMPILE<<                                                     */
@@ -614,6 +615,32 @@ wurde gesetzt auf: wert - maxWert - 1'                                +
                 SEV(00) +
                 FMT( +
                     (*CHAR 0010) +
+                ) +
+                ALROPT(*NO) +
+                CCSID( 65535) +
+                /*  -EOF-  */
+
+     /*-------------------------------------------------------------*/
+     /*   Cmd-ADDMSGD für Message-ID :   USR0031                    */
+     /* Field overflow occurred in field: &1                        */
+     /*-------------------------------------------------------------*/
+
+             ADDMSGD +
+                MSGID(USR0031) +
+                MSGF(&LI/EXPJRNE) +
+                MSG(+
+'Ungültiges Zeitstempelfeld: &1.'                                     +
+                ) +
+                SECLVL(+
+'&N &N Ursache . . . . :   Die angegebene Anzahl von Mikrosekunden wir-
+d nicht von DDS unterstützt. Anzahl Mikrosekunden: &2. &N Lösung  . . -
+. . :   Verwenden Sie SQL zur Erzeugung der Ausgabedatei und setzen Si-
+e dafür den Parameter CRTFILE auf *SQL.'                              +
+                ) +
+                SEV(00) +
+                FMT( +
+                    (*CHAR 0010) +
+                    (*DEC 2 0) +
                 ) +
                 ALROPT(*NO) +
                 CCSID( 65535) +

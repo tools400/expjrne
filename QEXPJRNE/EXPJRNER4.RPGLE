@@ -86,6 +86,10 @@
       *  03.02.2015  Th.Raddatz    Changed to generate a pseudo field       *
       *                            for CLOB/BLOB fields.                    *
       *                                                                     *
+      *  22.09.2023  Th.Raddatz    Changed generator to support TIMESTAMP   *
+      *                            fields with any number of fractional     *
+      *                            seconds.                                 *
+      *                                                                     *
       *=====================================================================*
       * >>PRE-COMPILER<<                                                    *
       *   >>CRTCMD<< CRTRPGMOD    MODULE(&LI/&OB) +                         *
@@ -95,7 +99,7 @@
       *     >>PARM<< TRUNCNBR(*NO);                                         *
       *     >>PARM<< DBGVIEW(*LIST);                                        *
       *     >>PARM<< OPTION(*EVENTF);                                       *
-      *     >>PARM<< TGTRLS(V7R1M0);                                        *
+      *     >>PARM<< TGTRLS(V7R2M0);                                        *
       *   >>END-IMPORTANT<<                                                 *
       *   >>EXECUTE<<                                                       *
       * >>END-PRE-COMPILER<<                                                *
@@ -170,6 +174,7 @@
      D tplFile         DS                  likeds(qObj_t    ) inz
      D fldAttr         DS                  likeds(fldAttr_t ) based(pFldAttr)
      D rc              S                   like(SQLRETCODE_t) inz
+     D ts_fraction     S             10I 0 inz
       *
      D sqlStrFld       S                   like(sqlStrV_t   ) inz
      D sqlStrText      S                   like(sqlStrV_t   ) inz
@@ -253,10 +258,20 @@
                     (fldAttr.sqlType = cSQL_TYPE_FLOAT     ) or
                     (fldAttr.sqlType = cSQL_TYPE_REAL      ) or
                     (fldAttr.sqlType = cSQL_TYPE_DATE      ) or
-                    (fldAttr.sqlType = cSQL_TYPE_TIME      ) or
-                    (fldAttr.sqlType = cSQL_TYPE_TIMESTAMP );
+                    (fldAttr.sqlType = cSQL_TYPE_TIME      );
 
                   sqlStrFld = sqlStrFld + '  ' + fldAttr.sqlType;
+
+               when (fldAttr.sqlType = cSQL_TYPE_TIMESTAMP );
+
+                  if (fldAttr.flda0320.length = 19);
+                     ts_fraction = 0;
+                  else;
+                     ts_fraction = fldAttr.flda0320.length - 20;
+                  endif;
+
+                  sqlStrFld = sqlStrFld + '  ' + fldAttr.sqlType + ' (' +
+                              %char(ts_fraction) + ')';
 
                when (fldAttr.sqlType = cSQL_TYPE_GRAPHIC   ) or
                     (fldAttr.sqlType = cSQL_TYPE_VARGRAPHIC);

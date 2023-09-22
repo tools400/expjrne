@@ -51,7 +51,7 @@
       appblddate CDATA #REQUIRED
      >
      ]>
-<upload  appname="EXPJRNE"  appauthor="Thomas Raddatz"  appblddate=" 7/31/2023">
+<upload  appname="EXPJRNE"  appauthor="Thomas Raddatz"  appblddate=" 9/22/2023">
 <install_instructions><![CDATA[
      *----------------------------------------------------------------      ------
      *  1. Upload entire XML to your AS/400 to a source file 112 long, into any mbr
@@ -1621,7 +1621,8 @@ srccssid=  "01141">
      /* STRPREPRC Compile Options:                                            */
      /* >>PRE-COMPILER<<                                                      */
      /*  >>CRTCMD<<   CRTBNDCL   PGM(QTEMP/&OB) +                             */
-     /*                          SRCFILE(&SL/&SF) SRCMBR(&SM);                */
+     /*                          SRCFILE(&SL/&SF) SRCMBR(&SM) +               */
+     /*                          OPTION(*EVENTF);                             */
      /*   >>COMPILE<<                                                         */
      /*    >>PARM<<  TEXT('Tool: EXPJRNE    (Export Journal Entries  ) Eng'); */
      /*   >>END-COMPILE<<                                                     */
@@ -2224,11 +2225,37 @@ for the output file and try your request again.'                      +
                 SECLVL(+
 '&N &N Cause . . . . . :   A value for field &1 has exceeded the maxim-
 um possible value. The error has been caught and the field value was s-
-et to: value - maxValue - 1.                                          +
+et to: value - maxValue - 1'                                          +
                 ) +
                 SEV(00) +
                 FMT( +
                     (*CHAR 0010) +
+                ) +
+                ALROPT(*NO) +
+                CCSID( 65535) +
+                /*  -EOF-  */
+
+     /*-------------------------------------------------------------*/
+     /*   Cmd-ADDMSGD für Message-ID :   USR0031                    */
+     /* Field overflow occurred in field: &1                        */
+     /*-------------------------------------------------------------*/
+
+             ADDMSGD +
+                MSGID(USR0031) +
+                MSGF(&LI/EXPJRNE) +
+                MSG(+
+'Invalid timestamp field: &1.'                                        +
+                ) +
+                SECLVL(+
+'&N &N Cause . . . . . :   The number of fractional-seconds is not sup-
+ported by DDS. Number of fractional-seconds: &2. &N Solution  . . . : -
+  Set parameter CRTFILE to *SQL to use SQL for creating the output fil-
+e.'                                                                   +
+                ) +
+                SEV(00) +
+                FMT( +
+                    (*CHAR 0010) +
+                    (*DEC 2 0) +
                 ) +
                 ALROPT(*NO) +
                 CCSID( 65535) +
@@ -2358,7 +2385,8 @@ srccssid=  "01141">
      /* STRPREPRC Compile Options:                                            */
      /* >>PRE-COMPILER<<                                                      */
      /*  >>CRTCMD<<   CRTBNDCL   PGM(QTEMP/&OB) +                             */
-     /*                          SRCFILE(&SL/&SF) SRCMBR(&SM);                */
+     /*                          SRCFILE(&SL/&SF) SRCMBR(&SM) +               */
+     /*                          OPTION(*EVENTF);                             */
      /*   >>COMPILE<<                                                         */
      /*    >>PARM<<  TEXT('Tool: EXPJRNE    (Export Journal Entries  ) Ger'); */
      /*   >>END-COMPILE<<                                                     */
@@ -2976,6 +3004,32 @@ wurde gesetzt auf: wert - maxWert - 1'                                +
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
+     /*   Cmd-ADDMSGD für Message-ID :   USR0031                    */
+     /* Field overflow occurred in field: &1                        */
+     /*-------------------------------------------------------------*/
+
+             ADDMSGD +
+                MSGID(USR0031) +
+                MSGF(&LI/EXPJRNE) +
+                MSG(+
+'Ungültiges Zeitstempelfeld: &1.'                                     +
+                ) +
+                SECLVL(+
+'&N &N Ursache . . . . :   Die angegebene Anzahl von Mikrosekunden wir-
+d nicht von DDS unterstützt. Anzahl Mikrosekunden: &2. &N Lösung  . . -
+. . :   Verwenden Sie SQL zur Erzeugung der Ausgabedatei und setzen Si-
+e dafür den Parameter CRTFILE auf *SQL.'                              +
+                ) +
+                SEV(00) +
+                FMT( +
+                    (*CHAR 0010) +
+                    (*DEC 2 0) +
+                ) +
+                ALROPT(*NO) +
+                CCSID( 65535) +
+                /*  -EOF-  */
+
+     /*-------------------------------------------------------------*/
      /*   Cmd-ADDMSGD für Message-ID :   USR0101                    */
      /* Erzeugen temporäre Quellendatei ...                         */
      /*-------------------------------------------------------------*/
@@ -3477,11 +3531,11 @@ srclen  =  "00112"
 srccssid=  "01141">
 <copysrc><![CDATA[
       /if not defined(COPYRIGHT_DSPEC)
-     h copyright('V5.4 - 31.07.2023 - mailto: thomas.raddatz@tools400.de')
+     h copyright('V5.5 - 22.09.2023 - mailto: thomas.raddatz@tools400.de')
       /eof
       /endif
      D EXPJRNE_VERSION...
-     D                 C                   '5.4'
+     D                 C                   '5.5'
      D EXPJRNE_DATE...
      D                 C                   '31.07.2023'
 ]]>  </copysrc>
@@ -3637,7 +3691,7 @@ srccssid=  "01141">
      /*     >>PARM<< DETAIL(*BASIC);                                        */
      /*     >>PARM<< ALWUPD(*YES);                                          */
      /*     >>PARM<< ALWLIBUPD(*YES);                                       */
-     /*     >>PARM<< TGTRLS(V7R1M0);                                        */
+     /*     >>PARM<< TGTRLS(V7R2M0);                                        */
      /*   >>END-IMPORTANT<<                                                 */
      /*   >>EXECUTE<<                                                       */
      /* >>END-PRE-COMPILER<<                                                */
@@ -3695,7 +3749,7 @@ srccssid=  "01141">
      /*     >>PARM<< DETAIL(*BASIC);                                        */
      /*     >>PARM<< ALWUPD(*YES);                                          */
      /*     >>PARM<< ALWLIBUPD(*YES);                                       */
-     /*     >>PARM<< TGTRLS(V7R1M0);                                        */
+     /*     >>PARM<< TGTRLS(V7R2M0);                                        */
      /*   >>END-IMPORTANT<<                                                 */
      /*   >>EXECUTE<<                                                       */
      /* >>END-PRE-COMPILER<<                                                */
@@ -3749,7 +3803,7 @@ srccssid=  "01141">
      /*     >>PARM<< ACTGRP(*CALLER   );                                    */
      /*     >>PARM<< USRPRF(*USER);                                         */
      /*     >>PARM<< DETAIL(*BASIC);                                        */
-     /*     >>PARM<< TGTRLS(V7R1M0);                                        */
+     /*     >>PARM<< TGTRLS(V7R2M0);                                        */
      /*   >>END-IMPORTANT<<                                                 */
      /*   >>EXECUTE<<                                                       */
      /* >>END-PRE-COMPILER<<                                                */
@@ -3809,7 +3863,7 @@ srccssid=  "01141">
      /*     >>PARM<< DETAIL(*BASIC);                                        */
      /*     >>PARM<< ALWUPD(*YES);                                          */
      /*     >>PARM<< ALWLIBUPD(*YES);                                       */
-     /*     >>PARM<< TGTRLS(V7R1M0);                                        */
+     /*     >>PARM<< TGTRLS(V7R2M0);                                        */
      /*   >>END-IMPORTANT<<                                                 */
      /*   >>EXECUTE<<                                                       */
      /* >>END-PRE-COMPILER<<                                                */
@@ -3871,7 +3925,7 @@ srccssid=  "01141">
      /*     >>PARM<< DETAIL(*BASIC);                                        */
      /*     >>PARM<< ALWUPD(*YES);                                          */
      /*     >>PARM<< ALWLIBUPD(*YES);                                       */
-     /*     >>PARM<< TGTRLS(V7R1M0);                                        */
+     /*     >>PARM<< TGTRLS(V7R2M0);                                        */
      /*     >>PARM<< TEXT(+                                                 */
      /*              'Tool: EXPJRNE    (Export Journal Entries  ) UTIL');   */
      /*   >>END-IMPORTANT<<                                                 */
@@ -4052,7 +4106,7 @@ srccssid=  "01141">
      /*                                                                     */
      /*   >>IMPORTANT<<                                                     */
      /*     >>PARM<< DBGVIEW(*LIST);                                        */
-     /*     >>PARM<< TGTRLS(V7R1M0);                                        */
+     /*     >>PARM<< TGTRLS(V7R2M0);                                        */
      /*     >>PARM<< OPTION(*EVENTF);                                       */
      /*   >>END-IMPORTANT<<                                                 */
      /*                                                                     */
@@ -7112,7 +7166,7 @@ srccssid=  "01141">
       *     >>PARM<< TRUNCNBR(*NO);                                         *
       *     >>PARM<< DBGVIEW(*LIST);                                        *
       *     >>PARM<< OPTION(*EVENTF);                                       *
-      *     >>PARM<< TGTRLS(V7R1M0);                                        *
+      *     >>PARM<< TGTRLS(V7R2M0);                                        *
       *   >>END-IMPORTANT<<                                                 *
       *   >>EXECUTE<<                                                       *
       * >>END-PRE-COMPILER<<                                                *
@@ -7225,7 +7279,7 @@ srccssid=  "01141">
       *     >>PARM<< TRUNCNBR(*NO);                                         *
       *     >>PARM<< DBGVIEW(*LIST);                                        *
       *     >>PARM<< OPTION(*EVENTF);                                       *
-      *     >>PARM<< TGTRLS(V7R1M0);                                        *
+      *     >>PARM<< TGTRLS(V7R2M0);                                        *
       *   >>END-IMPORTANT<<                                                 *
       *   >>EXECUTE<<                                                       *
       * >>END-PRE-COMPILER<<                                                *
@@ -7392,7 +7446,7 @@ srccssid=  "01141">
       *     >>PARM<< TRUNCNBR(*NO);                                         *
       *     >>PARM<< DBGVIEW(*LIST);                                        *
       *     >>PARM<< OPTION(*EVENTF);                                       *
-      *     >>PARM<< TGTRLS(V7R1M0);                                        *
+      *     >>PARM<< TGTRLS(V7R2M0);                                        *
       *   >>END-IMPORTANT<<                                                 *
       *   >>EXECUTE<<                                                       *
       * >>END-PRE-COMPILER<<                                                *
@@ -9930,6 +9984,10 @@ srccssid=  "01141">
       *  03.02.2015  Th.Raddatz    Changed to generate a pseudo field       *
       *                            for CLOB/BLOB fields.                    *
       *                                                                     *
+      *  22.09.2023  Th.Raddatz    Changed generator to support TIMESTAMP   *
+      *                            fields with any number of fractional     *
+      *                            seconds.                                 *
+      *                                                                     *
       *=====================================================================*
       * >>PRE-COMPILER<<                                                    *
       *   >>CRTCMD<< CRTRPGMOD    MODULE(&LI/&OB) +                         *
@@ -9939,7 +9997,7 @@ srccssid=  "01141">
       *     >>PARM<< TRUNCNBR(*NO);                                         *
       *     >>PARM<< DBGVIEW(*LIST);                                        *
       *     >>PARM<< OPTION(*EVENTF);                                       *
-      *     >>PARM<< TGTRLS(V7R1M0);                                        *
+      *     >>PARM<< TGTRLS(V7R2M0);                                        *
       *   >>END-IMPORTANT<<                                                 *
       *   >>EXECUTE<<                                                       *
       * >>END-PRE-COMPILER<<                                                *
@@ -10014,6 +10072,7 @@ srccssid=  "01141">
      D tplFile         DS                  likeds(qObj_t    ) inz
      D fldAttr         DS                  likeds(fldAttr_t ) based(pFldAttr)
      D rc              S                   like(SQLRETCODE_t) inz
+     D ts_fraction     S             10I 0 inz
       *
      D sqlStrFld       S                   like(sqlStrV_t   ) inz
      D sqlStrText      S                   like(sqlStrV_t   ) inz
@@ -10097,10 +10156,20 @@ srccssid=  "01141">
                     (fldAttr.sqlType = cSQL_TYPE_FLOAT     ) or
                     (fldAttr.sqlType = cSQL_TYPE_REAL      ) or
                     (fldAttr.sqlType = cSQL_TYPE_DATE      ) or
-                    (fldAttr.sqlType = cSQL_TYPE_TIME      ) or
-                    (fldAttr.sqlType = cSQL_TYPE_TIMESTAMP );
+                    (fldAttr.sqlType = cSQL_TYPE_TIME      );
 
                   sqlStrFld = sqlStrFld + '  ' + fldAttr.sqlType;
+
+               when (fldAttr.sqlType = cSQL_TYPE_TIMESTAMP );
+
+                  if (fldAttr.flda0320.length = 19);
+                     ts_fraction = 0;
+                  else;
+                     ts_fraction = fldAttr.flda0320.length - 20;
+                  endif;
+
+                  sqlStrFld = sqlStrFld + '  ' + fldAttr.sqlType + ' (' +
+                              %char(ts_fraction) + ')';
 
                when (fldAttr.sqlType = cSQL_TYPE_GRAPHIC   ) or
                     (fldAttr.sqlType = cSQL_TYPE_VARGRAPHIC);
@@ -10343,6 +10412,10 @@ srccssid=  "01141">
       *                                                                     *
       *  04.10.2018  Th.Raddatz    Fixed external procedure name (typo).    *
       *                                                                     *
+      *  22.09.2023  Th.Raddatz    Send message USR0031 if a timestamp      *
+      *                            field has an unsupported number of       *
+      *                            fractional-seconds.                      *
+      *                                                                     *
       *=====================================================================*
       * >>PRE-COMPILER<<                                                    *
       *   >>CRTCMD<< CRTRPGMOD    MODULE(&LI/&OB) +                         *
@@ -10352,7 +10425,7 @@ srccssid=  "01141">
       *     >>PARM<< TRUNCNBR(*NO);                                         *
       *     >>PARM<< DBGVIEW(*LIST);                                        *
       *     >>PARM<< OPTION(*EVENTF);                                       *
-      *     >>PARM<< TGTRLS(V7R1M0);                                        *
+      *     >>PARM<< TGTRLS(V7R2M0);                                        *
       *   >>END-IMPORTANT<<                                                 *
       *   >>EXECUTE<<                                                       *
       * >>END-PRE-COMPILER<<                                                *
@@ -10648,10 +10721,13 @@ srccssid=  "01141">
       *
       *  Local fields
      D x               S             10I 0 inz
+     D ts_fraction     S             10I 0 inz
      D fldAttr         DS                  likeds(fldAttr_t ) based(pFldAttr)
      D fldDef          DS                  likeds(fldDef_t   ) inz
      D srcLine         DS                  likeds(srcLine_t  ) inz
      D msg             DS                  likeds(msg_t      ) inz
+
+      /COPY QEXPJRNE,USR0031
       * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       /FREE
 
@@ -10684,11 +10760,28 @@ srccssid=  "01141">
                fldDef.length = fldAttr.flda0320.digits;
                fldDef.decPos = fldAttr.flda0320.decPos;
                fldDef.type   = fldAttr.flda0320.type;
-            // ... DATE / TIME / TIMESTAMP
+            // ... DATE / TIME
             when (fldAttr.flda0320.type = cFLDDCT_TYPE_DATE   ) or
-                 (fldAttr.flda0320.type = cFLDDCT_TYPE_TIME   ) or
-                 (fldAttr.flda0320.type = cFLDDCT_TYPE_TMSTMP );
+                 (fldAttr.flda0320.type = cFLDDCT_TYPE_TIME   );
                fldDef.type   = fldAttr.flda0320.type;
+            // ... TIMESTAMP
+            when (fldAttr.flda0320.type = cFLDDCT_TYPE_TMSTMP );
+               if (fldAttr.flda0320.length = 19);
+                  ts_fraction = 6;
+               else;
+                  ts_fraction = fldAttr.flda0320.length - 20;
+               endif;
+
+               if (ts_fraction = 6);
+                  fldDef.type   = fldAttr.flda0320.type;
+               else;
+                  clear USR0031;
+                  USR00311 = fldAttr.flda0320.name;
+                  USR00312 = ts_fraction;
+                  msg = f_newMsg('USR0031': USR0031: cMsg_Escape);
+                  f_sndPgmMsg(msg: cMsg_Prv: cMsg_ToPgmBdy);
+               endif;
+
             // ... BLOB / CLOB
             when (fldAttr.flda0320.type = cFLDDCT_TYPE_LOB    );
                fldDef.length = fldAttr.flda0320.buffLength;
@@ -10987,7 +11080,7 @@ srccssid=  "01141">
       *     >>PARM<< TRUNCNBR(*NO);                                         *
       *     >>PARM<< DBGVIEW(*LIST);                                        *
       *     >>PARM<< OPTION(*EVENTF);                                       *
-      *     >>PARM<< TGTRLS(V7R1M0);                                        *
+      *     >>PARM<< TGTRLS(V7R2M0);                                        *
       *   >>END-IMPORTANT<<                                                 *
       *   >>EXECUTE<<                                                       *
       * >>END-PRE-COMPILER<<                                                *
@@ -11984,7 +12077,7 @@ srccssid=  "01141">
       *     >>PARM<< TRUNCNBR(*NO);                                         *
       *     >>PARM<< DBGVIEW(*LIST);                                        *
       *     >>PARM<< OPTION(*EVENTF);                                       *
-      *     >>PARM<< TGTRLS(V7R1M0);                                        *
+      *     >>PARM<< TGTRLS(V7R2M0);                                        *
       *   >>END-IMPORTANT<<                                                 *
       *   >>EXECUTE<<                                                       *
       * >>END-PRE-COMPILER<<                                                *
@@ -13984,7 +14077,7 @@ srccssid=  "01141">
      /*   >>IMPORTANT<<                                                     */
      /*     >>PARM<< DBGVIEW(*LIST);                                        */
      /*     >>PARM<< OPTION(*EVENTF);                                       */
-     /*     >>PARM<< TGTRLS(V7R1M0);                                        */
+     /*     >>PARM<< TGTRLS(V7R2M0);                                        */
      /*   >>END-IMPORTANT<<                                                 */
      /*   >>EXECUTE<<                                                       */
      /*   >>CMD<<    CRTPGM       PGM(&LI/&OB) +                            */

@@ -47,6 +47,10 @@
       *                                                                     *
       *  04.10.2018  Th.Raddatz    Fixed external procedure name (typo).    *
       *                                                                     *
+      *  22.09.2023  Th.Raddatz    Send message USR0031 if a timestamp      *
+      *                            field has an unsupported number of       *
+      *                            fractional-seconds.                      *
+      *                                                                     *
       *=====================================================================*
       * >>PRE-COMPILER<<                                                    *
       *   >>CRTCMD<< CRTRPGMOD    MODULE(&LI/&OB) +                         *
@@ -56,7 +60,7 @@
       *     >>PARM<< TRUNCNBR(*NO);                                         *
       *     >>PARM<< DBGVIEW(*LIST);                                        *
       *     >>PARM<< OPTION(*EVENTF);                                       *
-      *     >>PARM<< TGTRLS(V7R1M0);                                        *
+      *     >>PARM<< TGTRLS(V7R2M0);                                        *
       *   >>END-IMPORTANT<<                                                 *
       *   >>EXECUTE<<                                                       *
       * >>END-PRE-COMPILER<<                                                *
@@ -352,10 +356,13 @@
       *
       *  Local fields
      D x               S             10I 0 inz
+     D ts_fraction     S             10I 0 inz
      D fldAttr         DS                  likeds(fldAttr_t ) based(pFldAttr)
      D fldDef          DS                  likeds(fldDef_t   ) inz
      D srcLine         DS                  likeds(srcLine_t  ) inz
      D msg             DS                  likeds(msg_t      ) inz
+
+      /COPY QEXPJRNE,USR0031
       * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       /FREE
 
@@ -388,11 +395,28 @@
                fldDef.length = fldAttr.flda0320.digits;
                fldDef.decPos = fldAttr.flda0320.decPos;
                fldDef.type   = fldAttr.flda0320.type;
-            // ... DATE / TIME / TIMESTAMP
+            // ... DATE / TIME
             when (fldAttr.flda0320.type = cFLDDCT_TYPE_DATE   ) or
-                 (fldAttr.flda0320.type = cFLDDCT_TYPE_TIME   ) or
-                 (fldAttr.flda0320.type = cFLDDCT_TYPE_TMSTMP );
+                 (fldAttr.flda0320.type = cFLDDCT_TYPE_TIME   );
                fldDef.type   = fldAttr.flda0320.type;
+            // ... TIMESTAMP
+            when (fldAttr.flda0320.type = cFLDDCT_TYPE_TMSTMP );
+               if (fldAttr.flda0320.length = 19);
+                  ts_fraction = 6;
+               else;
+                  ts_fraction = fldAttr.flda0320.length - 20;
+               endif;
+
+               if (ts_fraction = 6);
+                  fldDef.type   = fldAttr.flda0320.type;
+               else;
+                  clear USR0031;
+                  USR00311 = fldAttr.flda0320.name;
+                  USR00312 = ts_fraction;
+                  msg = f_newMsg('USR0031': USR0031: cMsg_Escape);
+                  f_sndPgmMsg(msg: cMsg_Prv: cMsg_ToPgmBdy);
+               endif;
+
             // ... BLOB / CLOB
             when (fldAttr.flda0320.type = cFLDDCT_TYPE_LOB    );
                fldDef.length = fldAttr.flda0320.buffLength;
