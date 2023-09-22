@@ -17422,6 +17422,30 @@ srccssid=  "01141">
      d USR0030_SIZE    s             10I 0 inz(0010)
 ]]>  </copysrc>
 </mbr>
+<sendmsg  sendmsgid="CPF9897" sendmsgtype = "*STATUS   "><![CDATA[
+Installing USR0031  type RPGLE - in progress.
+]]>  </sendmsg>
+<!-- START OF MEMBER  -->
+<mbr
+mbrname =  "USR0031   "
+mbrtype =  "RPGLE     "
+mbrtext =  "MSG: Ungültiges Zeitstempelfeld: 1.               "
+srcfile =  "QEXPJRNE  "
+srclib  =  "selected  "
+srclen  =  "00112"
+srccssid=  "01141">
+<copysrc><![CDATA[
+      // ---------------------------------------------------------------
+      //  Data structure for message ID: USR0031
+
+      //  Ungültiges Zeitstempelfeld: &1.
+
+     d USR0031         ds
+     d  USR00311                     10A   inz(*BLANKS)
+     d  USR00312                      2P 0 inz(*ZEROS )
+     d USR0031_SIZE    s             10I 0 inz(12)
+]]>  </copysrc>
+</mbr>
 <qcmdexc condition="*NONE" release="*CURRENT" dltsplf="A_INSTALL"><![CDATA[
 CRTBNDCL PGM(&tolib/A_INSTALL) SRCFILE(&tolib/QEXPJRNE) SRCMBR(*PGM) DFTACTGRP(*NO) ACTGRP(*NEW) DBG
 VIEW(*LIST)
