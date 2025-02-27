@@ -17,4 +17,44 @@ Compile members with the following PDM option:
 Members of type MAKPGM or BND are used for linking programs (MAKPGM)
 and service programs (BND).
 
-2018, Thomas Raddatz
+
+Using A_INSTALL
+---------------
+
+Follow these steps to compile the EXPJRNE utility:
+
+Compile A_INSTALL with command:
+  CRTBNDCL  PGM(QTEMP/A_INSTALL) SRCFILE(library_name/source_file_name)
+
+Call A_INSTALL with the following command:
+  CALL   PGM(QTEMP/A_INSTALL) PARM('*CURRENT' '&SF' '&LI' 'ENG')
+
+Use 'ENG' for English and 'GER' for German.
+
+
+XMLPREVIEW Utility
+------------------
+
+You can also use the XMLPREVIEW utility for installing EXPJRNE. Follow
+these steps for installing EXPJRNE with XMLPREVIEW:
+
+XMLPREVIEW UPLOADMBR(BASICS1) UPLOADSRCF(library_name/file_name)
+
+Q: Create sample programs:
+A: no
+Q: C-Compiler available?:
+A: depending on your system "c_yes" or "c_no". Try "c_yes" first.
+
+XMLPREVIEW UPLOADMBR(RTVFLDA) UPLOADSRCF(library_name/file_name)
+
+Q: Create sample programs:
+A: no
+
+XMLPREVIEW UPLOADMBR(EXPJRNE) UPLOADSRCF(library_name/file_name)
+
+Q: Select language (GER, ENG):
+A: eng (English) or ger (German)
+
+Usually file_name is QXML.
+
+2025, Thomas Raddatz
