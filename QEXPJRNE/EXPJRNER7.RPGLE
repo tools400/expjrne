@@ -38,6 +38,9 @@
       *                                                                     *
       *  04.10.2018  Th.Raddatz    Added outfile types *TYPE4 and *TYPE5.   *
       *                                                                     *
+      *  10.04.2025  Th.Raddatz    Add long sequence number field JOSEQ2    *
+      *                            for output format *TYPE3 and *TYPE4.     *
+      *                                                                     *
       *=====================================================================*
       * >>PRE-COMPILER<<                                                    *
       *   >>CRTCMD<< CRTRPGMOD    MODULE(&LI/&OB) +                         *
@@ -364,6 +367,7 @@
      D  i_hList                            const  like(BasicList_handle_t )
      D  i_file                             const  likeds(qObj_t   )
      D  i_lastField                  10A   const  options(*nopass)
+     D  i_isSeqNbr2                    N   const  options(*nopass)
       *
       *  Adds variable-length portion of journal entries of type *DTAARA.
      D addDataAreaVarLenFields...
@@ -810,6 +814,7 @@
       *  Local fields
      D fldAttr         DS                  likeds(fldAttr_t        ) inz
      D expType         DS                  likeds(qObj_t           ) inz
+     D isSeqNbr2       S               N
       * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       /FREE
 
@@ -818,22 +823,26 @@
          when (i_outFilFmt = '*TYPE1');
             expType.name = cType1File;
             expType.lib  = cType1Lib;
+            isSeqNbr2 = *off;
          when (i_outFilFmt = '*TYPE2');
             expType.name = cType2File;
             expType.lib  = cType2Lib ;
+            isSeqNbr2 = *off;
          when (i_outFilFmt = '*TYPE3');
             expType.name = cType3File;
             expType.lib  = cType3Lib;
+            isSeqNbr2 = *on;
          when (i_outFilFmt = '*TYPE4');
             expType.name = cType4File;
             expType.lib  = cType4Lib;
+            isSeqNbr2 = *on;
          when (i_outFilFmt = '*TYPE5');
             expType.name = cType5File;
             expType.lib  = cType5Lib;
          endsl;
 
          // ... add columns of QADSPJR*, depending of export type
-         addColumns(i_hList: expType: 'JOESD');
+         addColumns(i_hList: expType: 'JOESD': isSeqNbr2);
 
          // ... add variable-length portion of journal entries of ...
          select;
@@ -906,6 +915,7 @@
       *  Input :  i_hList    - Handle of the list the columns are added to.
       *           i_file     - Name of the file.
       *           i_lastField- Qualified file name of the template file.
+      *           i_isSeqNbr2- Add field JOSEQ2 as 20-digit sequence number.
       *
       *  Return:  void
       *====================================================================
@@ -915,27 +925,33 @@
      D  i_hList                            const  like(BasicList_handle_t )
      D  i_file                             const  likeds(qObj_t     )
      D  i_lastField                  10A   const  options(*nopass)
+     D  i_isSeqNbr2                    N   const  options(*nopass)
       *
       *  Return value
      D rc              S                   like(SQLRETCODE_t ) inz(SQL_ERROR)
       *
-      *  Parameter positions
-     D p_lastField     C                   3
-      *
       *  Fields for optional parameters
      D lastField       S                   like(i_lastField  ) inz
+     D isSeqNbr2       S                   like(i_isSeqNbr2  ) inz
       *
       *  Local fields
      D x               S             10I 0 inz
      D hColumns        DS                  likeds(hColumns_t ) inz
      D fldAttr         DS                  likeds(fldAttr_t  ) inz
+     D fldAttrJOSEQN   DS                  likeds(fldAttr_t  ) inz
       * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       /FREE
 
-         if (%parms() >= p_lastField);
+         if (%parms() >= %parmnum(i_lastField));
             lastField = i_lastField;
          else;
             lastField = '';
+         endif;
+
+         if (%parms() >= %parmnum(i_isSeqNbr2));
+            isSeqNbr2 = i_isSeqNbr2;
+         else;
+            isSeqNbr2 = *off;
          endif;
 
          hColumns = SQLCLI_Columns_null();
@@ -955,9 +971,22 @@
                endif;
 
                BasicList_add(i_hList: %addr(fldAttr): %size(fldAttr));
+
+               if (isSeqNbr2 and fldAttr.flda0320.name = 'JOSEQN');
+                  fldAttrJOSEQN = fldAttr;
+               endif;
             endfor;
 
          enddo;
+
+         if (isSeqNbr2);
+            fldAttrJOSEQN.flda0320.name = 'JOSEQ2';
+            fldAttrJOSEQN.flda0320.alias = 'JOSEQ2';
+            fldAttrJOSEQN.flda0320.digits = 20;
+            fldAttrJOSEQN.flda0320.colHdg3 = 'LONG';
+            fldAttrJOSEQN.flda0320.text = 'Sequence number long';
+            BasicList_add(i_hList: %addr(fldAttrJOSEQN): %size(fldAttrJOSEQN));
+         endif;
 
          if (not SQLCLI_Columns_isNull(hColumns));
             SQLCLI_Columns_close(hColumns);

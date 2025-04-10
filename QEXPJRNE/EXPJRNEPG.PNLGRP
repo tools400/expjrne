@@ -52,6 +52,9 @@
 .*  31.07.2023  Th.Raddatz    Feldüberlauf für Feld JOSEQN abgefangen. *
 .*                            Nachricht USR0030 eingebaut.             *
 .*                                                                     *
+.*  10.04.2025  Th.Raddatz    Add long sequence number field JOSEQ2    *
+.*                            for output format *TYPE3 and *TYPE4.     *
+.*                                                                     *
 .*=====================================================================*
 .* >>PRE-COMPILER<<                                                    *
 .*   >>CRTCMD<< CRTPNLGRP    PNLGRP(&LI/EXPJRNEP) +                    *
@@ -93,9 +96,13 @@ Mit dem Befehl EXPJRNE können Journaleinträge aus einem Journal abgerufen
 und in eine durch QUERY oder SQL auswertbare Ausgabedatei gestellt werden.
 .*
 Das Ausgabefeld JOSEQN ist seitens der IBM für die Formate *TYPE1 bis *TYPE4
-als Zoned(10,0) definiert. EXPJRNE fängt mögliche Feldüberlauffehler ab,
-setzt das Feld auf den Wert auf :HP2.Wert = Wert - MaxWert - 1:EHP2. und
-schreibt folgende Nachricht ins Jobprotokoll:
+als Zoned(10,0) definiert, welche zu einem Feldüberlauffehler führen kann,
+insofern die Journaleintragsnummer zu groß ist. EXPJRNE fügt das Feld JOSEQ2
+für die Ausgabefprmate *TYPE3 and *TYPE4 hinzu und weist diesem die
+Journaleintragsnummer zu. Ist die Journaleintragsnummer zu groß, wird das
+Feld JOSEQN auf -1 gesetzt.
+:P.
+Das Feld JOSEQ2 für die Ausgabeformate *TYPE1 und *TYPE2 nicht hinzugefügt.
 :P.
 Feldüberlauf aufgetreten in Feld: JOSEQN
 .*

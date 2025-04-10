@@ -52,6 +52,9 @@
       *  31.07.2023  Th.Raddatz    Caught field overflow error for field    *
       *                            JOSEQN and added message USR0030.        *
       *                                                                     *
+      *  10.04.2025  Th.Raddatz    Add long sequence number field JOSEQ2    *
+      *                            for output format *TYPE3 and *TYPE4.     *
+      *                                                                     *
       *=====================================================================*
       * >>PRE-COMPILER<<                                                    *
       *   >>CRTCMD<< CRTRPGMOD    MODULE(&LI/&OB) +                         *
@@ -632,6 +635,8 @@
      D dsQADSPJR5_O  E DS                  extname(QADSPJR5) based(pBuffer)
      D                                     qualified
       *
+     D JOSEQ2          S             20S 0 based(pJOSEQ2)
+      *
       *  Messages
       /COPY QEXPJRNE,USR0012
       /COPY QEXPJRNE,USR0030
@@ -798,10 +803,14 @@
 
                dsQADSPJR3_O.JORES    = '';
 
+               pJOSEQ2 = %addr(dsQADSPJR3_O.JOESD);
+               JOSEQ2 = RJNE0200.seqNbr;
+
                // Compute offset for entry data
                offsJOESD = %addr(dsQADSPJR3_O.JONVI)
                            - %addr(dsQADSPJR3_O)
-                           + %size(dsQADSPJR3_O.JONVI);
+                           + %size(dsQADSPJR3_O.JONVI)
+                           + %size(JOSEQ2);
 
                // Set entry data
                if entryData.length = 0;
@@ -876,10 +885,14 @@
 
                dsQADSPJR4_O.JORES    = '';
 
+               pJOSEQ2 = %addr(dsQADSPJR3_O.JOESD);
+               JOSEQ2 = RJNE0200.seqNbr;
+
                // Compute offset for entry data
                offsJOESD = %addr(dsQADSPJR4_O.JONVI)
                            - %addr(dsQADSPJR4_O)
-                           + %size(dsQADSPJR4_O.JONVI);
+                           + %size(dsQADSPJR4_O.JONVI)
+                           + %size(JOSEQ2);
 
                // Set entry data
                if entryData.length = 0;
@@ -1125,7 +1138,7 @@
              g_overflow.status = OVF_SET;
              g_overflow.fieldName = i_fieldName;
            endif;
-           newValue = i_seqNbr - MAX_VALUE - 1;
+           newValue = -1;
            return newValue;
          endif;
 

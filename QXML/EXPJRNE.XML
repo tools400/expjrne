@@ -51,7 +51,7 @@
       appblddate CDATA #REQUIRED
      >
      ]>
-<upload  appname="EXPJRNE"  appauthor="Thomas Raddatz"  appblddate=" 9/22/2023">
+<upload  appname="EXPJRNE"  appauthor="Thomas Raddatz"  appblddate=" 4/10/2025">
 <install_instructions><![CDATA[
      *----------------------------------------------------------------      ------
      *  1. Upload entire XML to your AS/400 to a source file 112 long, into any mbr
@@ -3168,7 +3168,47 @@ Compile members with the following PDM option:
 Members of type MAKPGM or BND are used for linking programs (MAKPGM)
 and service programs (BND).
 
-2018, Thomas Raddatz
+
+Using A_INSTALL
+---------------
+
+Follow these steps to compile the EXPJRNE utility:
+
+Compile A_INSTALL with command:
+  CRTBNDCL  PGM(QTEMP/A_INSTALL) SRCFILE(library_name/source_file_name)
+
+Call A_INSTALL with the following command:
+  CALL   PGM(QTEMP/A_INSTALL) PARM('*CURRENT' '&SF' '&LI' 'ENG')
+
+Use 'ENG' for English and 'GER' for German.
+
+
+XMLPREVIEW Utility
+------------------
+
+You can also use the XMLPREVIEW utility for installing EXPJRNE. Follow
+these steps for installing EXPJRNE with XMLPREVIEW:
+
+XMLPREVIEW UPLOADMBR(BASICS1) UPLOADSRCF(library_name/file_name)
+
+Q: Create sample programs:
+A: no
+Q: C-Compiler available?:
+A: depending on your system "c_yes" or "c_no". Try "c_yes" first.
+
+XMLPREVIEW UPLOADMBR(RTVFLDA) UPLOADSRCF(library_name/file_name)
+
+Q: Create sample programs:
+A: no
+
+XMLPREVIEW UPLOADMBR(EXPJRNE) UPLOADSRCF(library_name/file_name)
+
+Q: Select language (GER, ENG):
+A: eng (English) or ger (German)
+
+Usually file_name is QXML.
+
+2025, Thomas Raddatz
 ]]>  </copysrc>
 </mbr>
 <sendmsg  sendmsgid="CPF9897" sendmsgtype = "*STATUS   "><![CDATA[
@@ -3531,13 +3571,13 @@ srclen  =  "00112"
 srccssid=  "01141">
 <copysrc><![CDATA[
       /if not defined(COPYRIGHT_DSPEC)
-     h copyright('V5.5 - 22.09.2023 - mailto: thomas.raddatz@tools400.de')
+     h copyright('V5.6 - 10.04.2025 - mailto: thomas.raddatz@tools400.de')
       /eof
       /endif
      D EXPJRNE_VERSION...
-     D                 C                   '5.5'
+     D                 C                   '5.6'
      D EXPJRNE_DATE...
-     D                 C                   '31.07.2023'
+     D                 C                   '10.04.2025'
 ]]>  </copysrc>
 </mbr>
 <sendmsg  sendmsgid="CPF9897" sendmsgtype = "*STATUS   "><![CDATA[
@@ -3691,7 +3731,7 @@ srccssid=  "01141">
      /*     >>PARM<< DETAIL(*BASIC);                                        */
      /*     >>PARM<< ALWUPD(*YES);                                          */
      /*     >>PARM<< ALWLIBUPD(*YES);                                       */
-     /*     >>PARM<< TGTRLS(V7R2M0);                                        */
+     /*     >>PARM<< TGTRLS(V7R3M0);                                        */
      /*   >>END-IMPORTANT<<                                                 */
      /*   >>EXECUTE<<                                                       */
      /* >>END-PRE-COMPILER<<                                                */
@@ -3749,7 +3789,7 @@ srccssid=  "01141">
      /*     >>PARM<< DETAIL(*BASIC);                                        */
      /*     >>PARM<< ALWUPD(*YES);                                          */
      /*     >>PARM<< ALWLIBUPD(*YES);                                       */
-     /*     >>PARM<< TGTRLS(V7R2M0);                                        */
+     /*     >>PARM<< TGTRLS(V7R3M0);                                        */
      /*   >>END-IMPORTANT<<                                                 */
      /*   >>EXECUTE<<                                                       */
      /* >>END-PRE-COMPILER<<                                                */
@@ -3803,7 +3843,7 @@ srccssid=  "01141">
      /*     >>PARM<< ACTGRP(*CALLER   );                                    */
      /*     >>PARM<< USRPRF(*USER);                                         */
      /*     >>PARM<< DETAIL(*BASIC);                                        */
-     /*     >>PARM<< TGTRLS(V7R2M0);                                        */
+     /*     >>PARM<< TGTRLS(V7R3M0);                                        */
      /*   >>END-IMPORTANT<<                                                 */
      /*   >>EXECUTE<<                                                       */
      /* >>END-PRE-COMPILER<<                                                */
@@ -3863,7 +3903,7 @@ srccssid=  "01141">
      /*     >>PARM<< DETAIL(*BASIC);                                        */
      /*     >>PARM<< ALWUPD(*YES);                                          */
      /*     >>PARM<< ALWLIBUPD(*YES);                                       */
-     /*     >>PARM<< TGTRLS(V7R2M0);                                        */
+     /*     >>PARM<< TGTRLS(V7R3M0);                                        */
      /*   >>END-IMPORTANT<<                                                 */
      /*   >>EXECUTE<<                                                       */
      /* >>END-PRE-COMPILER<<                                                */
@@ -3925,7 +3965,7 @@ srccssid=  "01141">
      /*     >>PARM<< DETAIL(*BASIC);                                        */
      /*     >>PARM<< ALWUPD(*YES);                                          */
      /*     >>PARM<< ALWLIBUPD(*YES);                                       */
-     /*     >>PARM<< TGTRLS(V7R2M0);                                        */
+     /*     >>PARM<< TGTRLS(V7R3M0);                                        */
      /*     >>PARM<< TEXT(+                                                 */
      /*              'Tool: EXPJRNE    (Export Journal Entries  ) UTIL');   */
      /*   >>END-IMPORTANT<<                                                 */
@@ -4106,7 +4146,7 @@ srccssid=  "01141">
      /*                                                                     */
      /*   >>IMPORTANT<<                                                     */
      /*     >>PARM<< DBGVIEW(*LIST);                                        */
-     /*     >>PARM<< TGTRLS(V7R2M0);                                        */
+     /*     >>PARM<< TGTRLS(V7R3M0);                                        */
      /*     >>PARM<< OPTION(*EVENTF);                                       */
      /*   >>END-IMPORTANT<<                                                 */
      /*                                                                     */
@@ -5511,6 +5551,9 @@ srccssid=  "01141">
 .*  31.07.2023  Th.Raddatz    Feldüberlauf für Feld JOSEQN abgefangen. *
 .*                            Nachricht USR0030 eingebaut.             *
 .*                                                                     *
+.*  10.04.2025  Th.Raddatz    Add long sequence number field JOSEQ2    *
+.*                            for output format *TYPE3 and *TYPE4.     *
+.*                                                                     *
 .*=====================================================================*
 .* >>PRE-COMPILER<<                                                    *
 .*   >>CRTCMD<< CRTPNLGRP    PNLGRP(&LI/EXPJRNEP) +                    *
@@ -5554,10 +5597,14 @@ original fields of the file plus the journal information. That
 makes it easy to analyse the journal entries with SQL. The name of
 the associated journal is retrieved from the object.
 .*
-The output field JOSEQN is defined by IBM for the formats *TYPE1 to *TYPE4
-as Zoned(10,0). EXPJRNE catches possible field overflow errors, sets the
-field to value :HP2.Value = Value - MaxValue - 1:EHP2. and writes the
-following message to the job log:
+The output field JOSEQN is defined by IBM for the formats *TYPE1 to
+*TYPE4 as Zoned(10,0), which can cause field value overflow errors if
+the sequence number is too large. EXPJRNE adds field JOSEQ2, defined
+as Zoned(20,0) if the output format is specified as *TYPE3 or *TYPE4
+and assigns the sequence to it. If the sequence number is too large,
+JOSEQN is set to -1.
+:P.
+Field JOSEQ2 is not added for output formats *TYPE1 and *TYPE2.
 :P.
 Field overflow occurred in field: JOSEQN
 .*
@@ -6342,6 +6389,9 @@ srccssid=  "01141">
 .*  31.07.2023  Th.Raddatz    Feldüberlauf für Feld JOSEQN abgefangen. *
 .*                            Nachricht USR0030 eingebaut.             *
 .*                                                                     *
+.*  10.04.2025  Th.Raddatz    Add long sequence number field JOSEQ2    *
+.*                            for output format *TYPE3 and *TYPE4.     *
+.*                                                                     *
 .*=====================================================================*
 .* >>PRE-COMPILER<<                                                    *
 .*   >>CRTCMD<< CRTPNLGRP    PNLGRP(&LI/EXPJRNEP) +                    *
@@ -6383,9 +6433,13 @@ Mit dem Befehl EXPJRNE können Journaleinträge aus einem Journal abgerufen
 und in eine durch QUERY oder SQL auswertbare Ausgabedatei gestellt werden.
 .*
 Das Ausgabefeld JOSEQN ist seitens der IBM für die Formate *TYPE1 bis *TYPE4
-als Zoned(10,0) definiert. EXPJRNE fängt mögliche Feldüberlauffehler ab,
-setzt das Feld auf den Wert auf :HP2.Wert = Wert - MaxWert - 1:EHP2. und
-schreibt folgende Nachricht ins Jobprotokoll:
+als Zoned(10,0) definiert, welche zu einem Feldüberlauffehler führen kann,
+insofern die Journaleintragsnummer zu groß ist. EXPJRNE fügt das Feld JOSEQ2
+für die Ausgabefprmate *TYPE3 and *TYPE4 hinzu und weist diesem die
+Journaleintragsnummer zu. Ist die Journaleintragsnummer zu groß, wird das
+Feld JOSEQN auf -1 gesetzt.
+:P.
+Das Feld JOSEQ2 für die Ausgabeformate *TYPE1 und *TYPE2 nicht hinzugefügt.
 :P.
 Feldüberlauf aufgetreten in Feld: JOSEQN
 .*
@@ -7166,7 +7220,7 @@ srccssid=  "01141">
       *     >>PARM<< TRUNCNBR(*NO);                                         *
       *     >>PARM<< DBGVIEW(*LIST);                                        *
       *     >>PARM<< OPTION(*EVENTF);                                       *
-      *     >>PARM<< TGTRLS(V7R2M0);                                        *
+      *     >>PARM<< TGTRLS(V7R3M0);                                        *
       *   >>END-IMPORTANT<<                                                 *
       *   >>EXECUTE<<                                                       *
       * >>END-PRE-COMPILER<<                                                *
@@ -7279,7 +7333,7 @@ srccssid=  "01141">
       *     >>PARM<< TRUNCNBR(*NO);                                         *
       *     >>PARM<< DBGVIEW(*LIST);                                        *
       *     >>PARM<< OPTION(*EVENTF);                                       *
-      *     >>PARM<< TGTRLS(V7R2M0);                                        *
+      *     >>PARM<< TGTRLS(V7R3M0);                                        *
       *   >>END-IMPORTANT<<                                                 *
       *   >>EXECUTE<<                                                       *
       * >>END-PRE-COMPILER<<                                                *
@@ -7437,6 +7491,9 @@ srccssid=  "01141">
       *  31.07.2023  Th.Raddatz    Caught field overflow error for field    *
       *                            JOSEQN and added message USR0030.        *
       *                                                                     *
+      *  10.04.2025  Th.Raddatz    Add long sequence number field JOSEQ2    *
+      *                            for output format *TYPE3 and *TYPE4.     *
+      *                                                                     *
       *=====================================================================*
       * >>PRE-COMPILER<<                                                    *
       *   >>CRTCMD<< CRTRPGMOD    MODULE(&LI/&OB) +                         *
@@ -7446,7 +7503,7 @@ srccssid=  "01141">
       *     >>PARM<< TRUNCNBR(*NO);                                         *
       *     >>PARM<< DBGVIEW(*LIST);                                        *
       *     >>PARM<< OPTION(*EVENTF);                                       *
-      *     >>PARM<< TGTRLS(V7R2M0);                                        *
+      *     >>PARM<< TGTRLS(V7R3M0);                                        *
       *   >>END-IMPORTANT<<                                                 *
       *   >>EXECUTE<<                                                       *
       * >>END-PRE-COMPILER<<                                                *
@@ -8017,6 +8074,8 @@ srccssid=  "01141">
      D dsQADSPJR5_O  E DS                  extname(QADSPJR5) based(pBuffer)
      D                                     qualified
       *
+     D JOSEQ2          S             20S 0 based(pJOSEQ2)
+      *
       *  Messages
       /COPY QEXPJRNE,USR0012
       /COPY QEXPJRNE,USR0030
@@ -8183,10 +8242,14 @@ srccssid=  "01141">
 
                dsQADSPJR3_O.JORES    = '';
 
+               pJOSEQ2 = %addr(dsQADSPJR3_O.JOESD);
+               JOSEQ2 = RJNE0200.seqNbr;
+
                // Compute offset for entry data
                offsJOESD = %addr(dsQADSPJR3_O.JONVI)
                            - %addr(dsQADSPJR3_O)
-                           + %size(dsQADSPJR3_O.JONVI);
+                           + %size(dsQADSPJR3_O.JONVI)
+                           + %size(JOSEQ2);
 
                // Set entry data
                if entryData.length = 0;
@@ -8261,10 +8324,14 @@ srccssid=  "01141">
 
                dsQADSPJR4_O.JORES    = '';
 
+               pJOSEQ2 = %addr(dsQADSPJR3_O.JOESD);
+               JOSEQ2 = RJNE0200.seqNbr;
+
                // Compute offset for entry data
                offsJOESD = %addr(dsQADSPJR4_O.JONVI)
                            - %addr(dsQADSPJR4_O)
-                           + %size(dsQADSPJR4_O.JONVI);
+                           + %size(dsQADSPJR4_O.JONVI)
+                           + %size(JOSEQ2);
 
                // Set entry data
                if entryData.length = 0;
@@ -8510,7 +8577,7 @@ srccssid=  "01141">
              g_overflow.status = OVF_SET;
              g_overflow.fieldName = i_fieldName;
            endif;
-           newValue = i_seqNbr - MAX_VALUE - 1;
+           newValue = -1;
            return newValue;
          endif;
 
@@ -9997,7 +10064,7 @@ srccssid=  "01141">
       *     >>PARM<< TRUNCNBR(*NO);                                         *
       *     >>PARM<< DBGVIEW(*LIST);                                        *
       *     >>PARM<< OPTION(*EVENTF);                                       *
-      *     >>PARM<< TGTRLS(V7R2M0);                                        *
+      *     >>PARM<< TGTRLS(V7R3M0);                                        *
       *   >>END-IMPORTANT<<                                                 *
       *   >>EXECUTE<<                                                       *
       * >>END-PRE-COMPILER<<                                                *
@@ -10425,7 +10492,7 @@ srccssid=  "01141">
       *     >>PARM<< TRUNCNBR(*NO);                                         *
       *     >>PARM<< DBGVIEW(*LIST);                                        *
       *     >>PARM<< OPTION(*EVENTF);                                       *
-      *     >>PARM<< TGTRLS(V7R2M0);                                        *
+      *     >>PARM<< TGTRLS(V7R3M0);                                        *
       *   >>END-IMPORTANT<<                                                 *
       *   >>EXECUTE<<                                                       *
       * >>END-PRE-COMPILER<<                                                *
@@ -11080,7 +11147,7 @@ srccssid=  "01141">
       *     >>PARM<< TRUNCNBR(*NO);                                         *
       *     >>PARM<< DBGVIEW(*LIST);                                        *
       *     >>PARM<< OPTION(*EVENTF);                                       *
-      *     >>PARM<< TGTRLS(V7R2M0);                                        *
+      *     >>PARM<< TGTRLS(V7R3M0);                                        *
       *   >>END-IMPORTANT<<                                                 *
       *   >>EXECUTE<<                                                       *
       * >>END-PRE-COMPILER<<                                                *
@@ -12068,6 +12135,9 @@ srccssid=  "01141">
       *                                                                     *
       *  04.10.2018  Th.Raddatz    Added outfile types *TYPE4 and *TYPE5.   *
       *                                                                     *
+      *  10.04.2025  Th.Raddatz    Add long sequence number field JOSEQ2    *
+      *                            for output format *TYPE3 and *TYPE4.     *
+      *                                                                     *
       *=====================================================================*
       * >>PRE-COMPILER<<                                                    *
       *   >>CRTCMD<< CRTRPGMOD    MODULE(&LI/&OB) +                         *
@@ -12077,7 +12147,7 @@ srccssid=  "01141">
       *     >>PARM<< TRUNCNBR(*NO);                                         *
       *     >>PARM<< DBGVIEW(*LIST);                                        *
       *     >>PARM<< OPTION(*EVENTF);                                       *
-      *     >>PARM<< TGTRLS(V7R2M0);                                        *
+      *     >>PARM<< TGTRLS(V7R3M0);                                        *
       *   >>END-IMPORTANT<<                                                 *
       *   >>EXECUTE<<                                                       *
       * >>END-PRE-COMPILER<<                                                *
@@ -12394,6 +12464,7 @@ srccssid=  "01141">
      D  i_hList                            const  like(BasicList_handle_t )
      D  i_file                             const  likeds(qObj_t   )
      D  i_lastField                  10A   const  options(*nopass)
+     D  i_isSeqNbr2                    N   const  options(*nopass)
       *
       *  Adds variable-length portion of journal entries of type *DTAARA.
      D addDataAreaVarLenFields...
@@ -12840,6 +12911,7 @@ srccssid=  "01141">
       *  Local fields
      D fldAttr         DS                  likeds(fldAttr_t        ) inz
      D expType         DS                  likeds(qObj_t           ) inz
+     D isSeqNbr2       S               N
       * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       /FREE
 
@@ -12848,22 +12920,26 @@ srccssid=  "01141">
          when (i_outFilFmt = '*TYPE1');
             expType.name = cType1File;
             expType.lib  = cType1Lib;
+            isSeqNbr2 = *off;
          when (i_outFilFmt = '*TYPE2');
             expType.name = cType2File;
             expType.lib  = cType2Lib ;
+            isSeqNbr2 = *off;
          when (i_outFilFmt = '*TYPE3');
             expType.name = cType3File;
             expType.lib  = cType3Lib;
+            isSeqNbr2 = *on;
          when (i_outFilFmt = '*TYPE4');
             expType.name = cType4File;
             expType.lib  = cType4Lib;
+            isSeqNbr2 = *on;
          when (i_outFilFmt = '*TYPE5');
             expType.name = cType5File;
             expType.lib  = cType5Lib;
          endsl;
 
          // ... add columns of QADSPJR*, depending of export type
-         addColumns(i_hList: expType: 'JOESD');
+         addColumns(i_hList: expType: 'JOESD': isSeqNbr2);
 
          // ... add variable-length portion of journal entries of ...
          select;
@@ -12936,6 +13012,7 @@ srccssid=  "01141">
       *  Input :  i_hList    - Handle of the list the columns are added to.
       *           i_file     - Name of the file.
       *           i_lastField- Qualified file name of the template file.
+      *           i_isSeqNbr2- Add field JOSEQ2 as 20-digit sequence number.
       *
       *  Return:  void
       *====================================================================
@@ -12945,27 +13022,33 @@ srccssid=  "01141">
      D  i_hList                            const  like(BasicList_handle_t )
      D  i_file                             const  likeds(qObj_t     )
      D  i_lastField                  10A   const  options(*nopass)
+     D  i_isSeqNbr2                    N   const  options(*nopass)
       *
       *  Return value
      D rc              S                   like(SQLRETCODE_t ) inz(SQL_ERROR)
       *
-      *  Parameter positions
-     D p_lastField     C                   3
-      *
       *  Fields for optional parameters
      D lastField       S                   like(i_lastField  ) inz
+     D isSeqNbr2       S                   like(i_isSeqNbr2  ) inz
       *
       *  Local fields
      D x               S             10I 0 inz
      D hColumns        DS                  likeds(hColumns_t ) inz
      D fldAttr         DS                  likeds(fldAttr_t  ) inz
+     D fldAttrJOSEQN   DS                  likeds(fldAttr_t  ) inz
       * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       /FREE
 
-         if (%parms() >= p_lastField);
+         if (%parms() >= %parmnum(i_lastField));
             lastField = i_lastField;
          else;
             lastField = '';
+         endif;
+
+         if (%parms() >= %parmnum(i_isSeqNbr2));
+            isSeqNbr2 = i_isSeqNbr2;
+         else;
+            isSeqNbr2 = *off;
          endif;
 
          hColumns = SQLCLI_Columns_null();
@@ -12985,9 +13068,22 @@ srccssid=  "01141">
                endif;
 
                BasicList_add(i_hList: %addr(fldAttr): %size(fldAttr));
+
+               if (isSeqNbr2 and fldAttr.flda0320.name = 'JOSEQN');
+                  fldAttrJOSEQN = fldAttr;
+               endif;
             endfor;
 
          enddo;
+
+         if (isSeqNbr2);
+            fldAttrJOSEQN.flda0320.name = 'JOSEQ2';
+            fldAttrJOSEQN.flda0320.alias = 'JOSEQ2';
+            fldAttrJOSEQN.flda0320.digits = 20;
+            fldAttrJOSEQN.flda0320.colHdg3 = 'LONG';
+            fldAttrJOSEQN.flda0320.text = 'Sequence number long';
+            BasicList_add(i_hList: %addr(fldAttrJOSEQN): %size(fldAttrJOSEQN));
+         endif;
 
          if (not SQLCLI_Columns_isNull(hColumns));
             SQLCLI_Columns_close(hColumns);
@@ -14077,7 +14173,7 @@ srccssid=  "01141">
      /*   >>IMPORTANT<<                                                     */
      /*     >>PARM<< DBGVIEW(*LIST);                                        */
      /*     >>PARM<< OPTION(*EVENTF);                                       */
-     /*     >>PARM<< TGTRLS(V7R2M0);                                        */
+     /*     >>PARM<< TGTRLS(V7R3M0);                                        */
      /*   >>END-IMPORTANT<<                                                 */
      /*   >>EXECUTE<<                                                       */
      /*   >>CMD<<    CRTPGM       PGM(&LI/&OB) +                            */
@@ -17451,7 +17547,7 @@ CRTBNDCL PGM(&tolib/A_INSTALL) SRCFILE(&tolib/QEXPJRNE) SRCMBR(*PGM) DFTACTGRP(*
 VIEW(*LIST)
 ]]>  </qcmdexc>
 <qcmdexc condition="*NONE" release="*CURRENT" dltsplf="*NONE"><![CDATA[
-CALL PGM(&tolib/A_INSTALL) PARM('&TGTRLS' '&SRCFILE' '&tolib' '&LANG')
+CALL PGM(&tolib/A_INSTALL) PARM(('&TGTRLS') ('&SRCFILE') ('&tolib') ('&LANG'))
 ]]>  </qcmdexc>
 <qcmdexc condition="*NONE" release="*CURRENT" dltsplf="*NONE"><![CDATA[
 DLTPGM PGM(&tolib/A_INSTALL)
