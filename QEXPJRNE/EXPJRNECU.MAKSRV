@@ -40,7 +40,7 @@
      /*     >>PARM<< DETAIL(*BASIC);                                        */
      /*     >>PARM<< ALWUPD(*YES);                                          */
      /*     >>PARM<< ALWLIBUPD(*YES);                                       */
-     /*     >>PARM<< TGTRLS(V7R2M0);                                        */
+     /*     >>PARM<< TGTRLS(V7R3M0);                                        */
      /*     >>PARM<< TEXT(+                                                 */
      /*              'Tool: EXPJRNE    (Export Journal Entries  ) UTIL');   */
      /*   >>END-IMPORTANT<<                                                 */

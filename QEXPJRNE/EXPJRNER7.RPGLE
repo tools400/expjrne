@@ -47,7 +47,7 @@
       *     >>PARM<< TRUNCNBR(*NO);                                         *
       *     >>PARM<< DBGVIEW(*LIST);                                        *
       *     >>PARM<< OPTION(*EVENTF);                                       *
-      *     >>PARM<< TGTRLS(V7R2M0);                                        *
+      *     >>PARM<< TGTRLS(V7R3M0);                                        *
       *   >>END-IMPORTANT<<                                                 *
       *   >>EXECUTE<<                                                       *
       * >>END-PRE-COMPILER<<                                                *
