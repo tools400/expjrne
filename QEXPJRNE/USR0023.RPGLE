@@ -1,9 +1,11 @@
-      // ---------------------------------------------------------------
-      //  Data structure for message ID: USR0023
+**FREE
+// ---------------------------------------------------------------
+//  Data structure for message ID: USR0023
 
-      //  &1: &2
+//  &1: &2
 
-     d USR0023         ds
-     d  USR00231                   0010P 0 inz(*ZEROS )
-     d  USR00232                   0256A   inz(*BLANKS)
-     d USR0023_SIZE    s             10I 0 inz(0262)
+dcl-ds USR0023;
+  USR00231        packed(0010) inz(*ZEROS );
+  USR00232        char(0256) inz(*BLANKS);
+end-ds;
+dcl-s USR0023_SIZE    int(10) inz(0262);

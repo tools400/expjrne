@@ -1,35 +1,36 @@
-      /if not defined(QWCRDTAA)
-      /define QWCRDTAA
+**free
+/if not defined(QWCRDTAA)
+/define QWCRDTAA
 
-      // Retrieve Data Area (QWCRDTAA) API
-     d QWCRDTAA...
-     d                 pr                  extpgm('QWCRDTAA')
-     d  o_rcvVar                  65535a          options(*varsize)
-     d  i_lenRcvVar                  10i 0 const
-     d  i_qDtaAra                    20a   const
-     d  i_start                      10i 0 const
-     d  i_length                     10i 0 const
-     d  io_errCode                65535a          options(*varsize)
+// Retrieve Data Area (QWCRDTAA) API
+dcl-pr QWCRDTAA extpgm('QWCRDTAA');
+  o_rcvVar    char(65535) options(*varsize);
+  i_lenRcvVar int(10) const;
+  i_qDtaAra   char(20) const;
+  i_start     int(10) const;
+  i_length    int(10) const;
+  io_errCode  char(65535) options(*varsize);
+end-pr;
 
-      // Format of Data Returned (attributes and value)
-     d rtvDtaAra_t...
-     d                 ds                  qualified               based(pDummy)
-     d  bytRet                       10i 0
-     d  bytAvl                       10i 0
-     d  type                         10a
-     d  lib                          10a
-     d  length                       10i 0
-     d  decPos                       10i 0
-     d  value                      2000a
+// Format of Data Returned (attributes and value)
+dcl-ds rtvDtaAra_t qualified based(pDummy);
+  bytRet int(10);
+  bytAvl int(10);
+  type   char(10);
+  lib    char(10);
+  length int(10);
+  decPos int(10);
+  value  char(2000);
+end-ds;
 
-      // Format of Data Returned (attributes only)
-     d rtvDtaAraA_t...
-     d                 ds                  qualified               based(pDummy)
-     d  bytRet                       10i 0
-     d  bytAvl                       10i 0
-     d  type                         10a
-     d  lib                          10a
-     d  length                       10i 0
-     d  decPos                       10i 0
+// Format of Data Returned (attributes only)
+dcl-ds rtvDtaAraA_t qualified based(pDummy);
+  bytRet int(10);
+  bytAvl int(10);
+  type   char(10);
+  lib    char(10);
+  length int(10);
+  decPos int(10);
+end-ds;
 
-      /endif
+/endif

@@ -1,8 +1,10 @@
-      // ---------------------------------------------------------------
-      //  Data structure for message ID: USR0026
+**FREE
+// ---------------------------------------------------------------
+//  Data structure for message ID: USR0026
 
-      //  Ausführung der ASL Anweisung zum setzen der Spaltenüberschr
+//  Ausfhrung der ASL Anweisung zum setzen der Spaltenberschr
 
-     d USR0026         ds
-     d  USR00261                   0512A   inz(*BLANKS)
-     d USR0026_SIZE    s             10I 0 inz(0512)
+dcl-ds USR0026;
+  USR00261        char(0512) inz(*BLANKS);
+end-ds;
+dcl-s USR0026_SIZE    int(10) inz(0512);

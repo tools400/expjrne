@@ -1,8 +1,10 @@
-      // ---------------------------------------------------------------
-      //  Data structure for message ID: USR0025
+**FREE
+// ---------------------------------------------------------------
+//  Data structure for message ID: USR0025
 
-      //  Ausführung der SQL Anweisung zum Setzen der Feldbeschreibun
+//  Ausfhrung der SQL Anweisung zum Setzen der Feldbeschreibun
 
-     d USR0025         ds
-     d  USR00251                   0512A   inz(*BLANKS)
-     d USR0025_SIZE    s             10I 0 inz(0512)
+dcl-ds USR0025;
+  USR00251        char(0512) inz(*BLANKS);
+end-ds;
+dcl-s USR0025_SIZE    int(10) inz(0512);

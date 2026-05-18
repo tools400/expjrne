@@ -47,7 +47,7 @@
 .*                                                                     *
 .*  30.01.2022  Th.Raddatz    Added parameter OBJJID.                  *
 .*                                                                     *
-.*  31.07.2023  Th.Raddatz    Feldüberlauf für Feld JOSEQN abgefangen. *
+.*  31.07.2023  Th.Raddatz    Feldberlauf fr Feld JOSEQN abgefangen. *
 .*                            Nachricht USR0030 eingebaut.             *
 .*                                                                     *
 .*  10.04.2025  Th.Raddatz    Add long sequence number field JOSEQ2    *
@@ -85,7 +85,7 @@
 :IMHELP name='EXPJRNE/JRN       '.
 :EHELP.
 .*--------------------------------------------------------------------
-.* Hilfetext für den Befehl
+.* Hilfetext fr den Befehl
 .*--------------------------------------------------------------------
 :HELP NAME='EXPJRNE'.
 Export Journal Entries (EXPJRNE) - Help
@@ -110,7 +110,7 @@ Field overflow occurred in field: JOSEQN
 :EHELP.
 .*
 .*--------------------------------------------------------------------
-.* Hilfetext für Schlüsselwort OBJ
+.* Hilfetext fr Schlsselwort OBJ
 .*--------------------------------------------------------------------
 :HELP name='EXPJRNE/OBJ       '.
 Object - Help
@@ -145,7 +145,7 @@ library for the job, the QGPL is used.
 :EHELP.
 .*
 .*--------------------------------------------------------------------
-.* Hilfetext für Schlüsselwort OBJTYPE
+.* Hilfetext fr Schlsselwort OBJTYPE
 .*--------------------------------------------------------------------
 :HELP name='EXPJRNE/OBJTYPE   '.
 Object type - Help
@@ -191,7 +191,7 @@ exported to the output file.
 :EHELP.
 .*
 .*--------------------------------------------------------------------
-.* Hilfetext für Schlüsselwort MBR
+.* Hilfetext fr Schlsselwort MBR
 .*--------------------------------------------------------------------
 :HELP name='EXPJRNE/MBR       '.
 Member - Help
@@ -220,7 +220,7 @@ exported to the output file.
 :EHELP.
 .*
 .*--------------------------------------------------------------------
-.* Hilfetext für Schlüsselwort OBJJID
+.* Hilfetext fr Schlsselwort OBJJID
 .*--------------------------------------------------------------------
 :HELP name='EXPJRNE/OBJJID    '.
 Object journal identifier - Help
@@ -246,7 +246,7 @@ journal identifier are exported tot he output file.
 :EHELP.
 .*
 .*--------------------------------------------------------------------
-.* Hilfetext für Schlüsselwort FROMDATE
+.* Hilfetext fr Schlsselwort FROMDATE
 .*--------------------------------------------------------------------
 :HELP name='EXPJRNE/FROMDATE  '.
 Starting Date - Help
@@ -268,7 +268,7 @@ point for the range of entries to be exported.
 :EHELP.
 .*
 .*--------------------------------------------------------------------
-.* Hilfetext für Schlüsselwort FROMTIME
+.* Hilfetext fr Schlsselwort FROMTIME
 .*--------------------------------------------------------------------
 :HELP name='EXPJRNE/FROMTIME  '.
 Starting Time - Help
@@ -290,7 +290,7 @@ point for the range of entries to be exported.
 :EHELP.
 .*
 .*--------------------------------------------------------------------
-.* Hilfetext für Schlüsselwort TODATE
+.* Hilfetext fr Schlsselwort TODATE
 .*--------------------------------------------------------------------
 :HELP name='EXPJRNE/TODATE    '.
 Ending Date - Hepl
@@ -313,7 +313,7 @@ be exported.
 :EHELP.
 .*
 .*--------------------------------------------------------------------
-.* Hilfetext für Schlüsselwort TOTIME
+.* Hilfetext fr Schlsselwort TOTIME
 .*--------------------------------------------------------------------
 :HELP name='EXPJRNE/TOTIME  '.
 Ending Time - Help
@@ -336,7 +336,7 @@ be exported.
 :EHELP.
 .*
 .*--------------------------------------------------------------------
-.* Hilfetext für Schlüsselwort OUTFILFMT
+.* Hilfetext fr Schlsselwort OUTFILFMT
 .*--------------------------------------------------------------------
 :HELP name='EXPJRNE/OUTFILFMT '.
 Outfile format - Help
@@ -380,7 +380,7 @@ is specified and ASP, LUW, XID.
 :EHELP.
 .*
 .*--------------------------------------------------------------------
-.* Hilfetext für Schlüsselwort OUTFILE
+.* Hilfetext fr Schlsselwort OUTFILE
 .*--------------------------------------------------------------------
 :HELP name='EXPJRNE/OUTFILE   '.
 Outfile - Help
@@ -393,7 +393,7 @@ it. Records may replace or be added to the current data in the
 file member.
 :P.
 :HP2.Attention::EHP2. If a new file is created, the file description
-is set to "Ausgabedatei für EXPJRNE".
+is set to "Ausgabedatei fr EXPJRNE".
 .*
 :IMHELP name='COM/OPTPARM'.
 :P.
@@ -434,7 +434,7 @@ is searched for the output file.
 :EHELP.
 .*
 .*--------------------------------------------------------------------
-.* Hilfetext für Schlüsselwort OUTMBR
+.* Hilfetext fr Schlsselwort OUTMBR
 .*--------------------------------------------------------------------
 :HELP name='EXPJRNE/OUTMBR    '.
 Output member options - Help
@@ -457,7 +457,7 @@ existing records.
 :EHELP.
 .*
 .*--------------------------------------------------------------------
-.* Hilfetext für Schlüsselwort CRTFILE
+.* Hilfetext fr Schlsselwort CRTFILE
 .*--------------------------------------------------------------------
 :HELP name='EXPJRNE/CRTFILE   '.
 Create outfile - Help
@@ -496,7 +496,7 @@ that contain invalid data.
 :EHELP.
 .*
 .*--------------------------------------------------------------------
-.* Hilfetext für Schlüsselwort TPLFILE.
+.* Hilfetext fr Schlsselwort TPLFILE.
 .*--------------------------------------------------------------------
 :HELP name='EXPJRNE/TPLFILE   '.
 Template file - Help
@@ -540,7 +540,7 @@ library is used.
 :EHELP.
 .*
 .*--------------------------------------------------------------------
-.* Hilfetext für Schlüsselwort SIZE
+.* Hilfetext fr Schlsselwort SIZE
 .*--------------------------------------------------------------------
 :HELP name='EXPJRNE/SIZE      '.
 Member size - Help
@@ -606,7 +606,7 @@ number of records value is 0, this value must also be 0.
 :EHELP.
 .*
 .*--------------------------------------------------------------------
-.* Hilfetext für Schlüsselwort LVLCHK
+.* Hilfetext fr Schlsselwort LVLCHK
 .*--------------------------------------------------------------------
 :HELP name='EXPJRNE/LVLCHK    '.
 Record format level check - Help
@@ -633,7 +633,7 @@ an escape message is send.
 :EHELP.
 .*
 .*--------------------------------------------------------------------
-.* Hilfetext für Schlüsselwort JRN
+.* Hilfetext fr Schlsselwort JRN
 .*--------------------------------------------------------------------
 :HELP name='EXPJRNE/JRN       '.
 Journal - Help
@@ -679,7 +679,7 @@ job, QGPL is used.
 :EHELP.
 .*
 .*--------------------------------------------------------------------
-.* Hilfetext für Schlüsselwort RCVRNG
+.* Hilfetext fr Schlsselwort RCVRNG
 .*--------------------------------------------------------------------
 :HELP name='EXPJRNE/RCVRNG    '.
 Range of journal receivers - Help

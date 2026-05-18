@@ -1,8 +1,10 @@
-      // ---------------------------------------------------------------
-      //  Data structure for message ID: USR0018
+**FREE
+// ---------------------------------------------------------------
+//  Data structure for message ID: USR0018
 
-      //  &1 Journaleinträge aufgrund von Fehlern übergangen.
+//  &1 Journaleintrge aufgrund von Fehlern bergangen.
 
-     d USR0018         ds
-     d  USR00181                   0010A   inz(*BLANKS)
-     d USR0018_SIZE    s             10I 0 inz(0010)
+dcl-ds USR0018;
+  USR00181        char(0010) inz(*BLANKS);
+end-ds;
+dcl-s USR0018_SIZE    int(10) inz(0010);

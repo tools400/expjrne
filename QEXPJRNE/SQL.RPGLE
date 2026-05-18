@@ -1,137 +1,77 @@
-      /if not defined(SQL)
-      /define SQL
+**free
+/if not defined(SQL)
+/define SQL
 
-      // see "iSeries Messages and Codes" V5R3
+// see "iSeries Messages and Codes" V5R3
 
-      // SQL Status Class Codes
-     d cSQL_STATUS_OK...
-     d                 C                   '00'
-     d cSQL_STATUS_WARNING...
-     d                 C                   '01'
-     d cSQL_STATUS_NO_DATA...
-     d                 C                   '02'
-     d cSQL_STATUS_STMT_NOT_COMP...
-     d                 C                   '03'
-     d cSQL_STATUS_DYN_SQL_ERROR...
-     d                 C                   '07'
-     d cSQL_STATUS_CONN_EXCP...
-     d                 C                   '08'
-     d cSQL_STATUS_TRG_ACT_EXCP...
-     d                 C                   '09'
+// SQL Status Class Codes
+dcl-c cSQL_STATUS_OK '00';
+dcl-c cSQL_STATUS_WARNING '01';
+dcl-c cSQL_STATUS_NO_DATA '02';
+dcl-c cSQL_STATUS_STMT_NOT_COMP '03';
+dcl-c cSQL_STATUS_DYN_SQL_ERROR '07';
+dcl-c cSQL_STATUS_CONN_EXCP '08';
+dcl-c cSQL_STATUS_TRG_ACT_EXCP '09';
 
-     d cSQL_STATUS_NOT_SUPPORTED...
-     d                 C                   '0A'
-     d cSQL_STATUS_INVLD_SCHEMA_NAME_LIST_SPEC...
-     d                 C                   '0E'
-     d cSQL_STATUS_INVLD_TOKEN...
-     d                 C                   '0F'
-     d cSQL_STATUS_RESGNL_HNDLR_NOT_ACT...
-     d                 C                   '0K'
-     d cSQL_STATUS_PROHIB_STMT_DURING_TRG...
-     d                 C                   '0W'
-     d cSQL_STATUS_DIAG_EXCEP...
-     d                 C                   '0Z'
-     d cSQL_STATUS_CASE_NFND_FOR_CASE_STMT...
-     d                 C                   '20'
-     d cSQL_STATUS_CARD_VIOL...
-     d                 C                   '21'
-     d cSQL_STATUS_DATA_EXCEP...
-     d                 C                   '22'
-     d cSQL_STATUS_CONSTRNT_VIOL...
-     d                 C                   '23'
-     d cSQL_STATUS_INVLD_CRS_STATE...
-     d                 C                   '24'
-     d cSQL_STATUS_INVLD_TRNSACTN_STATE...
-     d                 C                   '25'
-     d cSQL_STATUS_INVLD_SQL_STMT_IDENT...
-     d                 C                   '26'
-     d cSQL_STATUS_TRG_DATA_CHG_VIOL...
-     d                 C                   '27'
-     d cSQL_STATUS_INVLD_AUTH_SPEC...
-     d                 C                   '28'
-     d cSQL_STATUS_INVLD_TRNSACTN_TERM...
-     d                 C                   '2D'
-     d cSQL_STATUS_INVLD_CONN_NAME...
-     d                 C                   '2E'
-     d cSQL_STATUS_SQL_FNC_EXCEP...
-     d                 C                   '2F'
-     d cSQL_STATUS_INVLD_CRS_NAME...
-     d                 C                   '34'
-     d cSQL_STATUS_INVLD_COND_NAME...
-     d                 C                   '35'
-     d cSQL_STATUS_CRS_SENS_EXCEP...
-     d                 C                   '36'
-     d cSQL_STATUS_EXT_FNC_EXCEP...
-     d                 C                   '38'
-     d cSQL_STATUS_EXT_FNC_CALL_EXCEP...
-     d                 C                   '39'
-     d cSQL_STATUS_SAVEPOINT_EXCEP...
-     d                 C                   '3B'
-     d cSQL_STATUS_AMB_CRS_NAME...
-     d                 C                   '3C'
-     d cSQL_STATUS_INVLD_SCHEMA_NAME...
-     d                 C                   '3F'
-     d cSQL_STATUS_SYNTX_ERR_ACC_RULE_VIOL...
-     d                 C                   '42'
-     d cSQL_STATUS_WTH_CHCK_OPT_VIOL...
-     d                 C                   '44'
-     d cSQL_STATUS_JAVATM_ERR...
-     d                 C                   '46'
-     d cSQL_STATUS_INVLD_APPL_STATE...
-     d                 C                   '51'
-     d cSQL_STATUS_INVLD_OP_INCONS_SPEC...
-     d                 C                   '53'
-     d cSQL_STATUS_SQL_PRD_LIMT_EXCEED...
-     d                 C                   '54'
-     d cSQL_STATUS_OBJ_NOT_IN_PREREQU_STATE...
-     d                 C                   '55'
-     d cSQL_STATUS_SQL_PRD_ERR...
-     d                 C                   '56'
-     d cSQL_STATUS_RSRC_NOT_AVAI_OPERA_INTERVENT...
-     d                 C                   '57'
-     d cSQL_SYSTEM_ERR...
-     d                 C                   '58'
+dcl-c cSQL_STATUS_NOT_SUPPORTED '0A';
+dcl-c cSQL_STATUS_INVLD_SCHEMA_NAME_LIST_SPEC '0E';
+dcl-c cSQL_STATUS_INVLD_TOKEN '0F';
+dcl-c cSQL_STATUS_RESGNL_HNDLR_NOT_ACT '0K';
+dcl-c cSQL_STATUS_PROHIB_STMT_DURING_TRG '0W';
+dcl-c cSQL_STATUS_DIAG_EXCEP '0Z';
+dcl-c cSQL_STATUS_CASE_NFND_FOR_CASE_STMT '20';
+dcl-c cSQL_STATUS_CARD_VIOL '21';
+dcl-c cSQL_STATUS_DATA_EXCEP '22';
+dcl-c cSQL_STATUS_CONSTRNT_VIOL '23';
+dcl-c cSQL_STATUS_INVLD_CRS_STATE '24';
+dcl-c cSQL_STATUS_INVLD_TRNSACTN_STATE '25';
+dcl-c cSQL_STATUS_INVLD_SQL_STMT_IDENT '26';
+dcl-c cSQL_STATUS_TRG_DATA_CHG_VIOL '27';
+dcl-c cSQL_STATUS_INVLD_AUTH_SPEC '28';
+dcl-c cSQL_STATUS_INVLD_TRNSACTN_TERM '2D';
+dcl-c cSQL_STATUS_INVLD_CONN_NAME '2E';
+dcl-c cSQL_STATUS_SQL_FNC_EXCEP '2F';
+dcl-c cSQL_STATUS_INVLD_CRS_NAME '34';
+dcl-c cSQL_STATUS_INVLD_COND_NAME '35';
+dcl-c cSQL_STATUS_CRS_SENS_EXCEP '36';
+dcl-c cSQL_STATUS_EXT_FNC_EXCEP '38';
+dcl-c cSQL_STATUS_EXT_FNC_CALL_EXCEP '39';
+dcl-c cSQL_STATUS_SAVEPOINT_EXCEP '3B';
+dcl-c cSQL_STATUS_AMB_CRS_NAME '3C';
+dcl-c cSQL_STATUS_INVLD_SCHEMA_NAME '3F';
+dcl-c cSQL_STATUS_SYNTX_ERR_ACC_RULE_VIOL '42';
+dcl-c cSQL_STATUS_WTH_CHCK_OPT_VIOL '44';
+dcl-c cSQL_STATUS_JAVATM_ERR '46';
+dcl-c cSQL_STATUS_INVLD_APPL_STATE '51';
+dcl-c cSQL_STATUS_INVLD_OP_INCONS_SPEC '53';
+dcl-c cSQL_STATUS_SQL_PRD_LIMT_EXCEED '54';
+dcl-c cSQL_STATUS_OBJ_NOT_IN_PREREQU_STATE '55';
+dcl-c cSQL_STATUS_SQL_PRD_ERR '56';
+dcl-c cSQL_STATUS_RSRC_NOT_AVAI_OPERA_INTERVENT '57';
+dcl-c cSQL_SYSTEM_ERR '58';
 
-      // Defines the Quote for SQL.
-     d cSQL_QUOTE      C                   ''''
+// Defines the Quote for SQL.
+dcl-c cSQL_QUOTE '''';
 
-     d cSQL_ParameterMarker...
-     d                 C                   '?'
+dcl-c cSQL_ParameterMarker '?';
 
-      // SQL literals
-     d cSQL_TYPE_CHARACTER...
-     d                 C                   'CHARACTER'
-     d cSQL_TYPE_VARCHAR...
-     d                 C                   'VARCHAR'
-     d cSQL_TYPE_GRAPHIC...
-     d                 C                   'GRAPHIC'
-     d cSQL_TYPE_VARGRAPHIC...
-     d                 C                   'VARGRAPHIC'
-     d cSQL_TYPE_SMALLINT...
-     d                 C                   'SMALLINT'
-     d cSQL_TYPE_INTEGER...
-     d                 C                   'INTEGER'
-     d cSQL_TYPE_BIGINT...
-     d                 C                   'BIGINT'
-     d cSQL_TYPE_DECIMAL...
-     d                 C                   'DECIMAL'
-     d cSQL_TYPE_NUMERIC...
-     d                 C                   'NUMERIC'
-     d cSQL_TYPE_DOUBLE...
-     d                 C                   'DOUBLE'
-     d cSQL_TYPE_FLOAT...
-     d                 C                   'FLOAT'
-     d cSQL_TYPE_REAL...
-     d                 C                   'REAL'
-     d cSQL_TYPE_DATE...
-     d                 C                   'DATE'
-     d cSQL_TYPE_TIME...
-     d                 C                   'TIME'
-     d cSQL_TYPE_TIMESTAMP...
-     d                 C                   'TIMESTAMP'
-     d cSQL_TYPE_BLOB...
-     d                 C                   'BLOB'
-     d cSQL_TYPE_CLOB...
-     d                 C                   'CLOB'
+// SQL literals
+dcl-c cSQL_TYPE_CHARACTER 'CHARACTER';
+dcl-c cSQL_TYPE_VARCHAR 'VARCHAR';
+dcl-c cSQL_TYPE_GRAPHIC 'GRAPHIC';
+dcl-c cSQL_TYPE_VARGRAPHIC 'VARGRAPHIC';
+dcl-c cSQL_TYPE_SMALLINT 'SMALLINT';
+dcl-c cSQL_TYPE_INTEGER 'INTEGER';
+dcl-c cSQL_TYPE_BIGINT 'BIGINT';
+dcl-c cSQL_TYPE_DECIMAL 'DECIMAL';
+dcl-c cSQL_TYPE_NUMERIC 'NUMERIC';
+dcl-c cSQL_TYPE_DOUBLE 'DOUBLE';
+dcl-c cSQL_TYPE_FLOAT 'FLOAT';
+dcl-c cSQL_TYPE_REAL 'REAL';
+dcl-c cSQL_TYPE_DATE 'DATE';
+dcl-c cSQL_TYPE_TIME 'TIME';
+dcl-c cSQL_TYPE_TIMESTAMP 'TIMESTAMP';
+dcl-c cSQL_TYPE_BLOB 'BLOB';
+dcl-c cSQL_TYPE_CLOB 'CLOB';
 
-      /endif
+/endif

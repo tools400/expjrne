@@ -1,8 +1,10 @@
-      // ---------------------------------------------------------------
-      //  Data structure for message ID: USR0020
+**FREE
+// ---------------------------------------------------------------
+//  Data structure for message ID: USR0020
 
-      //  Unerlaubter Speicherzugriff. Programm beendet.
+//  Unerlaubter Speicherzugriff. Programm beendet.
 
-     d USR0020         ds
-      //  No replacement variables available!
-     d USR0020_SIZE    s             10I 0 inz(0000)
+dcl-ds USR0020;
+end-ds;
+//  No replacement variables available!
+dcl-s USR0020_SIZE    int(10) inz(0000);

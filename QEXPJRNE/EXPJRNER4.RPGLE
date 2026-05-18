@@ -1,452 +1,447 @@
-      /IF NOT DEFINED(EXPJRNE_PROTOTYPE)
-      *=====================================================================*
-      *                                                                     *
-      *  Application . : EXPJRNE                                            *
-      *  Object  . . . : EXPJRNER4                                          *
-      *  Description . : Export Journal Entries - SQL                       *
-      *  Author  . . . : Thomas Raddatz   <thomas.raddatz@tools400.de>      *
-      *  Date  . . . . : 23.10.2001                                         *
-      *                                                                     *
-      *=====================================================================*
-      *                                                                     *
-      *  This software is free software, you can redistribute it and/or     *
-      *  modify it under the terms of the GNU General Public License (GPL)  *
-      *  as published by the Free Software Foundation.                      *
-      *                                                                     *
-      *  See GNU General Public License for details.                        *
-      *          http://www.opensource.org                                  *
-      *          http://www.opensource.org/licenses/gpl-license.html        *
-      *                                                                     *
-      *=====================================================================*
-      *  History:                                                           *
-      *                                                                     *
-      *  Date        Name          Comment                                  *
-      *  ----------  ------------  ---------------------------------------  *
-      *  23.12.2002  Th.Raddatz    Fixed problem that field names longer    *
-      *                            than 10 characeters were not supported.  *
-      *                                                                     *
-      *  10.11.2005  Th.Raddatz    Added option to select between outfile   *
-      *                            types: *TYPE1 / *TYPE2.                  *
-      *                                                                     *
-      *  22.12.2005  Th.Raddatz    Replaced local procedures by procedures  *
-      *                            of service program BASICS1.              *
-      *                            Fixed bug that non *ISO dates and times  *
-      *                            caused the program to crash. These       *
-      *                            values are now converted to CHARACTER.   *
-      *                            Replaced external data structures by     *
-      *                            type definitions using LIKEDS.           *
-      *                                                                     *
-      *  07.02.2006  Th.Raddatz    Added outfile type *TYPE3 to support     *
-      *                            files with null-capable fields.          *
-      *                                                                     *
-      *  10.04.2006  Th.Raddatz    Fixed problem with file names that       *
-      *                            contain a dot (.).                       *
-      *                                                                     *
-      *  11.10.2006  D. Storch     Added support for Datatyp BIGINT         *
-      *                                                                     *
-      *  10.10.2007  Th.Raddatz    Now renaming field name if the name      *
-      *                            contains invalid chracaters.             *
-      *                            '.' is changed to '_'.                   *
-      *                                                                     *
-      *  31.03.2008  Th.Raddatz    Changed input parameter and return value *
-      *                            of f_xlate() from 10A to 512A VARYING to *
-      *                            support long field names of SQL tables.  *
-      *                                                                     *
-      *  18.09.2008  Th.Raddatz    Fixed typo in #MSG_ENG when removing and *
-      *                            adding message description USR0019       *
-      *                            (wrong message file name).               *
-      *                            Renamed #MSG_ENG and #MSG_GER to         *
-      *                            A_MSG_ENG and A_MSG_GER.                 *
-      *                                                                     *
-      *  19.09.2008  Th.Raddatz    Changed size of sqlStr_t from 32767 to   *
-      *                            65535 and added new typedef sqlStrV_t.   *
-      *                            Now retrieving description of output     *
-      *                            file from message description TXT0001.   *
-      *                            Fixed incorrect logical 'or' in          *
-      *                            f_cliProcessStmt(). SQL_SUCCESS and      *
-      *                            SQL_SUCCESS_WITH_INFO had to be ANDed.   *
-      *                                                                     *
-      *  20.09.2008  Th.Raddatz    Redesigned EXPJRNE to support additional *
-      *                            object types, starting with *DTAARA.     *
-      *                                                                     *
-      *  12.08.2009  Th.Raddatz    Removed ' FOR SBCS DATA' clause.         *
-      *                            Added ' CCSID xxxxx' clause.             *
-      *                                                                     *
-      *  19.08.2009  Th.Raddatz    Fixed problem that CCSID clause was      *
-      *                            incorrectly added to DATE, TIME and      *
-      *                            TIMESTAMP fields.                        *
-      *                                                                     *
-      *  12.09.2009  Th.Raddatz    Fixed problem that the CREATE TABLE      *
-      *                            statement ended in error if SQL reserved *
-      *                            words (such as CHECK) were used as field *
-      *                            names.                                   *
-      *                                                                     *
-      *  06.10.2014  Th.Raddatz    Fixed compiler error RNF0203.            *
-      *                                                                     *
-      *  03.02.2015  Th.Raddatz    Changed to generate a pseudo field       *
-      *                            for CLOB/BLOB fields.                    *
-      *                                                                     *
-      *  22.09.2023  Th.Raddatz    Changed generator to support TIMESTAMP   *
-      *                            fields with any number of fractional     *
-      *                            seconds.                                 *
-      *                                                                     *
-      *=====================================================================*
-      * >>PRE-COMPILER<<                                                    *
-      *   >>CRTCMD<< CRTRPGMOD    MODULE(&LI/&OB) +                         *
-      *                           SRCFILE(&SL/&SF) +                        *
-      *                           SRCMBR(&SM);                              *
-      *   >>IMPORTANT<<                                                     *
-      *     >>PARM<< TRUNCNBR(*NO);                                         *
-      *     >>PARM<< DBGVIEW(*LIST);                                        *
-      *     >>PARM<< OPTION(*EVENTF);                                       *
-      *     >>PARM<< TGTRLS(V7R3M0);                                        *
-      *   >>END-IMPORTANT<<                                                 *
-      *   >>EXECUTE<<                                                       *
-      * >>END-PRE-COMPILER<<                                                *
-      *=====================================================================*
-     H NOMAIN
-      /COPY QEXPJRNE,H_SPEC
-      *=====================================================================*
-      /ENDIF
-      *
-     D f_crtOutfile_SQL...
-     D                 PR              N
-     D                                     extproc('EXPJRNER4_+
-     D                                     f_crtOutfile_SQL+
-     D                                     ')
-     D  i_tplFile                    10A   const
-     D  i_tplLib                     10A   const
-     D  i_outFile                    10A   const
-     D  i_outLib                     10A   const
-     D  i_outFilFmt                  10A   const
-      *
-      /IF DEFINED(EXPJRNE_PROTOTYPE)
-      /EOF
-      /ENDIF
-      *
-      /COPY QBASICS1,PBASICS1                      Tools/400 Runtime Library
-      /COPY QEXPJRNE,CEELIB                        CEE APIs
-      /COPY QEXPJRNE,SQL                           Embedded SQL type definitions and const.
-      *
-      /DEFINE EXPJRNE_PROTOTYPE
-      /COPY QEXPJRNE,EXPJRNER6                     Tool: EXPJRNE SQL Call Level Interface
-      /COPY QEXPJRNE,EXPJRNER7                     Tool: EXPJRNE Utilities
-      /UNDEFINE EXPJRNE_PROTOTYPE
-      *
-      *  Typedefs
-     D sqlStrV_t       S          65535A   varying            based(pDummy)
-      *
-      *  Constants
-      *  ... double quotes
-     D cDOUBLE_QUOTE   C                   const('"')
-     D cSINGLE_QUOTE   C                   const('''')
-      *
-      * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-      *  Internal prototypes
-      * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-      *
-     D p_abnEndProc...
-     D                 PR                  extproc('p_abnEndProc')
-     D  i_pRtxToken                    *   const
-      *
-     D RtxToken_t      DS                  qualified               based(pDummy)
-     D  hList                              like(BasicList_handle_t )
-     D  hSqlCli                            likeds(hSqlCli_t        )
-      *
-      *=====================================================================*
-      *  Create outfile
-      *=====================================================================*
-      *
-     P f_crtOutfile_SQL...
-     P                 B                   export
-     D                 PI              N
-     D  i_tplFile                    10A   const
-     D  i_tplLib                     10A   const
-     D  i_outFile                    10A   const
-     D  i_outLib                     10A   const
-     D  i_outFilFmt                  10A   const
-      *
-      *  return value
-     D isOK            S               N   inz(cFalse)
-      *
-      *  fields
-     D x               S             10I 0 inz
-     D tplFile         DS                  likeds(qObj_t    ) inz
-     D fldAttr         DS                  likeds(fldAttr_t ) based(pFldAttr)
-     D rc              S                   like(SQLRETCODE_t) inz
-     D ts_fraction     S             10I 0 inz
-      *
-     D sqlStrFld       S                   like(sqlStrV_t   ) inz
-     D sqlStrText      S                   like(sqlStrV_t   ) inz
-     D sqlStrCHdg      S                   like(sqlStrV_t   ) inz
-     D sqlStrDesc      S                   like(sqlStrV_t   ) inz
-     D text            S             52A   inz
-     D msg             DS                  likeds(msg_t)
-      *
-     D rtxToken        DS                  likeds(rtxToken_t) inz
-      *
-      *  Messages
-      /COPY QEXPJRNE,USR0024
-      /COPY QEXPJRNE,USR0025
-      /COPY QEXPJRNE,USR0026
-      /COPY QEXPJRNE,USR0027
-      * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-      /FREE
+**free
+/if NOT DEFINED(EXPJRNE_PROTOTYPE)
+//=====================================================================*
+//                                                                     *
+//  Application . : EXPJRNE                                            *
+//  Object  . . . : EXPJRNER4                                          *
+//  Description . : Export Journal Entries - SQL                       *
+//  Author  . . . : Thomas Raddatz   <thomas.raddatz@tools400.de>      *
+//  Date  . . . . : 23.10.2001                                         *
+//                                                                     *
+//=====================================================================*
+//                                                                     *
+//  This software is free software, you can redistribute it and/or     *
+//  modify it under the terms of the GNU General Public License (GPL)  *
+//  as published by the Free Software Foundation.                      *
+//                                                                     *
+//  See GNU General Public License for details.                        *
+//          http://www.opensource.org                                  *
+//          http://www.opensource.org/licenses/gpl-license.html        *
+//                                                                     *
+//=====================================================================*
+//  History:                                                           *
+//                                                                     *
+//  Date        Name          Comment                                  *
+//  ----------  ------------  ---------------------------------------  *
+//  23.12.2002  Th.Raddatz    Fixed problem that field names longer    *
+//                            than 10 characeters were not supported.  *
+//                                                                     *
+//  10.11.2005  Th.Raddatz    Added option to select between outfile   *
+//                            types: *TYPE1 / *TYPE2.                  *
+//                                                                     *
+//  22.12.2005  Th.Raddatz    Replaced local procedures by procedures  *
+//                            of service program BASICS1.              *
+//                            Fixed bug that non *ISO dates and times  *
+//                            caused the program to crash. These       *
+//                            values are now converted to CHARACTER.   *
+//                            Replaced external data structures by     *
+//                            type definitions using LIKEDS.           *
+//                                                                     *
+//  07.02.2006  Th.Raddatz    Added outfile type *TYPE3 to support     *
+//                            files with null-capable fields.          *
+//                                                                     *
+//  10.04.2006  Th.Raddatz    Fixed problem with file names that       *
+//                            contain a dot (.).                       *
+//                                                                     *
+//  11.10.2006  D. Storch     Added support for Datatyp BIGINT         *
+//                                                                     *
+//  10.10.2007  Th.Raddatz    Now renaming field name if the name      *
+//                            contains invalid chracaters.             *
+//                            '.' is changed to '_'.                   *
+//                                                                     *
+//  31.03.2008  Th.Raddatz    Changed input parameter and return value *
+//                            of f_xlate() from 10A to 512A VARYING to *
+//                            support long field names of SQL tables.  *
+//                                                                     *
+//  18.09.2008  Th.Raddatz    Fixed typo in #MSG_ENG when removing and *
+//                            adding message description USR0019       *
+//                            (wrong message file name).               *
+//                            Renamed #MSG_ENG and #MSG_GER to         *
+//                            A_MSG_ENG and A_MSG_GER.                 *
+//                                                                     *
+//  19.09.2008  Th.Raddatz    Changed size of sqlStr_t from 32767 to   *
+//                            65535 and added new typedef sqlStrV_t.   *
+//                            Now retrieving description of output     *
+//                            file from message description TXT0001.   *
+//                            Fixed incorrect logical 'or' in          *
+//                            f_cliProcessStmt(). SQL_SUCCESS and      *
+//                            SQL_SUCCESS_WITH_INFO had to be ANDed.   *
+//                                                                     *
+//  20.09.2008  Th.Raddatz    Redesigned EXPJRNE to support additional *
+//                            object types, starting with *DTAARA.     *
+//                                                                     *
+//  12.08.2009  Th.Raddatz    Removed ' FOR SBCS DATA' clause.         *
+//                            Added ' CCSID xxxxx' clause.             *
+//                                                                     *
+//  19.08.2009  Th.Raddatz    Fixed problem that CCSID clause was      *
+//                            incorrectly added to DATE, TIME and      *
+//                            TIMESTAMP fields.                        *
+//                                                                     *
+//  12.09.2009  Th.Raddatz    Fixed problem that the CREATE TABLE      *
+//                            statement ended in error if SQL reserved *
+//                            words (such as CHECK) were used as field *
+//                            names.                                   *
+//                                                                     *
+//  06.10.2014  Th.Raddatz    Fixed compiler error RNF0203.            *
+//                                                                     *
+//  03.02.2015  Th.Raddatz    Changed to generate a pseudo field       *
+//                            for CLOB/BLOB fields.                    *
+//                                                                     *
+//  22.09.2023  Th.Raddatz    Changed generator to support TIMESTAMP   *
+//                            fields with any number of fractional     *
+//                            seconds.                                 *
+//                                                                     *
+//=====================================================================*
+// >>PRE-COMPILER<<                                                    *
+//   >>CRTCMD<< CRTRPGMOD    MODULE(&LI/&OB) +                         *
+//                           SRCFILE(&SL/&SF) +                        *
+//                           SRCMBR(&SM);                              *
+//   >>IMPORTANT<<                                                     *
+//     >>PARM<< TRUNCNBR(*NO);                                         *
+//     >>PARM<< DBGVIEW(*LIST);                                        *
+//     >>PARM<< OPTION(*EVENTF);                                       *
+//     >>PARM<< TGTRLS(V7R3M0);                                        *
+//   >>END-IMPORTANT<<                                                 *
+//   >>EXECUTE<<                                                       *
+// >>END-PRE-COMPILER<<                                                *
+//=====================================================================*
+ctl-opt nomain;
+/copy QEXPJRNE,H_SPEC
+//=====================================================================*
+/endif
 
-         rtxToken.hSqlCli = SQLCLI_null();
-         rtxToken.hList   = BasicList_null();
+dcl-pr f_crtOutfile_SQL ind extproc('EXPJRNER4_f_crtOutfile_SQL');
+  i_tplFile   char(10) const;
+  i_tplLib    char(10) const;
+  i_outFile   char(10) const;
+  i_outLib    char(10) const;
+  i_outFilFmt char(10) const;
+end-pr;
 
-         // Register abnormal end procedure
-         CEERTX(%paddr('p_abnEndProc'): %addr(rtxToken): *omit);
+/if DEFINED(EXPJRNE_PROTOTYPE)
+/eof
+/endif
 
-         dou '1';
+/copy QBASICS1,PBASICS1                      Tools/400 Runtime Library
+/copy QEXPJRNE,CEELIB                        CEE APIs
+/copy QEXPJRNE,SQL                           Embedded SQL type definitions and const.
 
-            // Connect to DB Server
-            Message_sendStatusMsg('USR0001');
-            SQLCLI_initialize(rtxToken.hSqlCli);
+/define EXPJRNE_PROTOTYPE
+/copy QEXPJRNE,EXPJRNER6                     Tool: EXPJRNE SQL Call Level Interface
+/copy QEXPJRNE,EXPJRNER7                     Tool: EXPJRNE Utilities
+/undefine EXPJRNE_PROTOTYPE
 
-            // Retrieve Outfile Record Format
-            Message_sendStatusMsg('USR0002');
+//  Typedefs
+dcl-s sqlStrV_t varchar(65535) based(pDummy);
 
-            // Produce field list ...
-            rtxToken.hList = BasicList_new('*COLUMNS': 256);
+//  Constants
+//  ... double quotes
+dcl-c cDOUBLE_QUOTE '"';
+dcl-c cSINGLE_QUOTE '''';
 
-            tplFile.name = i_tplFile;
-            tplFile.lib  = i_tplLib;
-            getOutputFileColumns(rtxToken.hList: i_outFilFmt: tplFile);
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+//  Internal prototypes
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-            // Initialize SQL statements
-            sqlStrFld = 'CREATE TABLE ' + %trim(i_outLib) + '.' +
-                                          cDOUBLE_QUOTE +
-                                          %trim(i_outFile) +
-                                          cDOUBLE_QUOTE + ' (';
+dcl-pr p_abnEndProc extproc('p_abnEndProc');
+  i_pRtxToken pointer const;
+end-pr;
 
-            sqlStrText = 'LABEL ON '    + %trim(i_outLib) + '.' +
-                                          cDOUBLE_QUOTE +
-                                          %trim(i_outFile) +
-                                          cDOUBLE_QUOTE + ' (';
+dcl-ds RtxToken_t qualified based(pDummy);
+  hList   like(BasicList_handle_t);
+  hSqlCli likeds(hSqlCli_t);
+end-ds;
 
-            sqlStrCHdg = 'LABEL ON '    + %trim(i_outLib) + '.' +
-                                          cDOUBLE_QUOTE +
-                                          %trim(i_outFile) +
-                                          cDOUBLE_QUOTE + ' (';
+//=====================================================================*
+//  Create outfile
+//=====================================================================*
 
-            // Loop through column list and create SQL statements
-            for x = 1 to BasicList_getNumE(rtxToken.hList);
-               pFldAttr = BasicList_get(rtxToken.hList: x);
+dcl-proc f_crtOutfile_SQL export;
+  dcl-pi *n ind;
+    i_tplFile   char(10) const;
+    i_tplLib    char(10) const;
+    i_outFile   char(10) const;
+    i_outLib    char(10) const;
+    i_outFilFmt char(10) const;
+  end-pi;
 
-               // --------------------------------------------------
-               // produce SQL command: CREATE TABLE
-               // --------------------------------------------------
+  //  return value
+  dcl-s isOK ind inz(cFalse);
 
-               // ... column name
-               sqlStrFld = sqlStrFld + f_addQuotes(fldAttr.flda0320.alias
-                                                   : cDOUBLE_QUOTE);
+  //  fields
+  dcl-s x int(10) inz;
+  dcl-ds tplFile likeds(qObj_t) inz;
+  dcl-ds fldAttr likeds(fldAttr_t) based(pFldAttr);
+  dcl-s rc like(SQLRETCODE_t) inz;
+  dcl-s ts_fraction int(10) inz;
 
-               // ... add data type
-               select;
-               when (fldAttr.sqlType = cSQL_TYPE_CHARACTER ) or
-                    (fldAttr.sqlType = cSQL_TYPE_VARCHAR   );
+  dcl-s sqlStrFld like(sqlStrV_t) inz;
+  dcl-s sqlStrText like(sqlStrV_t) inz;
+  dcl-s sqlStrCHdg like(sqlStrV_t) inz;
+  dcl-s sqlStrDesc like(sqlStrV_t) inz;
+  dcl-s text char(52) inz;
+  dcl-ds msg likeds(msg_t);
 
-                  sqlStrFld = sqlStrFld + '  ' + fldAttr.sqlType + ' (' +
-                              %trim(%editc(fldAttr.flda0320.length: 'Z')) + ')';
+  dcl-ds rtxToken likeds(rtxToken_t) inz;
 
-               when (fldAttr.sqlType = cSQL_TYPE_SMALLINT  ) or
-                    (fldAttr.sqlType = cSQL_TYPE_INTEGER   ) or
-                    (fldAttr.sqlType = cSQL_TYPE_BIGINT    ) or
-                    (fldAttr.sqlType = cSQL_TYPE_DOUBLE    ) or
-                    (fldAttr.sqlType = cSQL_TYPE_FLOAT     ) or
-                    (fldAttr.sqlType = cSQL_TYPE_REAL      ) or
-                    (fldAttr.sqlType = cSQL_TYPE_DATE      ) or
-                    (fldAttr.sqlType = cSQL_TYPE_TIME      );
+  //  Messages
+/copy QEXPJRNE,USR0024
+/copy QEXPJRNE,USR0025
+/copy QEXPJRNE,USR0026
+/copy QEXPJRNE,USR0027
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-                  sqlStrFld = sqlStrFld + '  ' + fldAttr.sqlType;
+  rtxToken.hSqlCli = SQLCLI_null();
+  rtxToken.hList   = BasicList_null();
 
-               when (fldAttr.sqlType = cSQL_TYPE_TIMESTAMP );
+  // Register abnormal end procedure
+  CEERTX(%paddr('p_abnEndProc'): %addr(rtxToken): *omit);
 
-                  if (fldAttr.flda0320.length = 19);
-                     ts_fraction = 0;
-                  else;
-                     ts_fraction = fldAttr.flda0320.length - 20;
-                  endif;
+  dou '1';
 
-                  sqlStrFld = sqlStrFld + '  ' + fldAttr.sqlType + ' (' +
-                              %char(ts_fraction) + ')';
+    // Connect to DB Server
+    Message_sendStatusMsg('USR0001');
+    SQLCLI_initialize(rtxToken.hSqlCli);
 
-               when (fldAttr.sqlType = cSQL_TYPE_GRAPHIC   ) or
-                    (fldAttr.sqlType = cSQL_TYPE_VARGRAPHIC);
+    // Retrieve Outfile Record Format
+    Message_sendStatusMsg('USR0002');
 
-                  sqlStrFld = sqlStrFld + '  ' + fldAttr.sqlType + ' (' +
-                              %trim(%editc(fldAttr.flda0320.digits: 'Z')) + ')';
+    // Produce field list ...
+    rtxToken.hList = BasicList_new('*COLUMNS': 256);
 
-               when (fldAttr.sqlType = cSQL_TYPE_DECIMAL   ) or
-                    (fldAttr.sqlType = cSQL_TYPE_NUMERIC   );
+    tplFile.name = i_tplFile;
+    tplFile.lib  = i_tplLib;
+    getOutputFileColumns(rtxToken.hList: i_outFilFmt: tplFile);
 
-                  sqlStrFld = sqlStrFld + '  ' + fldAttr.sqltype + ' (' +
-                              %trim(%editc(fldAttr.flda0320.digits: 'Z')) +
-                              ', ' + %char(fldAttr.flda0320.decPos) + ')';
+    // Initialize SQL statements
+    sqlStrFld = 'CREATE TABLE ' + %trim(i_outLib) + '.' +
+                                  cDOUBLE_QUOTE +
+                                  %trim(i_outFile) +
+                                  cDOUBLE_QUOTE + ' (';
 
-               when (fldAttr.sqlType = cSQL_TYPE_BLOB      ) or
-                    (fldAttr.sqlType = cSQL_TYPE_CLOB      );
+    sqlStrText = 'LABEL ON '    + %trim(i_outLib) + '.' +
+                                  cDOUBLE_QUOTE +
+                                  %trim(i_outFile) +
+                                  cDOUBLE_QUOTE + ' (';
 
-                  sqlStrFld = sqlStrFld + '  ' + cSQL_TYPE_CHARACTER + ' (' +
-                        %trim(%editc(fldAttr.flda0320.buffLength: 'Z')) + ')';
+    sqlStrCHdg = 'LABEL ON '    + %trim(i_outLib) + '.' +
+                                  cDOUBLE_QUOTE +
+                                  %trim(i_outFile) +
+                                  cDOUBLE_QUOTE + ' (';
 
-               endsl;
+    // Loop through column list and create SQL statements
+    for x = 1 to BasicList_getNumE(rtxToken.hList);
+      pFldAttr = BasicList_get(rtxToken.hList: x);
 
-               // ... CCSID
-               // if (fldAttr.sqlType = cSQL_TYPE_CHARACTER or
-               //     fldAttr.sqlType = cSQL_TYPE_VARCHAR  );
-               //    sqlStrFld = sqlStrFld + ' FOR SBCS DATA';
-               // endif;
-               if (hasCcsidClause(fldAttr.flda0320.type
-                                  : fldAttr.flda0320.ccsid));
-                  sqlStrFld = sqlStrFld +
-                              ' CCSID ' + %char(fldAttr.flda0320.ccsid);
-               endif;
+      // --------------------------------------------------
+      // produce SQL command: CREATE TABLE
+      // --------------------------------------------------
 
-               // ... NULL capability
-               if (fldAttr.flda0320.alwNull = cFalse);
-                  sqlStrFld = sqlStrFld + ' NOT NULL WITH DEFAULT';
-               endif;
+      // ... column name
+      sqlStrFld = sqlStrFld + f_addQuotes(fldAttr.flda0320.alias
+                                          : cDOUBLE_QUOTE);
 
-               // --------------------------------------------------
-               // produce SQL command: ALTER TABLE (text)
-               // --------------------------------------------------
-               sqlStrText = sqlStrText +
-                            f_addQuotes(fldAttr.flda0320.alias: cDOUBLE_QUOTE) +
-                            ' TEXT IS ' +
-                            cSINGLE_QUOTE +
-                            f_replace(cSINGLE_QUOTE:
-                                      cSINGLE_QUOTE + cSINGLE_QUOTE:
-                                      %trim(fldAttr.flda0320.text)) +
-                            cSINGLE_QUOTE;
+      // ... add data type
+      select;
+      when (fldAttr.sqlType = cSQL_TYPE_CHARACTER ) or
+           (fldAttr.sqlType = cSQL_TYPE_VARCHAR   );
 
-               // --------------------------------------------------
-               // produce SQL command: ALTER TABLE (column heading)
-               // --------------------------------------------------
-               sqlStrCHdg = sqlStrCHdg +
-                            f_addQuotes(fldAttr.flda0320.alias: cDOUBLE_QUOTE) +
-                            ' IS ' +
-                            cSINGLE_QUOTE +
-                            f_replace(cSINGLE_QUOTE:
-                                      cSINGLE_QUOTE + cSINGLE_QUOTE:
-                                      fldAttr.flda0320.colHdg1  +
-                                      fldAttr.flda0320.colHdg2  +
-                                      fldAttr.flda0320.colHdg3) +
-                            cSINGLE_QUOTE;
+        sqlStrFld = sqlStrFld + '  ' + fldAttr.sqlType + ' (' +
+                    %trim(%editc(fldAttr.flda0320.length: 'Z')) + ')';
 
-               if (x <> BasicList_getNumE(rtxToken.hList));
-                  sqlStrFld  = sqlStrFld  + ', ';
-                  sqlStrText = sqlStrText + ', ';
-                  sqlStrCHdg = sqlStrCHdg + ', ';
-               endif;
-            endfor;
+      when (fldAttr.sqlType = cSQL_TYPE_SMALLINT  ) or
+           (fldAttr.sqlType = cSQL_TYPE_INTEGER   ) or
+           (fldAttr.sqlType = cSQL_TYPE_BIGINT    ) or
+           (fldAttr.sqlType = cSQL_TYPE_DOUBLE    ) or
+           (fldAttr.sqlType = cSQL_TYPE_FLOAT     ) or
+           (fldAttr.sqlType = cSQL_TYPE_REAL      ) or
+           (fldAttr.sqlType = cSQL_TYPE_DATE      ) or
+           (fldAttr.sqlType = cSQL_TYPE_TIME      );
 
-            // Finish SQL statements
-            sqlStrFld  = sqlStrFld + ')';
-            sqlStrText = sqlStrText+ ')';
-            sqlStrCHdg = sqlStrCHdg+ ')';
+        sqlStrFld = sqlStrFld + '  ' + fldAttr.sqlType;
 
-            // Create Outfile
-            Message_sendStatusMsg('USR0003');
+      when (fldAttr.sqlType = cSQL_TYPE_TIMESTAMP );
 
-            dou '1';
-               rc = SQLCLI_executeDirect(rtxToken.hSqlCli: sqlStrFld);
-               if (rc = SQL_ERROR);
-                  clear USR0024;
-                  USR00241 = sqlStrFld;
-                  Message_sendDiagMsg(f_newMsg('USR0024': USR0024));
-                  leave;
-               endif;
+        if (fldAttr.flda0320.length = 19);
+          ts_fraction = 0;
+        else;
+          ts_fraction = fldAttr.flda0320.length - 20;
+        endif;
 
-               rc = SQLCLI_executeDirect(rtxToken.hSqlCli: sqlStrText);
-               if (rc = SQL_ERROR);
-                  clear USR0025;
-                  USR00251 = sqlStrText;
-                  Message_sendDiagMsg(f_newMsg('USR0025': USR0025));
-                  leave;
-               endif;
+        sqlStrFld = sqlStrFld + '  ' + fldAttr.sqlType + ' (' +
+                    %char(ts_fraction) + ')';
 
-               rc = SQLCLI_executeDirect(rtxToken.hSqlCli: sqlStrCHdg);
-               if (rc = SQL_ERROR);
-                  clear USR0026;
-                  USR00261 = sqlStrCHdg;
-                  Message_sendDiagMsg(f_newMsg('USR0026': USR0026));
-                  leave;
-               endif;
+      when (fldAttr.sqlType = cSQL_TYPE_GRAPHIC   ) or
+           (fldAttr.sqlType = cSQL_TYPE_VARGRAPHIC);
 
-               msg = f_newMsg('TXT0001');
-               text = f_rtvMsgText(msg);
-               text = f_addQuotes(%trimR(text): cSINGLE_QUOTE);
+        sqlStrFld = sqlStrFld + '  ' + fldAttr.sqlType + ' (' +
+                    %trim(%editc(fldAttr.flda0320.digits: 'Z')) + ')';
 
-               sqlStrDesc = 'LABEL ON TABLE ' + %trim(i_outLib) + '.' +
-                                                %trim(i_outFile) +
-                            ' IS ' + text;
+      when (fldAttr.sqlType = cSQL_TYPE_DECIMAL   ) or
+           (fldAttr.sqlType = cSQL_TYPE_NUMERIC   );
 
-               rc = SQLCLI_executeDirect(rtxToken.hSqlCli: sqlStrDesc);
-               if (rc = SQL_ERROR);
-                  clear USR0027;
-                  USR00271 = sqlStrDesc;
-                  Message_sendDiagMsg(f_newMsg('USR0027': USR0027));
-                  leave;
-               endif;
-            enddo;
+        sqlStrFld = sqlStrFld + '  ' + fldAttr.sqltype + ' (' +
+                    %trim(%editc(fldAttr.flda0320.digits: 'Z')) +
+                    ', ' + %char(fldAttr.flda0320.decPos) + ')';
 
-            if (rc = SQL_ERROR);
-               Message_sendDiagMsg(SQLCLI_Error_get());
-            endif;
+      when (fldAttr.sqlType = cSQL_TYPE_BLOB      ) or
+           (fldAttr.sqlType = cSQL_TYPE_CLOB      );
 
-            // Disconnect from DB Server
-            SQLCLI_terminate(rtxToken.hSqlCli);
+        sqlStrFld = sqlStrFld + '  ' + cSQL_TYPE_CHARACTER + ' (' +
+              %trim(%editc(fldAttr.flda0320.buffLength: 'Z')) + ')';
 
-            // Unregister abnormal end procedure
-            CEEUTX(%paddr('p_abnEndProc'): *omit);
+      endsl;
 
-            isOK = cTrue;
-         enddo;
+      // ... CCSID
+      // if (fldAttr.sqlType = cSQL_TYPE_CHARACTER or
+      //     fldAttr.sqlType = cSQL_TYPE_VARCHAR  );
+      //    sqlStrFld = sqlStrFld + ' FOR SBCS DATA';
+      // endif;
+      if (hasCcsidClause(fldAttr.flda0320.type
+                         : fldAttr.flda0320.ccsid));
+        sqlStrFld = sqlStrFld +
+                    ' CCSID ' + %char(fldAttr.flda0320.ccsid);
+      endif;
 
-         // Delete temporary objects
-         Message_sendStatusMsg('USR0004');
+      // ... NULL capability
+      if (fldAttr.flda0320.alwNull = cFalse);
+        sqlStrFld = sqlStrFld + ' NOT NULL WITH DEFAULT';
+      endif;
 
-         // House keeping
-         // ... list of columns
-         if (not BasicList_isNull(rtxToken.hList));
-            BasicList_delete(rtxToken.hList);
-            rtxToken.hList = BasicList_null();
-         endif;
-         // ... SQL call level interface
-         if (not SQLCLI_isNull(rtxToken.hSqlCli));
-            SQLCLI_terminate(rtxToken.hSqlCli);
-            rtxToken.hSqlCli = SQLCLI_null();
-         endif;
+      // --------------------------------------------------
+      // produce SQL command: ALTER TABLE (text)
+      // --------------------------------------------------
+      sqlStrText = sqlStrText +
+                   f_addQuotes(fldAttr.flda0320.alias: cDOUBLE_QUOTE) +
+                   ' TEXT IS ' +
+                   cSINGLE_QUOTE +
+                   f_replace(cSINGLE_QUOTE:
+                             cSINGLE_QUOTE + cSINGLE_QUOTE:
+                             %trim(fldAttr.flda0320.text)) +
+                   cSINGLE_QUOTE;
 
-         return isOK;
+      // --------------------------------------------------
+      // produce SQL command: ALTER TABLE (column heading)
+      // --------------------------------------------------
+      sqlStrCHdg = sqlStrCHdg +
+                   f_addQuotes(fldAttr.flda0320.alias: cDOUBLE_QUOTE) +
+                   ' IS ' +
+                   cSINGLE_QUOTE +
+                   f_replace(cSINGLE_QUOTE:
+                             cSINGLE_QUOTE + cSINGLE_QUOTE:
+                             fldAttr.flda0320.colHdg1  +
+                             fldAttr.flda0320.colHdg2  +
+                             fldAttr.flda0320.colHdg3) +
+                   cSINGLE_QUOTE;
 
-      /END-FREE
-     P                 E
-      *
-      *=====================================================================*
-      *  Terminate SQL connection
-      *=====================================================================*
-      *
-     P p_abnEndProc...
-     P                 B
-     D                 PI
-     D  i_pRtxToken                    *   const
-      *
-     D rtxToken        DS                  likeds(rtxToken_t) based(i_pRtxToken)
-      * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-      /FREE
+      if (x <> BasicList_getNumE(rtxToken.hList));
+        sqlStrFld  = sqlStrFld  + ', ';
+        sqlStrText = sqlStrText + ', ';
+        sqlStrCHdg = sqlStrCHdg + ', ';
+      endif;
+    endfor;
 
-         if (not BasicList_isNull(rtxToken.hList));
-            BasicList_delete(rtxToken.hList);
-            rtxToken.hList = BasicList_null();
-         endif;
+    // Finish SQL statements
+    sqlStrFld  = sqlStrFld + ')';
+    sqlStrText = sqlStrText+ ')';
+    sqlStrCHdg = sqlStrCHdg+ ')';
 
-         SQLCLI_shutdown();
-         rtxToken.hSqlCli = SQLCLI_null();
+    // Create Outfile
+    Message_sendStatusMsg('USR0003');
 
-      /END-FREE
-     P                 E
-      *
+    dou '1';
+      rc = SQLCLI_executeDirect(rtxToken.hSqlCli: sqlStrFld);
+      if (rc = SQL_ERROR);
+        clear USR0024;
+        USR00241 = sqlStrFld;
+        Message_sendDiagMsg(f_newMsg('USR0024': USR0024));
+        leave;
+      endif;
+
+      rc = SQLCLI_executeDirect(rtxToken.hSqlCli: sqlStrText);
+      if (rc = SQL_ERROR);
+        clear USR0025;
+        USR00251 = sqlStrText;
+        Message_sendDiagMsg(f_newMsg('USR0025': USR0025));
+        leave;
+      endif;
+
+      rc = SQLCLI_executeDirect(rtxToken.hSqlCli: sqlStrCHdg);
+      if (rc = SQL_ERROR);
+        clear USR0026;
+        USR00261 = sqlStrCHdg;
+        Message_sendDiagMsg(f_newMsg('USR0026': USR0026));
+        leave;
+      endif;
+
+      msg = f_newMsg('TXT0001');
+      text = f_rtvMsgText(msg);
+      text = f_addQuotes(%trimR(text): cSINGLE_QUOTE);
+
+      sqlStrDesc = 'LABEL ON TABLE ' + %trim(i_outLib) + '.' +
+                                       %trim(i_outFile) +
+                   ' IS ' + text;
+
+      rc = SQLCLI_executeDirect(rtxToken.hSqlCli: sqlStrDesc);
+      if (rc = SQL_ERROR);
+        clear USR0027;
+        USR00271 = sqlStrDesc;
+        Message_sendDiagMsg(f_newMsg('USR0027': USR0027));
+        leave;
+      endif;
+    enddo;
+
+    if (rc = SQL_ERROR);
+      Message_sendDiagMsg(SQLCLI_Error_get());
+    endif;
+
+    // Disconnect from DB Server
+    SQLCLI_terminate(rtxToken.hSqlCli);
+
+    // Unregister abnormal end procedure
+    CEEUTX(%paddr('p_abnEndProc'): *omit);
+
+    isOK = cTrue;
+  enddo;
+
+  // Delete temporary objects
+  Message_sendStatusMsg('USR0004');
+
+  // House keeping
+  // ... list of columns
+  if (not BasicList_isNull(rtxToken.hList));
+    BasicList_delete(rtxToken.hList);
+    rtxToken.hList = BasicList_null();
+  endif;
+  // ... SQL call level interface
+  if (not SQLCLI_isNull(rtxToken.hSqlCli));
+    SQLCLI_terminate(rtxToken.hSqlCli);
+    rtxToken.hSqlCli = SQLCLI_null();
+  endif;
+
+  return isOK;
+
+end-proc;
+
+//=====================================================================*
+//  Terminate SQL connection
+//=====================================================================*
+
+dcl-proc p_abnEndProc;
+  dcl-pi *n;
+    i_pRtxToken pointer const;
+  end-pi;
+
+  dcl-ds rtxToken likeds(rtxToken_t) based(i_pRtxToken);
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  if (not BasicList_isNull(rtxToken.hList));
+    BasicList_delete(rtxToken.hList);
+    rtxToken.hList = BasicList_null();
+  endif;
+
+  SQLCLI_shutdown();
+  rtxToken.hSqlCli = SQLCLI_null();
+
+end-proc;
+

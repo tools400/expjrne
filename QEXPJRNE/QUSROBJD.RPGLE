@@ -1,22 +1,23 @@
-      /if not defined(QUSROBJD)
-      /define QUSROBJD
+**free
+/if not defined(QUSROBJD)
+/define QUSROBJD
 
-      // Retrieve Object Description (QUSROBJD) API
-     d QUSROBJD...
-     d                 pr                         extpgm('QUSROBJD')
-     d  o_rcvVar                  65535a          options(*varsize)
-     d  i_lenRcvVar                  10i 0 const
-     d  i_format                      8a   const
-     d  i_qObj                       20a   const
-     d  i_type                       10a   const
-     d  io_errCode                65535a          options(*nopass: *varsize)    | OptGrp 1
-     d  i_auxStgCtrl              65535a   const  options(*nopass: *varsize)    | OptGrp 2
+// Retrieve Object Description (QUSROBJD) API
+dcl-pr QUSROBJD extpgm('QUSROBJD');
+  o_rcvVar     char(65535) options(*varsize);
+  i_lenRcvVar  int(10) const;
+  i_format     char(8) const;
+  i_qObj       char(20) const;
+  i_type       char(10) const;
+  io_errCode   char(65535) options(*nopass: *varsize); // | OptGrp 1
+  i_auxStgCtrl char(65535) options(*nopass: *varsize) const; // | OptGrp 2
+end-pr;
 
-      // Auxiliary Storage Pool (ASP) Control Format
-     d auxStgCtrl_t...
-     d                 ds                  qualified               based(pDummy)
-     d  length                       10i 0
-     d  device                       10a
-     d  searchType                   10a
+// Auxiliary Storage Pool (ASP) Control Format
+dcl-ds auxStgCtrl_t qualified based(pDummy);
+  length     int(10);
+  device     char(10);
+  searchType char(10);
+end-ds;
 
-      /endif
+/endif

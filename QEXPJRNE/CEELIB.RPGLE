@@ -1,130 +1,125 @@
-      /if not defined(CEELIB)
-      /define CEELIB
+**free
+/if not defined(CEELIB)
+/define CEELIB
 
-      // --------------------------------------------------------------
-      //  Program or Procedure Call APIs
-      // --------------------------------------------------------------
+// --------------------------------------------------------------
+//  Program or Procedure Call APIs
+// --------------------------------------------------------------
 
-      // Retrieve Operational Descriptor Information (CEEDOD)
-     d CEEDOD...
-     d                 pr
-     d                                            extproc('CEEDOD')
-     d  i_posn                       10i 0 const
-     d  o_desctype                   10i 0
-     d  o_datatype                   10i 0
-     d  o_descinf1                   10i 0
-     d  o_descinf2                   10i 0
-     d  o_datalen                    10i 0
-     d  o_fc                         12a          options(*omit   )
+// Retrieve Operational Descriptor Information (CEEDOD)
+dcl-pr CEEDOD extproc('CEEDOD');
+  i_posn     int(10) const;
+  o_desctype int(10);
+  o_datatype int(10);
+  o_descinf1 int(10);
+  o_descinf2 int(10);
+  o_datalen  int(10);
+  o_fc       char(12) options(*omit);
+end-pr;
 
-      // Reference fields for CEEDOD API
-     d descInf_t       ds                  based(pDummy)   qualified
-     d  desctype                     10i 0
-     d  datatype                     10i 0
-     d  descinf1                     10i 0
-     d  descinf2                     10i 0
-     d  datalen                      10i 0
+// Reference fields for CEEDOD API
+dcl-ds descInf_t based(pDummy) qualified;
+  desctype int(10);
+  datatype int(10);
+  descinf1 int(10);
+  descinf2 int(10);
+  datalen  int(10);
+end-ds;
 
-      // Test for Omitted Argument (CEETSTA) API
-     d CEETSTA...
-     d                 pr
-     d                                            extproc('CEETSTA')
-     d  io_isPresent                 10i 0
-     d  i_argNum                     10i 0 const
-     d  o_fc                         12a          options(*omit   )
+// Test for Omitted Argument (CEETSTA) API
+dcl-pr CEETSTA extproc('CEETSTA');
+  io_isPresent int(10);
+  i_argNum     int(10) const;
+  o_fc         char(12) options(*omit);
+end-pr;
 
-      // Get String Information (CEEGSI) API
-     d CEEGSI...
-     d                 pr
-     d                                            extproc('CEEGSI')
-     d  i_posn                       10i 0 const
-     d  o_datatype                   10i 0
-     d  o_curlen                     10i 0
-     d  o_maxlen                     10i 0
-     d  o_fb                         12a          options(*omit   )
+// Get String Information (CEEGSI) API
+dcl-pr CEEGSI extproc('CEEGSI');
+  i_posn     int(10) const;
+  o_datatype int(10);
+  o_curlen   int(10);
+  o_maxlen   int(10);
+  o_fb       char(12) options(*omit);
+end-pr;
 
-      // Reference fields for CEEGSI API
-     d strInf_t        ds                  based(pDummy)   qualified
-     d  datatype                     10i 0
-     d  curlen                       10i 0
-     d  maxlen                       10i 0
+// Reference fields for CEEGSI API
+dcl-ds strInf_t based(pDummy) qualified;
+  datatype int(10);
+  curlen   int(10);
+  maxlen   int(10);
+end-ds;
 
-      // --------------------------------------------------------------
-      //  Math APIs
-      // --------------------------------------------------------------
+// --------------------------------------------------------------
+//  Math APIs
+// --------------------------------------------------------------
 
-      // Logarithm base 10 (double float)
-     d CEESDLG1...
-     d                 pr                  extproc('CEESDLG1')
-     d  i_value                       8f   const
-     d  o_result                      8f
+// Logarithm base 10 (double float)
+dcl-pr CEESDLG1 extproc('CEESDLG1');
+  i_value  float(8) const;
+  o_result float(8);
+end-pr;
 
-      // --------------------------------------------------------------
-      //  ILE CEE Date and Time APIs
-      // --------------------------------------------------------------
+// --------------------------------------------------------------
+//  ILE CEE Date and Time APIs
+// --------------------------------------------------------------
 
-      // Calculate Day of Week from Lilian Date (CEEDYWK) API
-     d CEEDYWK         pr                  opdesc extproc('CEEDYWK')
-     d   lilian_date                 10i 0 const
-     d   day_no                      10i 0
-     d   feedback                    12a   options(*omit)
+// Calculate Day of Week from Lilian Date (CEEDYWK) API
+dcl-pr CEEDYWK opdesc extproc('CEEDYWK');
+  lilian_date int(10) const;
+  day_no      int(10);
+  feedback    char(12) options(*omit);
+end-pr;
 
-      // Convert Lilian Date to Character Format (CEEDATE) API
-     d CEEDATE         pr                  opdesc extproc('CEEDATE')
-     d   lilian_date                 10i 0 const
-     d   date_format                 80a   const options(*varsize)
-     d   char_date                   80a   options(*varsize)
-     d   feedback                    12a   options(*omit)
+// Convert Lilian Date to Character Format (CEEDATE) API
+dcl-pr CEEDATE opdesc extproc('CEEDATE');
+  lilian_date int(10) const;
+  date_format char(80) options(*varsize) const;
+  char_date   char(80) options(*varsize);
+  feedback    char(12) options(*omit);
+end-pr;
 
-      // Convert Date to Lilian Format (CEEDAYS) API
-     d CEEDAYS         pr                  opdesc extproc('CEEDAYS')
-     d   char_date                   80a   const options(*varsize)
-     d   date_format                 80a   const options(*varsize)
-     d   lilian_date                 10i 0
-     d   feedback                    12a   options(*omit)
+// Convert Date to Lilian Format (CEEDAYS) API
+dcl-pr CEEDAYS opdesc extproc('CEEDAYS');
+  char_date   char(80) options(*varsize) const;
+  date_format char(80) options(*varsize) const;
+  lilian_date int(10);
+  feedback    char(12) options(*omit);
+end-pr;
 
-      // --------------------------------------------------------------
-      //  Activation Group and Control Flow APIs
-      // --------------------------------------------------------------
+// --------------------------------------------------------------
+//  Activation Group and Control Flow APIs
+// --------------------------------------------------------------
 
-      // Register Activation Group Exit Procedure (CEE4RAGE) API
-     d CEE4RAGE...
-     d                 pr                  extproc('CEE4RAGE')
-     d  i_pProc                        *   const procptr
-     d   fc                          12a         options(*OMIT)
+// Register Activation Group Exit Procedure (CEE4RAGE) API
+dcl-pr CEE4RAGE extproc('CEE4RAGE');
+  i_pProc pointer(*proc) const;
+  fc      char(12) options(*omit);
+end-pr;
 
-     d END_ACTGRP_CODE_EXCEPTION_MESSAGE...
-     d                 C                   x'40000000'
-     d END_ACTGRP_CODE_ABNORMAL_END...
-     d                 C                   x'00008000'
-     d END_ACTGRP_CODE_ACTGRP_IS_ENDING...
-     d                 C                   x'00004000'
-     d END_ACTGRP_CODE_INIT_BY_RCLACTGRP...
-     d                 C                   x'00002000'
-     d END_ACTGRP_CODE_INIT_BY_JOB_END...
-     d                 C                   x'00001000'
-     d END_ACTGRP_CODE_INIT_BY_EXIT_VERB...
-     d                 C                   x'00000800'
-     d END_ACTGRP_CODE_INIT_BY_FUNCTION_CHECK...
-     d                 C                   x'00000400'
-     d END_ACTGRP_CODE_INIT_BY_OUT_OF_SCOPE_JUMP...
-     d                 C                   x'00000200'
+dcl-c END_ACTGRP_CODE_EXCEPTION_MESSAGE x'40000000';
+dcl-c END_ACTGRP_CODE_ABNORMAL_END x'00008000';
+dcl-c END_ACTGRP_CODE_ACTGRP_IS_ENDING x'00004000';
+dcl-c END_ACTGRP_CODE_INIT_BY_RCLACTGRP x'00002000';
+dcl-c END_ACTGRP_CODE_INIT_BY_JOB_END x'00001000';
+dcl-c END_ACTGRP_CODE_INIT_BY_EXIT_VERB x'00000800';
+dcl-c END_ACTGRP_CODE_INIT_BY_FUNCTION_CHECK x'00000400';
+dcl-c END_ACTGRP_CODE_INIT_BY_OUT_OF_SCOPE_JUMP x'00000200';
 
-      // Register Call Stack Entry Termination User Exit Procedure (CEERTX)
-     d CEERTX...
-     d                 pr                         extproc('CEERTX')
-     d  i_procPtr                      *   const  procptr
-     d  i_rtxToken                     *   const  options(*omit)
-     d  o_fc                         12a          options(*omit)
+// Register Call Stack Entry Termination User Exit Procedure (CEERTX)
+dcl-pr CEERTX extproc('CEERTX');
+  i_procPtr  pointer(*proc) const;
+  i_rtxToken pointer options(*omit) const;
+  o_fc       char(12) options(*omit);
+end-pr;
 
-     D CEERTX_user_exit...
-     D                 pr                         extproc('CEERTX_user_exit')
-     D  i_rtxToken                     *   const
+dcl-pr CEERTX_user_exit extproc('CEERTX_user_exit');
+  i_rtxToken pointer const;
+end-pr;
 
-      // Unregister Call Stack Entry Termination User Exit Procedure (CEEUTX)
-     d CEEUTX...
-     d                 pr                         extproc('CEEUTX')
-     d  i_procPtr                      *   const  procptr
-     d  o_fc                         12a          options(*omit)
+// Unregister Call Stack Entry Termination User Exit Procedure (CEEUTX)
+dcl-pr CEEUTX extproc('CEEUTX');
+  i_procPtr pointer(*proc) const;
+  o_fc      char(12) options(*omit);
+end-pr;
 
-      /endif
+/endif

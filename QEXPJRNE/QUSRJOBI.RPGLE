@@ -1,182 +1,182 @@
-      /if not defined(QUSRJOBI)
-      /define QUSRJOBI
+**free
+/if not defined(QUSRJOBI)
+/define QUSRJOBI
 
-      // Retrieve Job Information (QUSRJOBI) API
-     d QUSRJOBI...
-     d                 pr                  extpgm('QUSRJOBI')
-     d  o_rcvVar                  65535a          options(*varsize)
-     d  i_rcvVarLen                  10i 0 const
-     d  i_format                      8a   const
-     d  i_qJob                       26a   const
-     d  i_intJobID                   16a   const
-     d  io_errCode                65535a          options(*nopass: *varsize)    OptGrp 1
-     d  i_resPrfStat                  1a   const  options(*nopass)              OptGrp 2
+// Retrieve Job Information (QUSRJOBI) API
+dcl-pr QUSRJOBI extpgm('QUSRJOBI');
+  o_rcvVar     char(65535) options(*varsize);
+  i_rcvVarLen  int(10) const;
+  i_format     char(8) const;
+  i_qJob       char(26) const;
+  i_intJobID   char(16) const;
+  io_errCode   char(65535) options(*nopass: *varsize); // OptGrp 1
+  i_resPrfStat char(1) options(*nopass) const; // OptGrp 2
+end-pr;
 
-     d jobi0100_t...
-     d                 ds                  qualified           based(pDummy)
-     d  bytRet                       10i 0
-     d  bytAvl                       10i 0
-     d  job                          10a
-     d  user                         10a
-     d  nbr                           6a
-     d  intJobID                     16a
-     d  status                       10a
-     d  type                          1a
-     d  subType                       1a
-     d  reserved_1                    2a
-     d  runPty                       10i 0
-     d  timeSlice                    10i 0
-     d  dftWait                      10i 0
-     d  purge                        10a
+dcl-ds jobi0100_t qualified based(pDummy);
+  bytRet     int(10);
+  bytAvl     int(10);
+  job        char(10);
+  user       char(10);
+  nbr        char(6);
+  intJobID   char(16);
+  status     char(10);
+  type       char(1);
+  subType    char(1);
+  reserved_1 char(2);
+  runPty     int(10);
+  timeSlice  int(10);
+  dftWait    int(10);
+  purge      char(10);
+end-ds;
 
-     d jobi0200_t...
-     d                 ds                  qualified           based(pDummy)
-     d  bytRet                       10i 0
-     d  bytAvl                       10i 0
-     d  job                          10a
-     d  user                         10a
-     d  nbr                           6a
-     d  intJobID                     16a
-     d  status                       10a
-     d  type                          1a
-     d  subType                       1a
-     d  sbsDName                     10a
-     d  runPty                       10i 0
-     d  sysPoolID                    10i 0
-     d  prcTimeUsd                   10i 0
-     d  numAuxIORq                   10i 0
-     d  numIntTact                   10i 0
-     d  rspTimeTot                   10i 0
-     d  fncType                       1a
-     d  fncName                      10a
-     d  actJobSts                     4a
-     d  numDBLckW                    10i 0
-     d  numIntLckW                   10i 0
-     d  numNonDBLckW                 10i 0
-     d  timeDBLckW                   10i 0
-     d  timeIntLckW                  10i 0
-     d  timeNonDBLckW                10i 0
-     d  reserved_01                   1a
-     d  currSysPoolID                10i 0
-     d  thrdCount                    10i 0
-     d  prcUntTmUsd                  20u 0
-     d  numAuxIORqLng                20u 0
-     d  prcUntTmUsdDB                20u 0
-     d  pageFaults                   20u 0
-     d  actJobStsJobEnd...
-     d                                4a
-     d  memPoolName                  10a
-     d  msgRply                       1a
+dcl-ds jobi0200_t qualified based(pDummy);
+  bytRet          int(10);
+  bytAvl          int(10);
+  job             char(10);
+  user            char(10);
+  nbr             char(6);
+  intJobID        char(16);
+  status          char(10);
+  type            char(1);
+  subType         char(1);
+  sbsDName        char(10);
+  runPty          int(10);
+  sysPoolID       int(10);
+  prcTimeUsd      int(10);
+  numAuxIORq      int(10);
+  numIntTact      int(10);
+  rspTimeTot      int(10);
+  fncType         char(1);
+  fncName         char(10);
+  actJobSts       char(4);
+  numDBLckW       int(10);
+  numIntLckW      int(10);
+  numNonDBLckW    int(10);
+  timeDBLckW      int(10);
+  timeIntLckW     int(10);
+  timeNonDBLckW   int(10);
+  reserved_01     char(1);
+  currSysPoolID   int(10);
+  thrdCount       int(10);
+  prcUntTmUsd     uns(20);
+  numAuxIORqLng   uns(20);
+  prcUntTmUsdDB   uns(20);
+  pageFaults      uns(20);
+  actJobStsJobEnd char(4);
+  memPoolName     char(10);
+  msgRply         char(1);
+end-ds;
 
-     d jobi0400_t...
-     d                 ds                  qualified           based(pDummy)
-     d  bytRet                       10i 0
-     d  bytAvl                       10i 0
-     d  job                          10a
-     d  user                         10a
-     d  nbr                           6a
-     d  intJobID                     16a
-     d  status                       10a
-     d  type                          1a
-     d  subType                       1a
-     d  dateTimeEnt                  13a
-     d  dateTimeAct                  13a
-     d  jobAcctCode                  15a
-     d  jobD                         10a
-     d  jobDLib                      10a
-     d  unitOfWorkID                 24a
-     d  mode                          8a
-     d  inqMsgRply                   10a
-     d  logCLPgms                    10a
-     d  brkMsgHdl                    10a
-     d  stsMsgHdl                    10a
-     d  devRcvrAct                   13a
-     d  ddmCnvHdl                    10a
-     d  dateSep                       1a
-     d  dateFmt                       4a
-     d  prtText                      30a
-     d  sbmJob                       10a
-     d  sbmUser                      10a
-     d  sbmNbr                        6a
-     d  sbmMsgQ                      10a
-     d  sbmMsgQLib                   10a
-     d  timeSep                       1a
-     d  ccsid                        10i 0
-     d  dateTimeScd                   8a
-     d  prtKeyFmt                    10a
-     d  sortSeq                      10a
-     d  sortSeqLib                   10a
-     d  langID                        3a
-     d  countryID                     2a
-     d  complSts                      1a
-     d  signedOnJob                   1a
-     d  jobSws                        8a
-     d  msgQFullAct                  10a
-     d  reserved_01                   1a
-     d  msgQMaxSize                  10i 0
-     d  dftCcsid                     10i 0
-     d  rtgData                      80a
-     d  decFmt                        1a
-     d  chrIDCtrl                    10a
-     d  serverType                   30a
-     d  alwMltThrds                   1a
-     d  jobLogPnd                     1a
-     d  reserved_02                   1a
-     d  jobEndRsn                    10i 0
-     d  jobTypeEnhncd                10i 0
-     d  dateTimeEnd                  13a
-     d  reserved_03                   1a
-     d  splFActn                     10a
-     d  ofsAspGrpInf                 10i 0
-     d  numEAspGrpInf                10i 0
-     d  lenAspGrpInfE                10i 0
-     d  timeZoneDscNm                10a
-     d  jobLogOutput                 10a
+dcl-ds jobi0400_t qualified based(pDummy);
+  bytRet        int(10);
+  bytAvl        int(10);
+  job           char(10);
+  user          char(10);
+  nbr           char(6);
+  intJobID      char(16);
+  status        char(10);
+  type          char(1);
+  subType       char(1);
+  dateTimeEnt   char(13);
+  dateTimeAct   char(13);
+  jobAcctCode   char(15);
+  jobD          char(10);
+  jobDLib       char(10);
+  unitOfWorkID  char(24);
+  mode          char(8);
+  inqMsgRply    char(10);
+  logCLPgms     char(10);
+  brkMsgHdl     char(10);
+  stsMsgHdl     char(10);
+  devRcvrAct    char(13);
+  ddmCnvHdl     char(10);
+  dateSep       char(1);
+  dateFmt       char(4);
+  prtText       char(30);
+  sbmJob        char(10);
+  sbmUser       char(10);
+  sbmNbr        char(6);
+  sbmMsgQ       char(10);
+  sbmMsgQLib    char(10);
+  timeSep       char(1);
+  ccsid         int(10);
+  dateTimeScd   char(8);
+  prtKeyFmt     char(10);
+  sortSeq       char(10);
+  sortSeqLib    char(10);
+  langID        char(3);
+  countryID     char(2);
+  complSts      char(1);
+  signedOnJob   char(1);
+  jobSws        char(8);
+  msgQFullAct   char(10);
+  reserved_01   char(1);
+  msgQMaxSize   int(10);
+  dftCcsid      int(10);
+  rtgData       char(80);
+  decFmt        char(1);
+  chrIDCtrl     char(10);
+  serverType    char(30);
+  alwMltThrds   char(1);
+  jobLogPnd     char(1);
+  reserved_02   char(1);
+  jobEndRsn     int(10);
+  jobTypeEnhncd int(10);
+  dateTimeEnd   char(13);
+  reserved_03   char(1);
+  splFActn      char(10);
+  ofsAspGrpInf  int(10);
+  numEAspGrpInf int(10);
+  lenAspGrpInfE int(10);
+  timeZoneDscNm char(10);
+  jobLogOutput  char(10);
+end-ds;
 
-     d jobi0600_t...
-     d                 ds                  qualified           based(pDummy)
-     d  bytRet                       10i 0
-     d  bytAvl                       10i 0
-     d  job                          10a
-     d  user                         10a
-     d  nbr                           6a
-     d  intJobID                     16a
-     d  status                       10a
-     d  type                          1a
-     d  subType                       1a
-     d  jobSws                        8a
-     d  endStatus                     1a
-     d  sbsD                         10a
-     d  sbsDLib                      10a
-     d  curUser                      10a
-     d  dbcs                          1a
-     d  exitKey                       1a
-     d  cancelKey                     1a
-     d  prdRetCode                   10i 0
-     d  userRetCode                  10i 0
-     d  pgmretCode                   10i 0
-     d  spcEnv                       10a
-     d  device                       10a
-     d  grpPrf                       10a
-     d  grpPrfAry                    10a   dim(15)
-     d  jobUsrID                     10a
-     d  jobUsrIDStg                   1a
+dcl-ds jobi0600_t qualified based(pDummy);
+  bytRet      int(10);
+  bytAvl      int(10);
+  job         char(10);
+  user        char(10);
+  nbr         char(6);
+  intJobID    char(16);
+  status      char(10);
+  type        char(1);
+  subType     char(1);
+  jobSws      char(8);
+  endStatus   char(1);
+  sbsD        char(10);
+  sbsDLib     char(10);
+  curUser     char(10);
+  dbcs        char(1);
+  exitKey     char(1);
+  cancelKey   char(1);
+  prdRetCode  int(10);
+  userRetCode int(10);
+  pgmretCode  int(10);
+  spcEnv      char(10);
+  device      char(10);
+  grpPrf      char(10);
+  grpPrfAry   char(10) dim(15);
+  jobUsrID    char(10);
+  jobUsrIDStg char(1);
+end-ds;
 
-     d jobi0700_t...
-     d                 ds                  qualified           based(pDummy)
-     d  bytRet                       10i 0
-     d  bytAvl                       10i 0
-     d  job                          10a
-     d  user                         10a
-     d  nbr                           6a
-     d  intJobID                     16a
-     d  status                       10a
-     d  type                          1a
-     d  subType                       1a
-     d  reserved_1                    2a
-     d  numSysLibE                   10i 0
-     d  numPrdLibE                   10i 0
-     d  numCurLibE                   10i 0
-     d  numUsrLibE                   10i 0
+dcl-ds jobi0700_t qualified based(pDummy);
+  bytRet     int(10);
+  bytAvl     int(10);
+  job        char(10);
+  user       char(10);
+  nbr        char(6);
+  intJobID   char(16);
+  status     char(10);
+  type       char(1);
+  subType    char(1);
+  reserved_1 char(2);
+  numSysLibE int(10);
+  numPrdLibE int(10);
+  numCurLibE int(10);
+  numUsrLibE int(10);
+end-ds;
 
-      /endif
+/endif

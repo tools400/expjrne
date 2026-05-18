@@ -1,48 +1,51 @@
-      /if not defined(QMHQRDQD)
-      /define QMHQRDQD
+**free
+/if not defined(QMHQRDQD)
+/define QMHQRDQD
 
-      // Retrieve Data Queue Description (QMHQRDQD) API
-     d QMHQRDQD...
-     d                 pr                  extpgm('QMHQRDQD')
-     d  o_rcvVar                  65535a          options(*varsize)
-     d  i_lenRcvVar                  10i 0 const
-     d  i_format                      8a   const
-     d  i_qDtaQ                      20a   const
+// Retrieve Data Queue Description (QMHQRDQD) API
+dcl-pr QMHQRDQD extpgm('QMHQRDQD');
+  o_rcvVar    char(65535) options(*varsize);
+  i_lenRcvVar int(10) const;
+  i_format    char(8) const;
+  i_qDtaQ     char(20) const;
+end-pr;
 
-      // RDQD0100 Format
-     d RDQD0100_t      ds                  qualified               based(pDummy)
-     d  bytRet                       10i 0
-     d  bytAvl                       10i 0
-     d  msgLength                    10i 0
-     d  keyLength                    10i 0
-     d  sequence                      1a
-     d  inclSndID                     1a
-     d  forceInd                      1a
-     d  text                         50a
-     d  typeDtaQ                      1a
-     d  autoReclaim                   1a
-     d  reserved_1                    1a
-     d  numMsg                       10i 0
-     d  numAllocE                    10i 0
-     d  dtaQ_name                    10a
-     d  dtaQ_lib                     10a
-     d  maxNumEAlw                   10i 0
-     d  initNumE                     10i 0
-     d  maxNumESpc                   10i 0
+// RDQD0100 Format
+dcl-ds RDQD0100_t qualified based(pDummy);
+  bytRet      int(10);
+  bytAvl      int(10);
+  msgLength   int(10);
+  keyLength   int(10);
+  sequence    char(1);
+  inclSndID   char(1);
+  forceInd    char(1);
+  text        char(50);
+  typeDtaQ    char(1);
+  autoReclaim char(1);
+  reserved_1  char(1);
+  numMsg      int(10);
+  numAllocE   int(10);
+  dtaQ_name   char(10);
+  dtaQ_lib    char(10);
+  maxNumEAlw  int(10);
+  initNumE    int(10);
+  maxNumESpc  int(10);
+end-ds;
 
-      // RDQD0200 Format
-     d RDQD0200_t      ds                  qualified               based(pDummy)
-     d  bytRet                       10i 0
-     d  bytAvl                       10i 0
-     d  appcDevD                     10a
-     d  mode                          8a
-     d  rmtLocName                    8a
-     d  lclLocName                    8a
-     d  rmtNetID                      8a
-     d  rmtDtaQ_name                 10a
-     d  rmtDtaQ_lib                  10a
-     d  dtaQ_name                    10a
-     d  dtaQ_lib                     10a
-     d  rdbName                      18a
+// RDQD0200 Format
+dcl-ds RDQD0200_t qualified based(pDummy);
+  bytRet       int(10);
+  bytAvl       int(10);
+  appcDevD     char(10);
+  mode         char(8);
+  rmtLocName   char(8);
+  lclLocName   char(8);
+  rmtNetID     char(8);
+  rmtDtaQ_name char(10);
+  rmtDtaQ_lib  char(10);
+  dtaQ_name    char(10);
+  dtaQ_lib     char(10);
+  rdbName      char(18);
+end-ds;
 
-      /ENDIF
+/endif

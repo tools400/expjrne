@@ -1,9 +1,11 @@
-      // ---------------------------------------------------------------
-      //  Data structure for message ID: USR0021
+**FREE
+// ---------------------------------------------------------------
+//  Data structure for message ID: USR0021
 
-      //  Aktualitätsprüfung für Datei &1 in Bibliothek &2.
+//  Aktualittsprfung fr Datei &1 in Bibliothek &2.
 
-     d USR0021         ds
-     d  USR00211                   0010A   inz(*BLANKS)
-     d  USR00212                   0010A   inz(*BLANKS)
-     d USR0021_SIZE    s             10I 0 inz(0020)
+dcl-ds USR0021;
+  USR00211        char(0010) inz(*BLANKS);
+  USR00212        char(0010) inz(*BLANKS);
+end-ds;
+dcl-s USR0021_SIZE    int(10) inz(0020);

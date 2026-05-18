@@ -1,9 +1,11 @@
-      // ---------------------------------------------------------------
-      //  Data structure for message ID: USR0031
+**FREE
+// ---------------------------------------------------------------
+//  Data structure for message ID: USR0031
 
-      //  Ungültiges Zeitstempelfeld: &1.
+//  Ungltiges Zeitstempelfeld: &1.
 
-     d USR0031         ds
-     d  USR00311                     10A   inz(*BLANKS)
-     d  USR00312                      2P 0 inz(*ZEROS )
-     d USR0031_SIZE    s             10I 0 inz(12)
+dcl-ds USR0031;
+  USR00311        char(10) inz(*BLANKS);
+  USR00312        packed(2) inz(*ZEROS );
+end-ds;
+dcl-s USR0031_SIZE    int(10) inz(12);
