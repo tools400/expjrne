@@ -213,8 +213,8 @@
                           EXPORT(*SRCFILE) +
                           SRCFILE(&TOLIB/QEXPJRNE) +
                           SRCMBR(EXPJRNECU) +
-                          BNDSRVPGM(&TOLIB/BASICS1  +
-                                    &TOLIB/RTVFLDA) +
+                          BNDSRVPGM(*LIBL/BASICS1  +
+                                    *LIBL/RTVFLDA) +
                           BNDDIR(QC2LE) +
                           ACTGRP(*CALLER   ) +
                           TEXT('Export Journal Entries') +
@@ -228,9 +228,9 @@
                                  &TOLIB/EXPJRNER4  +
                                  &TOLIB/EXPJRNER5) +
                           ENTMOD(&TOLIB/EXPJRNEC1) +
-                          BNDSRVPGM(&TOLIB/BASICS1    +
-                                    &TOLIB/RTVFLDA    +
-                                    &TOLIB/EXPJRNECU) +
+                          BNDSRVPGM(*LIBL/BASICS1    +
+                                    *LIBL/RTVFLDA    +
+                                    *LIBL/EXPJRNECU) +
                           BNDDIR(QC2LE) +
                           DETAIL(*BASIC) +
                           ACTGRP(*NEW) +
@@ -240,8 +240,8 @@
 
              CRTPGM     PGM(&TOLIB/EXPJRNECC) +
                           MODULE(&TOLIB/EXPJRNER2 ) +
-                          BNDSRVPGM(&TOLIB/EXPJRNECU  +
-                                    &TOLIB/BASICS1  ) +
+                          BNDSRVPGM(*LIBL/EXPJRNECU  +
+                                    *LIBL/BASICS1  ) +
                           BNDDIR(QC2LE) +
                           ACTGRP(*CALLER   ) +
                           USRPRF(*USER) +
@@ -261,9 +261,9 @@
 
              CRTPGM     PGM(&TOLIB/EXPJRNECR) +
                           MODULE(&TOLIB/EXPJRNER3) +
-                          BNDSRVPGM(&TOLIB/EXPJRNECU  +
-                                    &TOLIB/BASICS1    +
-                                    &TOLIB/RTVFLDA  ) +
+                          BNDSRVPGM(*LIBL/EXPJRNECU  +
+                                    *LIBL/BASICS1    +
+                                    *LIBL/RTVFLDA  ) +
                           BNDDIR(QC2LE     ) +
                           ACTGRP(*CALLER   ) +
                           USRPRF(*USER) +
