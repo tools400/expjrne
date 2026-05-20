@@ -38,6 +38,6 @@ dcl-ds sds qualified psds;
   pgmContProc   char(10);
   modContProc   char(10);
   unused_2      char(76);
-end-ds;
 /endif
+end-ds;
 /endif
