@@ -2,7 +2,7 @@
 // ---------------------------------------------------------------
 //  Data structure for message ID: USR0031
 
-//  Ungltiges Zeitstempelfeld: &1.
+//  Ungültiges Zeitstempelfeld: &1.
 
 dcl-ds USR0031;
   USR00311        char(10) inz(*BLANKS);

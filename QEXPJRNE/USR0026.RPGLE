@@ -2,7 +2,7 @@
 // ---------------------------------------------------------------
 //  Data structure for message ID: USR0026
 
-//  Ausfhrung der ASL Anweisung zum setzen der Spaltenberschr
+//  Ausführung der ASL Anweisung zum setzen der Spaltenüberschr
 
 dcl-ds USR0026;
   USR00261        char(0512) inz(*BLANKS);

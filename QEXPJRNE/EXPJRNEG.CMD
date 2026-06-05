@@ -59,7 +59,7 @@
 /*   >>EXECUTE<<                                                       */
 /* >>END-PRE-COMPILER<<                                                */
 /* =================================================================== */
-           CMD      PROMPT('Journaleintrge exportieren')
+           CMD      PROMPT('Journaleinträge exportieren')
 
              PARM       KWD(OBJ)                         +
                           TYPE(OBJ)                      +
@@ -122,12 +122,12 @@
                           TYPE(QUAL2)                    +
                           MIN(0)                         +
                           CHOICE(*NONE)                  +
-                          PROMPT('Datei fr Ausgabe' 10)
+                          PROMPT('Datei für Ausgabe' 10)
 
              PARM       KWD(OUTMBR)                      +
                           MIN(0)                         +
                           TYPE(ELEM1)                    +
-                          PROMPT('Auswahl fr Ausgabeteildatei' 11)
+                          PROMPT('Auswahl für Ausgabeteildatei' 11)
 
              PARM       KWD(CRTFILE)                     +
                           TYPE(*CHAR)                    +
@@ -146,7 +146,7 @@
                           MIN(0)                         +
                           DFT(*OBJECT)                   +
                           SNGVAL(*OBJECT)                +
-                          PROMPT('Vorlage fr Ausgabedatei' 13)
+                          PROMPT('Vorlage für Ausgabedatei' 13)
 
              PARM       KWD(OUTFILFMT)                   +
                           TYPE(*CHAR)                    +
@@ -172,12 +172,12 @@
                           DFT(*CURCHAIN)                 +
                           SNGVAL((*CURCHAIN)             +
                                  (*CURRENT ))            +
-                          PROMPT('Bereich der Journalempfnger' 17)
+                          PROMPT('Bereich der Journalempfänger' 17)
 
              PARM       KWD(SIZE)                        +
                           TYPE(SIZE)                     +
                           SNGVAL((*NOMAX 0))             +
-                          PROMPT('Gre der Teildatei' 14)
+                          PROMPT('Größe der Teildatei' 14)
 
              PARM       KWD(LVLCHK)                      +
                           TYPE(*CHAR)                    +
@@ -187,7 +187,7 @@
                           RSTD(*YES)                     +
                           SPCVAL((*YES 'Y')              +
                                  (*NO  'N'))             +
-                          PROMPT('Satzformat-Aktualittsprfung' 15)
+                          PROMPT('Satzformat-Aktualitätsprüfung' 15)
 
 /* ----------------------------------------------------------------- */
 
@@ -255,26 +255,26 @@ JRN:         QUAL       TYPE(*NAME)                      +
                           VALUES((*REPLACE)              +
                                  (*ADD    ))             +
                           DFT(*REPLACE)                  +
-                          PROMPT('Stze ersetzen od. hinzufgen')
+                          PROMPT('Sätze ersetzen od. hinzufügen')
 
  RCVRNG:     ELEM       TYPE(QUAL3)                      +
                           MIN(0)                         +
-                          PROMPT('Start Journalempfnger')
+                          PROMPT('Start Journalempfänger')
              ELEM       TYPE(QUAL3)                      +
                           MIN(0)                         +
                           SNGVAL((*CURRENT))             +
-                          PROMPT('Ende Journalempfnger')
+                          PROMPT('Ende Journalempfänger')
 
  SIZE:       ELEM       TYPE(*INT4)                      +
                           DFT(*SAME)                     +
                           RANGE(1 2147483646)            +
                           SPCVAL((*SAME  -2))            +
-                          PROMPT('Anfangsanzahl Stze')
+                          PROMPT('Anfangsanzahl Sätze')
              ELEM       TYPE(*INT2)                      +
                           DFT(*SAME)                     +
                           RANGE(0 32767)                 +
                           SPCVAL((*SAME  -2))            +
-                          PROMPT('Satzanzahl fr Erweiterung')
+                          PROMPT('Satzanzahl für Erweiterung')
              ELEM       TYPE(*INT2)                      +
                           DFT(*SAME)                     +
                           RANGE(0 32767)                 +

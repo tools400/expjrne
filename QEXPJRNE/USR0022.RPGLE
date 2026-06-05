@@ -2,7 +2,7 @@
 // ---------------------------------------------------------------
 //  Data structure for message ID: USR0022
 
-//  Aktualittsprfung fr Feld &3 in Datei &1 in Bibliothek &2
+//  Aktualitätsprüfung für Feld &3 in Datei &1 in Bibliothek &2
 
 dcl-ds USR0022;
   USR00221        char(0010) inz(*BLANKS);

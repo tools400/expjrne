@@ -17,7 +17,7 @@
              DCL        VAR(&LI) TYPE(*CHAR) LEN(10)
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD fr Message-ID :   TXT0001                    */
+     /*   Cmd-ADDMSGD für Message-ID :   TXT0001                    */
      /* EXPJRNE - Exported journal entries                          */
      /*-------------------------------------------------------------*/
 
@@ -34,7 +34,7 @@
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD fr Message-ID :   USR0001                    */
+     /*   Cmd-ADDMSGD für Message-ID :   USR0001                    */
      /* Producing SQL 'CREATE TABLE' commands ...                   */
      /*-------------------------------------------------------------*/
 
@@ -51,7 +51,7 @@
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD fr Message-ID :   USR0002                    */
+     /*   Cmd-ADDMSGD für Message-ID :   USR0002                    */
      /* Retrieving outfile record format ...                        */
      /*-------------------------------------------------------------*/
 
@@ -68,7 +68,7 @@
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD fr Message-ID :   USR0003                    */
+     /*   Cmd-ADDMSGD für Message-ID :   USR0003                    */
      /* Creating outfile ...                                        */
      /*-------------------------------------------------------------*/
 
@@ -85,7 +85,7 @@
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD fr Message-ID :   USR0004                    */
+     /*   Cmd-ADDMSGD für Message-ID :   USR0004                    */
      /* Deleting temporary objects ...                              */
      /*-------------------------------------------------------------*/
 
@@ -102,7 +102,7 @@
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD fr Message-ID :   USR0005                    */
+     /*   Cmd-ADDMSGD für Message-ID :   USR0005                    */
      /* Outfile default name can not be generated. File name to lon */
      /*-------------------------------------------------------------*/
 
@@ -119,7 +119,7 @@
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD fr Message-ID :   USR0006                    */
+     /*   Cmd-ADDMSGD für Message-ID :   USR0006                    */
      /* Records can not be added when a new outfile is created.     */
      /*-------------------------------------------------------------*/
 
@@ -136,7 +136,7 @@
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD fr Message-ID :   USR0007                    */
+     /*   Cmd-ADDMSGD für Message-ID :   USR0007                    */
      /* Retrieving journal information ...                          */
      /*-------------------------------------------------------------*/
 
@@ -153,7 +153,7 @@
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD fr Message-ID :   USR0008                    */
+     /*   Cmd-ADDMSGD für Message-ID :   USR0008                    */
      /* Specified object is not journaled. Journal records can not  */
      /*-------------------------------------------------------------*/
 
@@ -171,7 +171,7 @@ d.'                                                                   +
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD fr Message-ID :   USR0009                    */
+     /*   Cmd-ADDMSGD für Message-ID :   USR0009                    */
      /* File record length could not be determined.                 */
      /*-------------------------------------------------------------*/
 
@@ -188,7 +188,7 @@ d.'                                                                   +
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD fr Message-ID :   USR0010                    */
+     /*   Cmd-ADDMSGD für Message-ID :   USR0010                    */
      /* Outfile could not be created.                               */
      /*-------------------------------------------------------------*/
 
@@ -205,7 +205,7 @@ d.'                                                                   +
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD fr Message-ID :   USR0011                    */
+     /*   Cmd-ADDMSGD für Message-ID :   USR0011                    */
      /* Exporting journal entries ...                               */
      /*-------------------------------------------------------------*/
 
@@ -222,7 +222,7 @@ d.'                                                                   +
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD fr Message-ID :   USR0012                    */
+     /*   Cmd-ADDMSGD für Message-ID :   USR0012                    */
      /* Exporting journal entries (&1) ...                          */
      /*-------------------------------------------------------------*/
 
@@ -241,7 +241,7 @@ d.'                                                                   +
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD fr Message-ID :   USR0014                    */
+     /*   Cmd-ADDMSGD für Message-ID :   USR0014                    */
      /* &3 Journal entries exported to outfile &2/&1.               */
      /*-------------------------------------------------------------*/
 
@@ -262,7 +262,7 @@ d.'                                                                   +
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD fr Message-ID :   USR0015                    */
+     /*   Cmd-ADDMSGD für Message-ID :   USR0015                    */
      /* No journal entries available for file &2/&1.                */
      /*-------------------------------------------------------------*/
 
@@ -282,7 +282,7 @@ d.'                                                                   +
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD fr Message-ID :   USR0016                    */
+     /*   Cmd-ADDMSGD für Message-ID :   USR0016                    */
      /* Command ended in error - See joblog.                        */
      /*-------------------------------------------------------------*/
 
@@ -299,7 +299,7 @@ d.'                                                                   +
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD fr Message-ID :   USR0017                    */
+     /*   Cmd-ADDMSGD für Message-ID :   USR0017                    */
      /* Data type of field &1 is not supported.                     */
      /*-------------------------------------------------------------*/
 
@@ -318,7 +318,7 @@ d.'                                                                   +
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD fr Message-ID :   USR0018                    */
+     /*   Cmd-ADDMSGD für Message-ID :   USR0018                    */
      /* Skipped &1 journal entries due to errors.                   */
      /*-------------------------------------------------------------*/
 
@@ -342,7 +342,7 @@ ecause of incomplete data or because of journal parameter ''MINENTDTA'-
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD fr Message-ID :   USR0019                    */
+     /*   Cmd-ADDMSGD für Message-ID :   USR0019                    */
      /* Renamed field or record format &1 to &2.                    */
      /*-------------------------------------------------------------*/
 
@@ -366,7 +366,7 @@ to &2 because the name contained invalid characters.'                 +
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD fr Message-ID :   USR0020                    */
+     /*   Cmd-ADDMSGD für Message-ID :   USR0020                    */
      /* Memory adressing violation. Program halted.                 */
      /*-------------------------------------------------------------*/
 
@@ -387,7 +387,7 @@ the specified boundaries. Please report that error to the developer.' +
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD fr Message-ID :   USR0021                    */
+     /*   Cmd-ADDMSGD für Message-ID :   USR0021                    */
      /* Level check on file &1 in library &2.                       */
      /*-------------------------------------------------------------*/
 
@@ -410,7 +410,7 @@ the specified boundaries. Please report that error to the developer.' +
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD fr Message-ID :   USR0022                    */
+     /*   Cmd-ADDMSGD für Message-ID :   USR0022                    */
      /* Level check on field &3 in file &1 in library &2.           */
      /*-------------------------------------------------------------*/
 
@@ -435,7 +435,7 @@ y &2 do not match expected values.'                                   +
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD fr Message-ID :   USR0023                    */
+     /*   Cmd-ADDMSGD für Message-ID :   USR0023                    */
      /* &1: &2                                                      */
      /*-------------------------------------------------------------*/
 
@@ -455,7 +455,7 @@ y &2 do not match expected values.'                                   +
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD fr Message-ID :   USR0024                    */
+     /*   Cmd-ADDMSGD für Message-ID :   USR0024                    */
      /* Failed to execute SQL statement to create the output file.  */
      /*-------------------------------------------------------------*/
 
@@ -477,7 +477,7 @@ y &2 do not match expected values.'                                   +
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD fr Message-ID :   USR0025                    */
+     /*   Cmd-ADDMSGD für Message-ID :   USR0025                    */
      /* Failed to execute SQL statement to set the field descriptio */
      /*-------------------------------------------------------------*/
 
@@ -500,7 +500,7 @@ utput file.'                                                          +
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD fr Message-ID :   USR0026                    */
+     /*   Cmd-ADDMSGD für Message-ID :   USR0026                    */
      /* Failed to execute SQL statement to set the column headings  */
      /*-------------------------------------------------------------*/
 
@@ -523,7 +523,7 @@ put file.'                                                            +
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD fr Message-ID :   USR0027                    */
+     /*   Cmd-ADDMSGD für Message-ID :   USR0027                    */
      /* Failed to execute SQL statement to set the text description */
      /*-------------------------------------------------------------*/
 
@@ -546,7 +546,7 @@ tput file.'                                                           +
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD fr Message-ID :   USR0028                    */
+     /*   Cmd-ADDMSGD für Message-ID :   USR0028                    */
      /* Parameter OBJTYPE contains an invalid value.                */
      /*-------------------------------------------------------------*/
 
@@ -571,7 +571,7 @@ M0. The release level of your system is: &2.'                         +
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD fr Message-ID :   USR0029                    */
+     /*   Cmd-ADDMSGD für Message-ID :   USR0029                    */
      /* Output file must be different from the input file.          */
      /*-------------------------------------------------------------*/
 
@@ -593,7 +593,7 @@ for the output file and try your request again.'                      +
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD fr Message-ID :   USR0030                    */
+     /*   Cmd-ADDMSGD für Message-ID :   USR0030                    */
      /* Field overflow occurred in field: &1                        */
      /*-------------------------------------------------------------*/
 
@@ -617,7 +617,7 @@ et to: value - maxValue - 1'                                          +
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD fr Message-ID :   USR0031                    */
+     /*   Cmd-ADDMSGD für Message-ID :   USR0031                    */
      /* Field overflow occurred in field: &1                        */
      /*-------------------------------------------------------------*/
 
@@ -643,7 +643,7 @@ e.'                                                                   +
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD fr Message-ID :   USR0101                    */
+     /*   Cmd-ADDMSGD für Message-ID :   USR0101                    */
      /* Create temporary source file ...                            */
      /*-------------------------------------------------------------*/
 
@@ -660,7 +660,7 @@ e.'                                                                   +
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD fr Message-ID :   USR0102                    */
+     /*   Cmd-ADDMSGD für Message-ID :   USR0102                    */
      /* Retrieving outfile record format ...                        */
      /*-------------------------------------------------------------*/
 
@@ -677,7 +677,7 @@ e.'                                                                   +
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD fr Message-ID :   USR0103                    */
+     /*   Cmd-ADDMSGD für Message-ID :   USR0103                    */
      /* Creating outfile ...                                        */
      /*-------------------------------------------------------------*/
 
@@ -694,7 +694,7 @@ e.'                                                                   +
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD fr Message-ID :   USR0104                    */
+     /*   Cmd-ADDMSGD für Message-ID :   USR0104                    */
      /* Deleting temporary objects ...                              */
      /*-------------------------------------------------------------*/
 
@@ -711,7 +711,7 @@ e.'                                                                   +
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD fr Message-ID :   USR0200                    */
+     /*   Cmd-ADDMSGD für Message-ID :   USR0200                    */
      /* Connecting to DB Server ...                                 */
      /*-------------------------------------------------------------*/
 
@@ -728,7 +728,7 @@ e.'                                                                   +
                 /*  -EOF-  */
 
      /*-------------------------------------------------------------*/
-     /*   Cmd-ADDMSGD fr Message-ID :   USR0201                    */
+     /*   Cmd-ADDMSGD für Message-ID :   USR0201                    */
      /* Disconnecting from DB server ...                            */
      /*-------------------------------------------------------------*/
 

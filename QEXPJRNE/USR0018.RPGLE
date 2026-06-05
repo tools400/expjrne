@@ -2,7 +2,7 @@
 // ---------------------------------------------------------------
 //  Data structure for message ID: USR0018
 
-//  &1 Journaleintrge aufgrund von Fehlern bergangen.
+//  &1 Journaleinträge aufgrund von Fehlern übergangen.
 
 dcl-ds USR0018;
   USR00181        char(0010) inz(*BLANKS);

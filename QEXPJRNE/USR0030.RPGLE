@@ -2,7 +2,7 @@
 // ---------------------------------------------------------------
 //  Data structure for message ID: USR0030
 
-//  Feldberlauf aufgetreten in Feld: &1
+//  Feldüberlauf aufgetreten in Feld: &1
 
 dcl-ds USR0030;
   USR00301        char(0010) inz(*BLANKS);

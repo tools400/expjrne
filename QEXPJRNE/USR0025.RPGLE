@@ -2,7 +2,7 @@
 // ---------------------------------------------------------------
 //  Data structure for message ID: USR0025
 
-//  Ausfhrung der SQL Anweisung zum Setzen der Feldbeschreibun
+//  Ausführung der SQL Anweisung zum Setzen der Feldbeschreibun
 
 dcl-ds USR0025;
   USR00251        char(0512) inz(*BLANKS);

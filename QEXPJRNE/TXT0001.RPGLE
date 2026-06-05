@@ -2,7 +2,7 @@
 // ---------------------------------------------------------------
 //  Data structure for message ID: TXT0001
 //
-//EXPJRNE - Exportierte Journaleintrge
+//EXPJRNE - Exportierte Journaleinträge
 //
 dcl-ds TXT0001;
 end-ds;
