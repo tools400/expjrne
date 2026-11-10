@@ -60,6 +60,10 @@ A: eng (English) or ger (German)
 
 Usually file_name is QXML.
 
+## Liability
+
+This software is free and provided without warranty. You use it at your own risk: test it with non-critical data first, and back up your data before you use it. The [license](LICENSE) applies in addition.
+
 ---
 
 2018, Thomas Raddatz
