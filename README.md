@@ -3,7 +3,7 @@
 EXPJRNE is a utility for exporting journal entries from a journal to
 an output file. The utility creates the output file with the meta
 data fields of the journal entry and the original fields of the
-journaled file. That makes it is easy to analyze the exported data.
+journaled file. That makes it easy to analyze the exported data.
 
 ## Dependencies
 
